@@ -1,0 +1,41 @@
+@file:Suppress("UNUSED")
+package dev.racci.minix.nms.entity
+
+import org.bukkit.Location
+import org.bukkit.entity.Entity
+import org.bukkit.util.Vector
+
+/**
+ * Sets what this entity is looking at.
+ */
+fun Entity.lookAt(x: Double, y: Double, z: Double) {
+    val dirBetweenLocations = Vector(x, y, z).subtract(location.toVector())
+    val location = location
+    location.direction = dirBetweenLocations
+    setRotation(location.yaw, location.pitch)
+}
+
+/**
+ * Sets the entities location it looks at.
+ */
+fun Entity.lookAt(location: Location) = lookAt(location.x, location.y, location.z)
+
+/**
+ * Makes this entity look at another entity.
+ */
+fun Entity.lookAt(entity: Entity) = lookAt(entity.location)
+
+/**
+ * Sets the [x] and [z] that the entity is looking at with its current y level.
+ */
+fun Entity.lookAt(x: Double, z: Double) = lookAt(x, location.y, z)
+
+/**
+ * Sets the entities pitch that it looks at to this [location].
+ */
+fun Entity.lookAtPitchLock(location: Location) = lookAt(location.x, location.z)
+
+/**
+ * Sets the entities pitch that it looks at to this [entity]'s pitch.
+ */
+fun Entity.lookAtPitchLock(entity: Entity) = lookAtPitchLock(entity.location)
