@@ -59,6 +59,6 @@ tasks {
     }
 
     dokkaHtmlMultiModule {
-        outputDirectory.set(File("$rootDir/Docs"))
+        outputDirectory.set(File("$rootDir/docs"))
     }
 }
