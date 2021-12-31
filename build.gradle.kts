@@ -57,4 +57,8 @@ tasks {
         dependsOn(gradle.includedBuilds.map { it.task(":clean") })
         dependsOn(subprojects.map { it.tasks.clean })
     }
+
+    dokkaHtmlMultiModule {
+        outputDirectory.set(File("$rootDir/Docs"))
+    }
 }
