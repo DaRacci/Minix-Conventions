@@ -38,7 +38,7 @@ dependencies {
         api("${Deps.minecraft.authLib}:2.3.31")
         api("${Deps.minecraft.headLib}:3.0.9")
         api("${Deps.minecraft.acfPaper}:0.5.0-SNAPSHOT")
-        api("${Deps.minecraft.inventoryFramework}:0.10.3")
+        api("${Deps.minecraft.inventoryFramework}:0.10.4")
         api("${Deps.minecraft.mcCoroutineAPI}:1.5.0")
         api("${Deps.minecraft.mcCoroutineCore}:1.5.0")
 
@@ -47,21 +47,21 @@ dependencies {
         api("${Deps.kotlin.stdlib}:$kotlinVersion")
         api("${Deps.kotlin.reflect}:$kotlinVersion")
 
-        api("${Deps.kotlinx.coroutines}:1.6.0-RC")
+        api("${Deps.kotlinx.coroutines}:1.6.0")
 
-        api("${Deps.kotlinx.serialization.kaml}:0.37.0")
-        api("${Deps.kotlinx.serialization.json}:1.3.1")
-        api("${Deps.kotlinx.serialization.cbor}:1.3.1")
-        api("${Deps.kotlinx.serialization.hocon}:1.3.1")
-        api("${Deps.kotlinx.serialization.protobuf}:1.3.1")
-        api("${Deps.kotlinx.serialization.properties}:1.3.1")
+        api("${Deps.kotlinx.serialization.kaml}:0.39.0")
+        api("${Deps.kotlinx.serialization.json}:1.3.2")
+        api("${Deps.kotlinx.serialization.cbor}:1.3.2")
+        api("${Deps.kotlinx.serialization.hocon}:1.3.2")
+        api("${Deps.kotlinx.serialization.protobuf}:1.3.2")
+        api("${Deps.kotlinx.serialization.properties}:1.3.2")
 
-        api("${Deps.exposed.core}:0.34.2")
-        api("${Deps.exposed.dao}:0.34.2")
-        api("${Deps.exposed.jdbc}:0.34.2")
+        api("${Deps.exposed.core}:0.37.3")
+        api("${Deps.exposed.dao}:0.37.3")
+        api("${Deps.exposed.jdbc}:0.37.3")
 
         api("${Deps.kotlin_statistics}:1.2.1")
-        api("${Deps.sqlite_jdbc}:3.36.0.2")
+        api("${Deps.sqlite_jdbc}:3.36.0.3")
     }
 }
 
@@ -80,6 +80,10 @@ publishing {
 }
 
 tasks {
+    dependencyUpdates {
+        this.checkForGradleUpdate = true
+    }
+
     build {
         dependsOn(project(":shaded").tasks.build)
     }

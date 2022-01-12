@@ -1,7 +1,9 @@
 version: 2
 updates:
   - package-ecosystem: "gradle"
-    directory: "/Minix-Platform"
+    directory: |
+      - "/Minix-Platform"
+      - "/Minix-Gradle"
     schedule:
       interval: "daily"
   - package-ecosystem: "github-actions"
