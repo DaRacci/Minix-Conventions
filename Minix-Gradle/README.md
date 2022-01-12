@@ -62,6 +62,9 @@ Copies a generated `shadowJar` artifact to a specified path.
 
 Adds Kotlin, Detekt Linter and shadowJar plugins. Applies a Java platform of the common dependencies.
 
+Adds a `detektFile` property to the project to provide a custom detekt configuration.
+The path to this file is relative to your project.
+
 Adds a `kotlinVersion` property to the project and warns if the project already has such a property that doesn't match.
 
 ### dev.racci.minix.purpurmc

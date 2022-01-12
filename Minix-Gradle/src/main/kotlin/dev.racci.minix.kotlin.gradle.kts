@@ -14,26 +14,6 @@ kotlin {
     }
 }
 
-detekt {
-    toolVersion = "1.19.0"
-    source = files("src/main/java", "src/main/kotlin")
-    parallel = true
-    config = detektFile
-    buildUponDefaultConfig = false
-    allRules = false
-    disableDefaultRuleSets = false
-    debug = true
-    ignoreFailures = false
-    basePath = projectDir.path
-}
-
-val detektFile: ConfigurableFileCollection get() {
-    val tempFile = org.jetbrains.kotlin.konan.file.createTempFile("detekt")
-    val inputStream = javaClass.classLoader!!.getResourceAsStream("detekt.yml")!!
-    inputStream.use { tempFile.writeBytes(it.readAllBytes()) }
-    return files(tempFile.path)
-}
-
 fun loadPropertiesFromResources(
     propFileName: String
 ): Properties {
@@ -52,15 +32,58 @@ val minConventionsKotlinVersion: String by savedProps
 val kotlinVersion: String? by project
 val minixVersion: String? by project
 val detektVersion: String? by project
+val detektFile: ConfigurableFileCollection
+    get() {
+        val tempFile = org.jetbrains.kotlin.konan.file.createTempFile("detekt")
+        val detektFile: String? by project
+        if(detektFile != null) {
+            file(detektFile!!).inputStream().use { tempFile.writeBytes(it.readAllBytes()) }
+        } else {
+            val inputStream = javaClass.classLoader!!.getResourceAsStream("detekt.yml")!!
+            inputStream.use { tempFile.writeBytes(it.readAllBytes()) }
+        }
+        return files(tempFile.path)
+    }
+
+detekt {
+    toolVersion = "1.19.0"
+    source = files("src/main/java", "src/main/kotlin")
+    parallel = true
+    config = detektFile
+    buildUponDefaultConfig = false
+    allRules = false
+    disableDefaultRuleSets = false
+    debug = false
+    ignoreFailures = false
+    basePath = projectDir.path
+}
+
+tasks {
+    withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+        jvmTarget = "16"
+        autoCorrect = true
+        reports {
+            html.required.set(true)
+            html.outputLocation.set(file("build/reports/detekt.html"))
+        }
+    }
+    named("check").configure {
+        setDependsOn(
+            dependsOn.filterNot {
+                it is TaskProvider<*> && it.name == "detektMain"
+            }
+        )
+    }
+}
 
 if (kotlinVersion != null && minConventionsKotlinVersion != kotlinVersion) {
     logger.error(
         """
-        kotlinVersion property ($kotlinVersion) is not the same as the one
-        applied by the Minix conventions plugin $minConventionsKotlinVersion.
-        
-        Will be using $minConventionsKotlinVersion for Kotlin plugin and stdlib version.
-        Try to remove kotlinVersion from gradle.properties or ensure you are on the same version.
+    kotlinVersion property ($kotlinVersion) is not the same as the one
+    applied by the Minix conventions plugin $minConventionsKotlinVersion.
+    
+    Will be using $minConventionsKotlinVersion for Kotlin plugin and stdlib version.
+    Try to remove kotlinVersion from gradle.properties or ensure you are on the same version.
         """.trimIndent()
     )
 }
