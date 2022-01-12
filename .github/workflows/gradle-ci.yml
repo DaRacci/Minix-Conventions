@@ -38,7 +38,7 @@ jobs:
         run: ./gradlew detektMain
 
       - name: Upload build
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: build
           path: build/libs
