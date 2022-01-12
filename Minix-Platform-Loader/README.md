@@ -14,7 +14,7 @@ Under the hood, it's really just injecting a classloader into Spigot's library l
 #### build.gradle.kts
 ```kotlin
 repositories {
-    maven("https://repo.racci.dev/releases")}
+    maven("https://repo.racci.dev/releases")
 }
 
 dependencies {

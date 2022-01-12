@@ -11,7 +11,13 @@ import java.util.function.Predicate
 object MinixPlatforms {
 
     /**
-     * Loads a .platform file in the plugins' folder that starts with a platformName.
+     * Loads a .platform file in the plugin's folder that starts with the platformName.
+     */
+    @Throws(ReflectiveOperationException::class)
+    fun Plugin.loadPlatform(platformName: String) = load(this, platformName)
+
+    /**
+     * Loads a .platform file in the plugins' folder that starts with the platformName.
      */
     @Throws(ReflectiveOperationException::class)
     fun load(

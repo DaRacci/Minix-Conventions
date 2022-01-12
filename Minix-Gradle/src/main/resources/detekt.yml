@@ -304,7 +304,7 @@ formatting:
     autoCorrect: true
     insertFinalNewLine: true
   ImportOrdering:
-    active: true
+    active: false
     autoCorrect: true
     layout: '*,dev.racci.**,net.minecraft.**,org.bukkit.**,io.papermc.**,org.purpurmc.**,java.**,javax.**,kotlin.**,^'
   Indentation:
