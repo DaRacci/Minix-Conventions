@@ -5,12 +5,14 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+    paths-ignore: [ "**.md" ]
 
 env:
   DETEKT_RELEASE_TAG: v1.19.0
 
 jobs:
   scan:
+    if: "!contains(github.event.head_commit.message, '[ci-skip]')"
     name: Scan
     runs-on: ubuntu-latest
 
