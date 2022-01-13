@@ -36,8 +36,7 @@ dependencies {
         api("${Deps.adventure.minimessage}:4.10.0-SNAPSHOT")
 
         api("${Deps.minecraft.authLib}:2.3.31")
-        api("${Deps.minecraft.headLib}:3.0.9")
-        api("${Deps.minecraft.acfPaper}:0.5.0-SNAPSHOT")
+        api("${Deps.minecraft.acfPaper}:0.5.1-SNAPSHOT")
         api("${Deps.minecraft.inventoryFramework}:0.10.4")
         api("${Deps.minecraft.mcCoroutineAPI}:1.5.0")
         api("${Deps.minecraft.mcCoroutineCore}:1.5.0")
@@ -48,6 +47,8 @@ dependencies {
         api("${Deps.kotlin.reflect}:$kotlinVersion")
 
         api("${Deps.kotlinx.coroutines}:1.6.0")
+        api("${Deps.kotlinx.dateTime}:0.3.2")
+        api("${Deps.kotlinx.immutableCollections}:0.3.5")
 
         api("${Deps.kotlinx.serialization.kaml}:0.39.0")
         api("${Deps.kotlinx.serialization.json}:1.3.2")
@@ -59,9 +60,19 @@ dependencies {
         api("${Deps.exposed.core}:0.37.3")
         api("${Deps.exposed.dao}:0.37.3")
         api("${Deps.exposed.jdbc}:0.37.3")
+        api("${Deps.exposed.dateTime}:0.37.3")
 
         api("${Deps.kotlin_statistics}:1.2.1")
         api("${Deps.sqlite_jdbc}:3.36.0.3")
+
+        api("${Deps.logging.sentry}:6.0.0-alpha.1")
+        api("${Deps.logging.slf4jAPI}:2.0.0-alpha5")
+        api("${Deps.logging.kotlinLogger}:2.1.21")
+
+        api("${Deps.koin.core}:3.1.5")
+        api("${Deps.koin.ktor}:3.1.5")
+        api("${Deps.koin.test}:3.1.4")
+        api("${Deps.koin.testJunit5}:3.1.4")
     }
 }
 

@@ -39,6 +39,7 @@ object Deps {
         const val dao = "org.jetbrains.exposed:exposed-dao"
         const val core = "org.jetbrains.exposed:exposed-core"
         const val jdbc = "org.jetbrains.exposed:exposed-jdbc"
+        const val dateTime = "org.jetbrains.exposed:exposed-kotlin-datetime"
     }
 
     /**
@@ -54,6 +55,8 @@ object Deps {
      */
     object kotlinx {
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8"
+        const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm"
+        const val immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable"
 
         /**
          * Dependencies for KotlinX Serialization modules.
@@ -68,8 +71,29 @@ object Deps {
         }
     }
 
+    /**
+     * Dependencies for Logging.
+     */
+    object logging {
+        const val sentry = "io.sentry:sentry"
+        const val slf4jAPI = "org.slf4j:slf4j-api"
+        const val kotlinLogger = "io.github.microutils:kotlin-logging-jvm"
+    }
+
     const val sqlite_jdbc = "org.xerial:sqlite-jdbc"
     const val kotlin_statistics = "org.nield:kotlin-statistics"
+
+    /**
+     * Dependencies for Koin.
+     */
+    object koin {
+        private const val common = "io.insert-koin:koin"
+
+        const val core = "$common-core"
+        const val test = "$common-test"
+        const val testJunit5 = "$common-test-junit5"
+        const val ktor = "$common-ktor"
+    }
 
     /**
      * Dependencies for my libs / plugin APIs.

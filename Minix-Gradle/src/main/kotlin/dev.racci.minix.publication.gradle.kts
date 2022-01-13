@@ -18,7 +18,7 @@ java {
 }
 
 tasks.dokkaHtml {
-    outputDirectory.set(File("${(project.parent ?: project).projectDir}/docs"))
+    outputDirectory.set(file("/docs"))
 }
 
 publishing {

@@ -42,6 +42,8 @@ dependencies {
     implementation(Deps.kotlin.reflect)
 
     implementation(Deps.kotlinx.coroutines)
+    implementation(Deps.kotlinx.dateTime)
+    implementation(Deps.kotlinx.immutableCollections)
 
     implementation(Deps.kotlinx.serialization.kaml)
     implementation(Deps.kotlinx.serialization.json)
@@ -53,9 +55,17 @@ dependencies {
     implementation(Deps.exposed.core)
     implementation(Deps.exposed.dao)
     implementation(Deps.exposed.jdbc)
+    implementation(Deps.exposed.dateTime)
 
     implementation(Deps.kotlin_statistics)
     implementation(Deps.sqlite_jdbc)
+
+    implementation(Deps.logging.sentry)
+    implementation(Deps.logging.slf4jAPI)
+    implementation(Deps.logging.kotlinLogger)
+
+    implementation(Deps.koin.core)
+    implementation(Deps.koin.ktor)
 }
 
 tasks {

@@ -2,7 +2,7 @@
   
 # Minix-Platform-Loader
 
-[![Maven](https://badgen.net/maven/v/metadata-url/repo.racci.dev/releases/dev/racci/Minix-Platform-Loader/maven-metadata.xml)](https://repo.racci.dev/releases/dev/racci/Minix-Platform-Loader)
+[![Maven](https://badgen.net/maven/v/metadata-url/repo.racci.dev/releases/dev/racci/Minix-Platform-Loader/maven-metadata.xml)](https://repo.racci.dev/#/releases/dev/racci/Minix-Platform-Loader)
 </div>
 
 A tiny kotlin lib that allows plugins to load and share jar files.
