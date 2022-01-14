@@ -30,7 +30,6 @@ dependencies {
     implementation(Deps.adventure.minimessage)
 
     implementation(Deps.minecraft.authLib)
-    implementation(Deps.minecraft.headLib)
     implementation(Deps.minecraft.acfPaper)
     implementation(Deps.minecraft.inventoryFramework)
     implementation(Deps.minecraft.mcCoroutineAPI)
@@ -64,8 +63,8 @@ dependencies {
     implementation(Deps.logging.slf4jAPI)
     implementation(Deps.logging.kotlinLogger)
 
-    implementation(Deps.koin.core)
-    implementation(Deps.koin.ktor)
+    implementation(Deps.koin.core) { exclude("org.jetbrains.kotlin") }
+    implementation(Deps.koin.ktor) { exclude("org.jetbrains.kotlin") ; exclude("org.jetbrains.kotlinx") }
 }
 
 tasks {

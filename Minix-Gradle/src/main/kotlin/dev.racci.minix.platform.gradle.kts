@@ -18,7 +18,6 @@ object Deps {
      */
     object minecraft {
         const val authLib = "com.mojang:authlib"
-        const val headLib = "de.erethon:headlib"
         const val acfPaper = "co.aikar:acf-paper"
         const val mcCoroutineAPI = "com.github.shynixn.mccoroutine:mccoroutine-bukkit-api"
         const val mcCoroutineCore = "com.github.shynixn.mccoroutine:mccoroutine-bukkit-core"
