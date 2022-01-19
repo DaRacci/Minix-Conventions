@@ -35,7 +35,7 @@ val detektVersion: String? by project
 val detektFile: ConfigurableFileCollection
     get() {
         val tempFile = org.jetbrains.kotlin.konan.file.createTempFile("detekt")
-        val detektFile: String? by project
+        val detektFile: String? by project.rootProject
         if(detektFile != null) {
             file(detektFile!!).inputStream().use { tempFile.writeBytes(it.readAllBytes()) }
         } else {
@@ -104,7 +104,6 @@ repositories {
 
 dependencies {
     compileOnly(kotlin("stdlib-jdk8", kotlinVersion))
-    implementation("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.17.0")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion")
     implementation(platform("dev.racci:Minix-Platform:$minConventionsVersion"))
 }
