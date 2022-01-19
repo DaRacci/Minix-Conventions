@@ -43,6 +43,7 @@ dependencies {
     implementation(Deps.kotlinx.coroutines)
     implementation(Deps.kotlinx.dateTime)
     implementation(Deps.kotlinx.immutableCollections)
+    implementation(Deps.kotlinx.atomicFU)
 
     implementation(Deps.kotlinx.serialization.kaml)
     implementation(Deps.kotlinx.serialization.json)

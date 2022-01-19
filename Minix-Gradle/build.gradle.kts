@@ -24,6 +24,7 @@ repositories {
 dependencies {
     implementation(kotlin("gradle-plugin", kotlinVersion))
     implementation(kotlin("serialization", kotlinVersion))
+    implementation("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.17.0")
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.6.0")
     implementation("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
     implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0")

@@ -49,8 +49,9 @@ dependencies {
         api("${Deps.kotlinx.coroutines}:1.6.0")
         api("${Deps.kotlinx.dateTime}:0.3.2")
         api("${Deps.kotlinx.immutableCollections}:0.3.5")
+        api("${Deps.kotlinx.atomicFU}:0.17.0")
 
-        api("${Deps.kotlinx.serialization.kaml}:0.39.0")
+        api("${Deps.kotlinx.serialization.kaml}:0.40.0")
         api("${Deps.kotlinx.serialization.json}:1.3.2")
         api("${Deps.kotlinx.serialization.cbor}:1.3.2")
         api("${Deps.kotlinx.serialization.hocon}:1.3.2")
@@ -66,7 +67,7 @@ dependencies {
         api("${Deps.sqlite_jdbc}:3.36.0.3")
 
         api("${Deps.logging.sentry}:6.0.0-alpha.1")
-        api("${Deps.logging.slf4jAPI}:2.0.0-alpha5")
+        api("${Deps.logging.slf4jAPI}:2.0.0-alpha6")
         api("${Deps.logging.kotlinLogger}:2.1.21")
 
         api("${Deps.koin.core}:3.1.5")
@@ -92,7 +93,7 @@ publishing {
 
 tasks {
     dependencyUpdates {
-        this.checkForGradleUpdate = true
+        checkForGradleUpdate = true
     }
 
     build {

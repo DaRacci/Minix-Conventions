@@ -56,6 +56,7 @@ object Deps {
         const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8"
         const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm"
         const val immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable"
+        const val atomicFU = "org.jetbrains.kotlinx:atomicfu"
 
         /**
          * Dependencies for KotlinX Serialization modules.

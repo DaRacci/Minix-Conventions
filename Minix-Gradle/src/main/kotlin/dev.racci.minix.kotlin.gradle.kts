@@ -104,6 +104,7 @@ repositories {
 
 dependencies {
     compileOnly(kotlin("stdlib-jdk8", kotlinVersion))
+    implementation("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.17.0")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion")
     implementation(platform("dev.racci:Minix-Platform:$minConventionsVersion"))
 }
