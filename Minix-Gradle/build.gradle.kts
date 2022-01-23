@@ -12,6 +12,7 @@ plugins {
 val kotlinVersion: String by project
 val runNumber = System.getenv("GITHUB_RUN_NUMBER") ?: "DEV"
 val minixVersion = "${project.ext["version"]}.$runNumber"
+val detektVersion: String by project
 version = "$kotlinVersion-$runNumber"
 
 repositories {
@@ -55,7 +56,8 @@ tasks {
                 mutableMapOf(
                     "minixConventionsVersion" to version,
                     "minixConventionsKotlinVersion" to kotlinVersion,
-                    "minixVersion" to minixVersion
+                    "minixVersion" to minixVersion,
+                    "minixConventionsDetektVersion" to detektVersion,
                 )
             )
         }

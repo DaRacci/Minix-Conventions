@@ -28,10 +28,10 @@ val savedProps = loadPropertiesFromResources("Minix-Conventions.properties")
 val minConventionsVersion: String by savedProps
 val minVersion: String by savedProps
 val minConventionsKotlinVersion: String by savedProps
+val minDetektVersion: String by savedProps
 
 val kotlinVersion: String? by project
 val minixVersion: String? by project
-val detektVersion: String? by project
 val detektFile: ConfigurableFileCollection
     get() {
         val tempFile = org.jetbrains.kotlin.konan.file.createTempFile("detekt")
@@ -104,6 +104,6 @@ repositories {
 
 dependencies {
     compileOnly(kotlin("stdlib-jdk8", kotlinVersion))
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$minDetektVersion")
     implementation(platform("dev.racci:Minix-Platform:$minConventionsVersion"))
 }

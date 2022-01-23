@@ -314,8 +314,8 @@ formatting:
     continuationIndentSize: 8
   MaximumLineLength:
     active: true
-    maxLineLength: 120
-    ignoreBackTickedIdentifier: false
+    maxLineLength: 160
+    ignoreBackTickedIdentifier: true
   ModifierOrdering:
     active: true
     autoCorrect: true
@@ -664,7 +664,7 @@ style:
     excludes: ['**']
   LoopWithTooManyJumpStatements:
     active: true
-    maxJumpCount: 1
+    maxJumpCount: 4
   MagicNumber:
     active: false
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
@@ -691,10 +691,10 @@ style:
     active: true
   MaxLineLength:
     active: true
-    maxLineLength: 120
+    maxLineLength: 160
     excludePackageStatements: true
     excludeImportStatements: true
-    excludeCommentStatements: false
+    excludeCommentStatements: true
   MayBeConst:
     active: true
   ModifierOrder:
