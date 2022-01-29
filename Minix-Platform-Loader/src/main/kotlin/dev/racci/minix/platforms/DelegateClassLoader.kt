@@ -7,18 +7,18 @@ import java.net.URLClassLoader
  */
 class DelegateClassLoader internal constructor(
     private val parents: Collection<ClassLoader>
-): URLClassLoader(arrayOfNulls(0)) {
+) : URLClassLoader(arrayOfNulls(0)) {
 
     @Throws(ClassNotFoundException::class)
     override fun loadClass(
         name: String,
         resolve: Boolean
     ): Class<*> {
-        for(loader in parents) {
+        for (loader in parents) {
             try {
                 return loader.loadClass(name)
-            } catch(ignored: NoClassDefFoundError) {
-            } catch(ignored: ClassNotFoundException) {
+            } catch (ignored: NoClassDefFoundError) {
+            } catch (ignored: ClassNotFoundException) {
             }
         }
         return super.loadClass(name, resolve)

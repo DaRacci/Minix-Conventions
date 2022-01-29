@@ -7,7 +7,6 @@ plugins {
     id("dev.racci.minix.publication")
     id("dev.racci.minix.testing")
     kotlin("plugin.serialization")
-    id("io.gitlab.arturbosch.detekt")
 }
 
 dependencies {
@@ -22,13 +21,13 @@ allprojects {
     tasks.withType<KotlinCompile> {
         kotlinOptions {
             freeCompilerArgs = listOf(
-                "-Xopt-in=kotlin.RequiresOptIn",
+                "-Xopt-in=kotlin.RequiresOptIn"
             )
         }
     }
 
-    if (buildscript.sourceFile?.extension?.toLowerCase() == "kts"
-        && parent != rootProject
+    if (buildscript.sourceFile?.extension?.toLowerCase() == "kts" &&
+        parent != rootProject
     ) {
         generateSequence(parent) { project ->
             project.parent.takeIf { it != rootProject }

@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED", "UNCHECKED_CAST")
+
 package dev.racci.minix.nms.typeinjection
 
 import com.mojang.datafixers.DSL

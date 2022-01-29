@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED", "DEPRECATION")
+
 package dev.racci.minix.nms.entity
 
 import dev.racci.minix.nms.aliases.NMSCreatureType
@@ -20,7 +21,7 @@ val NMSEntityType<*>.typeName: String get() = typeNamespacedKey.key.replaceFirst
 /**
  * The [typeName] of this creature's [NMSEntityType].
  */
-val Entity.typeName get() = toNMS().type.typeName
+val Entity.typeName: String get() = toNMS().type.typeName
 
 /**
  * Gets a namespaced key via the NMS entity type's id.
@@ -49,9 +50,9 @@ val NMSEntityType<*>.creatureType: NMSCreatureType get() = category
 /**
  * The name of the [NMSCreatureType] of this entity.
  */
-val Entity.creatureType get() = toNMS().type.creatureType.name
+val Entity.creatureType: String get() = toNMS().type.creatureType.name
 
 /**
  * Whether this mob's creature type (i.e. monster, creature, water_creature, ambient, misc) is [creatureType].
  */
-fun Entity.isOfCreatureType(creatureType: NMSCreatureType) = toNMS().type.creatureType.name == creatureType.name
+fun Entity.isOfCreatureType(creatureType: NMSCreatureType): Boolean = toNMS().type.creatureType.name == creatureType.name

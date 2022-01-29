@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED")
+
 package dev.racci.minix.nms.aliases
 
 import net.minecraft.sounds.SoundEvent

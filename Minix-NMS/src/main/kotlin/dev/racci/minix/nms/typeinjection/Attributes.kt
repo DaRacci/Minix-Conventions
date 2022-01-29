@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED")
+
 package dev.racci.minix.nms.typeinjection
 
 import dev.racci.minix.nms.aliases.NMSLivingEntity

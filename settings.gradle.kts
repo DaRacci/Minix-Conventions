@@ -1,6 +1,5 @@
 pluginManagement {
     val kotlinVersion: String by settings
-    val detektVersion: String by settings
 
     repositories {
         mavenCentral()
@@ -11,9 +10,7 @@ pluginManagement {
 
     plugins {
         kotlin("plugin.serialization") version kotlinVersion
-        id("io.gitlab.arturbosch.detekt") version detektVersion
     }
-
 }
 
 rootProject.name = "Minix-Conventions"
@@ -23,5 +20,5 @@ includeBuild("Minix-Platform")
 
 include(
     "Minix-NMS",
-    "Minix-Platform-Loader",
+    "Minix-Platform-Loader"
 )

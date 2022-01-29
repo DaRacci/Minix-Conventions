@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED")
+
 package dev.racci.minix.platforms
 
 import org.bukkit.plugin.Plugin
@@ -14,7 +15,7 @@ object MinixPlatforms {
      * Loads a .platform file in the plugin's folder that starts with the platformName.
      */
     @Throws(ReflectiveOperationException::class)
-    fun Plugin.loadPlatform(platformName: String) = load(this, platformName)
+    fun Plugin.loadPlatform(platformName: String): Unit = load(this, platformName)
 
     /**
      * Loads a .platform file in the plugins' folder that starts with the platformName.
@@ -23,9 +24,9 @@ object MinixPlatforms {
     fun load(
         plugin: Plugin,
         platformName: String
-    ) = load(plugin) {
-        it.name.endsWith(".platform")
-            && it.name.startsWith(platformName)
+    ): Unit = load(plugin) {
+        it.name.endsWith(".platform") &&
+            it.name.startsWith(platformName)
     }
 
     /**

@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED")
+
 package dev.racci.minix.nms.entity
 
 import dev.racci.minix.nms.aliases.NMSPlayer
@@ -42,4 +43,4 @@ fun Entity.canReach(
  */
 fun Entity.reachDistance(
     target: Entity
-) = width * width + target.width * target.width
+): Double = width * width + target.width * target.width

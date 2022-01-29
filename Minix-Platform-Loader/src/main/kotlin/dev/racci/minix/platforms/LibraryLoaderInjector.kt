@@ -1,11 +1,12 @@
 @file:Suppress("UNCHECKED_CAST")
+
 package dev.racci.minix.platforms
 
-import sun.misc.Unsafe
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.ServicePriority
 import org.bukkit.plugin.java.PluginClassLoader
+import sun.misc.Unsafe
 import java.io.File
 import java.net.URLClassLoader
 import java.util.function.Function

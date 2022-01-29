@@ -12,7 +12,7 @@ plugins {
 }
 
 val kotlinVersion: String by project
-val runNumber = System.getenv("GITHUB_RUN_NUMBER") ?: "DEV"
+val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "DEV"
 
 version = "$kotlinVersion-$runNumber"
 
@@ -68,7 +68,7 @@ dependencies {
         api("${Deps.valiktor}:0.12.0")
         api("${Deps.hikariCP}:5.0.1")
 
-        api("${Deps.logging.sentry}:6.0.0-alpha.1")
+        api("${Deps.logging.sentry}:6.0.0-alpha.2")
         api("${Deps.logging.slf4jAPI}:2.0.0-alpha6")
         api("${Deps.logging.kotlinLogger}:2.1.21")
 

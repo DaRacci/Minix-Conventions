@@ -1,4 +1,5 @@
 @file:Suppress("NOTHING_TO_INLINE", "UNUSED", "UNCHECKED_CAST")
+
 package dev.racci.minix.nms.aliases
 
 import net.minecraft.server.level.ServerLevel
@@ -73,37 +74,37 @@ inline fun Snowball.toNMS(): NMSSnowball = (this as CraftSnowball).handle
 /**
  * Converts the NMS Entity to its Bukkit Representation.
  */
-inline fun NMSEntity.toBukkit() = bukkitEntity as BukkitEntity
+inline fun NMSEntity.toBukkit(): BukkitEntity = bukkitEntity as BukkitEntity
 
 /**
  * Converts the NMS Living Entity to its Bukkit Representation.
  */
-inline fun NMSLivingEntity.toBukkit() = bukkitEntity as LivingEntity
+inline fun NMSLivingEntity.toBukkit(): LivingEntity = bukkitEntity as LivingEntity
 
 /**
  * Converts the NMS Mob to its Bukkit Representation.
  */
-inline fun NMSMob.toBukkit() = bukkitEntity as Mob
+inline fun NMSMob.toBukkit(): Mob = bukkitEntity as Mob
 
 /**
  * Converts the NMS Pathfinding Mob to its Bukkit Representation.
  */
-inline fun NMSPathfindingMob.toBukkit() = bukkitEntity as Creature
+inline fun NMSPathfindingMob.toBukkit(): Creature = bukkitEntity as Creature
 
 /**
  * Converts the NMS Player to its Bukkit Representation.
  */
-inline fun NMSPlayer.toBukkit() = bukkitEntity as HumanEntity
+inline fun NMSPlayer.toBukkit(): HumanEntity = bukkitEntity as HumanEntity
 
 /**
  * Converts the NMS Server Player to its Bukkit Representation.
  */
-inline fun NMSServerPlayer.toBukkit() = bukkitEntity as Player
+inline fun NMSServerPlayer.toBukkit(): Player = bukkitEntity as Player
 
 /**
  * Converts the NMS Snowball to its Bukkit Representation.
  */
-inline fun NMSSnowball.toBukkit() = bukkitEntity as Snowball
+inline fun NMSSnowball.toBukkit(): Snowball = bukkitEntity as Snowball
 
 /**
  * Casts the Entity to an NMS Representation.
