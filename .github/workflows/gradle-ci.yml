@@ -34,8 +34,11 @@ jobs:
       - name: Build
         run: ./gradlew build
 
-      - name: Run detekt
-        run: ./gradlew detektMain
+      - name: Run Formatter
+        run: ./gradlew ktlintFormat
+
+      - name: Run ktlintCheck
+        run: ./gradlew ktlintCheck
 
       - name: Extract Current Branch name
         shell: bash
