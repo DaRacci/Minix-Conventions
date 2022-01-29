@@ -6,13 +6,13 @@ plugins {
 val copyJar: String? by project
 val pluginPath: String? by project.properties
 
-if(copyJar != "false"
-    && pluginPath != null
+if (copyJar != "false" &&
+    pluginPath != null
 ) {
     tasks {
         register<Copy>("copyJar") {
             from(shadowJar)
-            into(pluginPath!!)
+            into(pluginPath ?: return@register)
             doLast {
                 println("Copied to plugin directory $pluginPath")
             }

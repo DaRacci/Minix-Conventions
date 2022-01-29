@@ -10,9 +10,8 @@ plugins {
 }
 
 val kotlinVersion: String by project
-val runNumber = System.getenv("GITHUB_RUN_NUMBER") ?: "DEV"
-val minixVersion = "${project.ext["version"]}.$runNumber"
-val detektVersion: String by project
+val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "DEV"
+val minixVersion: String = "${project.ext["version"]}.$runNumber"
 version = "$kotlinVersion-$runNumber"
 
 repositories {
@@ -25,10 +24,9 @@ repositories {
 dependencies {
     implementation(kotlin("gradle-plugin", kotlinVersion))
     implementation(kotlin("serialization", kotlinVersion))
-    implementation("org.jetbrains.kotlinx:atomicfu-gradle-plugin:0.17.0")
+    implementation("org.jlleitschuh.gradle:ktlint-gradle:10.2.1")
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.6.0")
     implementation("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
-    implementation("io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.19.0")
     implementation("io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.3")
     implementation(kotlin("stdlib-jdk8", kotlinVersion))
     implementation(kotlin("reflect", kotlinVersion))
@@ -57,7 +55,6 @@ tasks {
                     "minixConventionsVersion" to version,
                     "minixConventionsKotlinVersion" to kotlinVersion,
                     "minixVersion" to minixVersion,
-                    "minixConventionsDetektVersion" to detektVersion,
                 )
             )
         }

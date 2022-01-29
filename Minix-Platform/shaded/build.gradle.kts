@@ -32,10 +32,10 @@ dependencies {
     implementation(Deps.minecraft.authLib)
     implementation(Deps.minecraft.acfPaper)
     implementation(Deps.minecraft.inventoryFramework)
-    implementation(Deps.minecraft.mcCoroutineAPI)
-    implementation(Deps.minecraft.mcCoroutineCore)
 
     implementation(Deps.minecraft.apis.floodgate)
+    implementation(Deps.minecraft.apis.protocolLib)
+    implementation(Deps.minecraft.apis.placeholderAPI)
 
     implementation(Deps.kotlin.stdlib)
     implementation(Deps.kotlin.reflect)
@@ -59,6 +59,8 @@ dependencies {
 
     implementation(Deps.kotlin_statistics)
     implementation(Deps.sqlite_jdbc)
+    implementation(Deps.valiktor)
+    implementation(Deps.hikariCP)
 
     implementation(Deps.logging.sentry)
     implementation(Deps.logging.slf4jAPI)

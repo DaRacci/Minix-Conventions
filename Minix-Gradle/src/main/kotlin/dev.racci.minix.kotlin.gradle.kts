@@ -1,11 +1,13 @@
-import org.jetbrains.kotlin.konan.properties.Properties
 import java.io.FileNotFoundException
+import org.jetbrains.kotlin.konan.properties.Properties
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
+import org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask
 
 plugins {
     java
     kotlin("jvm")
     id("dev.racci.minix.platform")
-    id("io.gitlab.arturbosch.detekt")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 kotlin {
@@ -15,7 +17,7 @@ kotlin {
 }
 
 fun loadPropertiesFromResources(
-    propFileName: String
+    propFileName: String,
 ): Properties {
     val props = Properties()
     val inputStream = javaClass.classLoader!!.getResourceAsStream(propFileName)
@@ -24,55 +26,29 @@ fun loadPropertiesFromResources(
     return props
 }
 
-val savedProps = loadPropertiesFromResources("Minix-Conventions.properties")
+val savedProps: Properties = loadPropertiesFromResources("Minix-Conventions.properties")
 val minConventionsVersion: String by savedProps
 val minVersion: String by savedProps
 val minConventionsKotlinVersion: String by savedProps
-val minDetektVersion: String by savedProps
 
 val kotlinVersion: String? by project
 val minixVersion: String? by project
-val detektFile: ConfigurableFileCollection
-    get() {
-        val tempFile = org.jetbrains.kotlin.konan.file.createTempFile("detekt")
-        val detektFile: String? by project.rootProject
-        if(detektFile != null) {
-            file(detektFile!!).inputStream().use { tempFile.writeBytes(it.readAllBytes()) }
-        } else {
-            val inputStream = javaClass.classLoader!!.getResourceAsStream("detekt.yml")!!
-            inputStream.use { tempFile.writeBytes(it.readAllBytes()) }
-        }
-        return files(tempFile.path)
-    }
 
-detekt {
-    toolVersion = "1.19.0"
-    source = files("src/main/java", "src/main/kotlin")
-    parallel = true
-    config = detektFile
-    buildUponDefaultConfig = false
-    allRules = false
-    disableDefaultRuleSets = false
-    debug = false
-    ignoreFailures = false
-    basePath = projectDir.path
+ktlint {
+    version.set("0.43.2")
+    coloredOutput.set(true)
+    outputToConsole.set(true)
+    enableExperimentalRules.set(true)
+    reporters {
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.HTML)
+        reporter(ReporterType.CHECKSTYLE)
+    }
 }
 
 tasks {
-    withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-        jvmTarget = "16"
-        autoCorrect = true
-        reports {
-            html.required.set(true)
-            html.outputLocation.set(file("build/reports/detekt.html"))
-        }
-    }
-    named("check").configure {
-        setDependsOn(
-            dependsOn.filterNot {
-                it is TaskProvider<*> && it.name == "detektMain"
-            }
-        )
+    withType<BaseKtLintCheckTask> {
+        workerMaxHeapSize.set("1024m")
     }
 }
 
@@ -89,11 +65,11 @@ if (kotlinVersion != null && minConventionsKotlinVersion != kotlinVersion) {
 }
 
 // Let others read kotlinVersion and Minix version published with these conventions
-if(kotlinVersion == null) {
+if (kotlinVersion == null) {
     project.ext["kotlinVersion"] = minConventionsKotlinVersion
 }
 
-if(minixVersion == null) {
+if (minixVersion == null) {
     project.ext["minixVersion"] = minVersion
 }
 
@@ -104,6 +80,5 @@ repositories {
 
 dependencies {
     compileOnly(kotlin("stdlib-jdk8", kotlinVersion))
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$minDetektVersion")
     implementation(platform("dev.racci:Minix-Platform:$minConventionsVersion"))
 }

@@ -38,10 +38,10 @@ dependencies {
         api("${Deps.minecraft.authLib}:2.3.31")
         api("${Deps.minecraft.acfPaper}:0.5.1-SNAPSHOT")
         api("${Deps.minecraft.inventoryFramework}:0.10.4")
-        api("${Deps.minecraft.mcCoroutineAPI}:1.5.0")
-        api("${Deps.minecraft.mcCoroutineCore}:1.5.0")
 
         api("${Deps.minecraft.apis.floodgate}:2.1.1-SNAPSHOT")
+        api("${Deps.minecraft.apis.protocolLib}:4.7.0")
+        api("${Deps.minecraft.apis.placeholderAPI}:2.11.1")
 
         api("${Deps.kotlin.stdlib}:$kotlinVersion")
         api("${Deps.kotlin.reflect}:$kotlinVersion")
@@ -65,6 +65,8 @@ dependencies {
 
         api("${Deps.kotlin_statistics}:1.2.1")
         api("${Deps.sqlite_jdbc}:3.36.0.3")
+        api("${Deps.valiktor}:0.12.0")
+        api("${Deps.hikariCP}:5.0.1")
 
         api("${Deps.logging.sentry}:6.0.0-alpha.1")
         api("${Deps.logging.slf4jAPI}:2.0.0-alpha6")
