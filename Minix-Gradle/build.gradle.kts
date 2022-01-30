@@ -7,6 +7,7 @@ Properties()
 plugins {
     `kotlin-dsl`
     `maven-publish`
+    id("com.github.ben-manes.versions") version "0.41.0"
 }
 
 val kotlinVersion: String by project
@@ -25,9 +26,9 @@ dependencies {
     implementation(kotlin("gradle-plugin", kotlinVersion))
     implementation(kotlin("serialization", kotlinVersion))
     implementation("org.jlleitschuh.gradle:ktlint-gradle:10.2.1")
-    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.6.0")
+    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.6.10")
     implementation("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
-    implementation("io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.3")
+    implementation("io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.4")
     implementation(kotlin("stdlib-jdk8", kotlinVersion))
     implementation(kotlin("reflect", kotlinVersion))
 }

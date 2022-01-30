@@ -49,7 +49,6 @@ dependencies {
         api("${Deps.kotlinx.coroutines}:1.6.0")
         api("${Deps.kotlinx.dateTime}:0.3.2")
         api("${Deps.kotlinx.immutableCollections}:0.3.5")
-        api("${Deps.kotlinx.atomicFU}:0.17.0")
 
         api("${Deps.kotlinx.serialization.kaml}:0.40.0")
         api("${Deps.kotlinx.serialization.json}:1.3.2")
@@ -67,6 +66,7 @@ dependencies {
         api("${Deps.sqlite_jdbc}:3.36.0.3")
         api("${Deps.valiktor}:0.12.0")
         api("${Deps.hikariCP}:5.0.1")
+        api("${Deps.mordant}:2.0.0-beta4")
 
         api("${Deps.logging.sentry}:6.0.0-alpha.2")
         api("${Deps.logging.slf4jAPI}:2.0.0-alpha6")

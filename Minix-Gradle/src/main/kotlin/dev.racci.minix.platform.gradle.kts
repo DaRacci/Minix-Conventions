@@ -56,7 +56,6 @@ object Deps {
         const val coroutines: String = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8"
         const val dateTime: String = "org.jetbrains.kotlinx:kotlinx-datetime-jvm"
         const val immutableCollections: String = "org.jetbrains.kotlinx:kotlinx-collections-immutable"
-        const val atomicFU: String = "org.jetbrains.kotlinx:atomicfu"
 
         /**
          * Dependencies for KotlinX Serialization modules.
@@ -84,6 +83,7 @@ object Deps {
     const val kotlin_statistics: String = "org.nield:kotlin-statistics"
     const val valiktor: String = "org.valiktor:valiktor-core"
     const val hikariCP: String = "com.zaxxer:HikariCP"
+    const val mordant: String = "com.github.ajalt.mordant:mordant"
 
     /**
      * Dependencies for Koin.
@@ -103,8 +103,7 @@ object Deps {
     object racci {
         private const val group = "dev.racci"
         const val minix: String = "$group:Minix"
-        const val minixNMS: String = "$group:Minix-nms"
+        const val minixNMS: String = "$group:Minix-NMS"
         const val minixPlatform: String = "$group:Minix-Platform-Loader"
-        const val raccBacc: String = "$group:RaccBacc"
     }
 }
