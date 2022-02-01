@@ -1,3 +1,4 @@
+
 val serverVersion: String by project
 
 plugins {
@@ -7,6 +8,8 @@ plugins {
 repositories {
     maven("https://papermc.io/repo/repository/maven-public/")
 }
+
+tasks.getByName("assemble").dependsOn("reobfJar")
 
 dependencies {
     paperDevBundle(serverVersion)

@@ -27,7 +27,6 @@ fun loadPropertiesFromResources(
 }
 
 val savedProps: Properties = loadPropertiesFromResources("Minix-Conventions.properties")
-val minConventionsVersion: String by savedProps
 val minVersion: String by savedProps
 val minConventionsKotlinVersion: String by savedProps
 
@@ -38,7 +37,6 @@ ktlint {
     version.set("0.43.2")
     coloredOutput.set(true)
     outputToConsole.set(true)
-    enableExperimentalRules.set(true)
     reporters {
         reporter(ReporterType.PLAIN)
         reporter(ReporterType.HTML)
@@ -47,6 +45,11 @@ ktlint {
 }
 
 tasks {
+
+    compileKotlin {
+        dependsOn(ktlintFormat)
+    }
+
     withType<BaseKtLintCheckTask> {
         workerMaxHeapSize.set("1024m")
     }
@@ -80,5 +83,4 @@ repositories {
 
 dependencies {
     compileOnly(kotlin("stdlib-jdk8", kotlinVersion))
-    implementation(platform("dev.racci:Minix-Platform:$minConventionsVersion"))
 }
