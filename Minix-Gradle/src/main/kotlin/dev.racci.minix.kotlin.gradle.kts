@@ -46,9 +46,9 @@ ktlint {
 
 tasks {
 
-    compileKotlin {
-        dependsOn(ktlintFormat)
-    }
+//    compileKotlin {
+//        dependsOn(ktlintFormat)
+//    }
 
     withType<BaseKtLintCheckTask> {
         workerMaxHeapSize.set("1024m")

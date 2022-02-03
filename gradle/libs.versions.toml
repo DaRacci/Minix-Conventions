@@ -1,0 +1,63 @@
+[versions]
+adventure = "4.10.0-SNAPSHOT"
+kotlin = "1.6.10"
+serialization = "1.3.2"
+exposed = "0.37.3"
+ktor = "1.6.7"
+koin = "3.1.5"
+
+[libraries]
+adventure-api = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
+adventure-kotlin = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
+adventure-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
+
+minecraft-authLib = "com.mojang:authlib:2.3.31"
+minecraft-acfPaper = "co.aikar:acf-paper:0.5.1-SNAPSHOT"
+minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.4"
+
+minecraft-api-floodgate = "org.geysermc.floodgate:api:2.1.1-SNAPSHOT"
+minecraft-api-protoclLib = "com.comphenix.protocol:ProtocolLib:4.7.0"
+minecraft-api-placeholderAPI = "me.clip:placeholderapi:2.11.1"
+minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:5.15.2"
+
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+
+kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.0"
+kotlinx-dateTime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.2"
+kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
+
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor", version.ref = "serialization" }
+kotlinx-serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon", version.ref = "serialization" }
+kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "serialization" }
+kotlinx-serialization-properties = { module = "org.jetbrains.kotlinx:kotlinx-serialization-properties", version.ref = "serialization" }
+kotlinx-serialization-kaml = "com.charleskorn.kaml:kaml:0.40.0"
+
+exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+exposed-dateTime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
+
+hikariCP = "com.zaxxer:HikariCP:5.0.1"
+kotlin-statistics = "org.nield:kotlin-statistics:1.2.1"
+valiktor = "org.valiktor:valiktor-core:0.12.0"
+mordant = "com.github.ajalt.mordant:mordant:2.0.0-beta4"
+caffeine = "com.github.ben-manes.caffeine:caffeine:3.0.5"
+
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+koin-test-junit5 = { module = "io.insert-koin:koin-test-junit5", version.ref = "koin" }
+koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
+
+logging-sentry = "io.sentry:sentry:6.0.0-alpha.2"
+logging-slf4JAPI = "org.slf4j:slf4j-api:2.0.0-alpha6"
+logging-kotlinLogging = "io.github.microutils:kotlin-logging-jvm:2.1.21"
+
+#minix-API = "dev.racci:Minix:"
+#minix-NMS = "dev.racci:Minix-NMS:"
+#minix-Loader = "dev.racci:Minix-Platform-Loader:"
+
+[bundles]
+kyori = ["adventure-api", "adventure-kotlin", "adventure-minimessage"]
+minecraft = ["minecraft-authLib", "minecraft-acfPaper", "minecraft-inventoryFramework"]
+exposed = ["exposed-core", "exposed-dao", "exposed-dateTime", "hikariCP"]

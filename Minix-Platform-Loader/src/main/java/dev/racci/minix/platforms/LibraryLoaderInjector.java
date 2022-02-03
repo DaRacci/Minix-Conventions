@@ -26,18 +26,18 @@ public class LibraryLoaderInjector {
     static void inject(Plugin plugin, File injectFile) throws ReflectiveOperationException {
         // Read library loader
         PluginClassLoader pluginClassLoader = (PluginClassLoader) plugin.getClass().getClassLoader();
-        var libraryLoader = getLibraryClassLoaderFor(pluginClassLoader);
+        ClassLoader libraryLoader = getLibraryClassLoaderFor(pluginClassLoader);
 
         // Get or load a service which extends the built-in java Function class, so it can be shared across classloaders
-        var services = Bukkit.getServicesManager();
+        ServicesManager services = Bukkit.getServicesManager();
         @SuppressWarnings("unchecked")
-        var platformProvider = (Optional<Function<File, URLClassLoader>>) services.getKnownServices().stream()
-                .filter(it -> it.getName().equals(PlatformProvider.class.getName()))
+        Optional<Function<File, URLClassLoader>> platformProvider = (Optional<Function<File, URLClassLoader>>) services.getKnownServices().stream()
+                .filter(it -> it.isAssignableFrom(PlatformProvider.class))
                 .map(services::load)
                 .findFirst();
 
-        var platformLoader = platformProvider.orElseGet(() -> {
-            var service = new PlatformProviderImpl();
+        URLClassLoader platformLoader = platformProvider.orElseGet(() -> {
+            PlatformProviderImpl service = new PlatformProviderImpl();
             services.register(PlatformProvider.class, service, plugin, ServicePriority.Low);
             return service;
         }).apply(injectFile);

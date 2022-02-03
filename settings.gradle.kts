@@ -1,3 +1,4 @@
+enableFeaturePreview("VERSION_CATALOGS")
 pluginManagement {
     val kotlinVersion: String by settings
 
@@ -9,6 +10,7 @@ pluginManagement {
     }
 
     plugins {
+        kotlin("jvm") version kotlinVersion
         kotlin("plugin.serialization") version kotlinVersion
     }
 }
@@ -16,9 +18,10 @@ pluginManagement {
 rootProject.name = "Minix-Conventions"
 
 includeBuild("Minix-Gradle")
-includeBuild("Minix-Platform")
 
 include(
     "Minix-NMS",
-    "Minix-Platform-Loader"
+    "Minix-Platform-Loader",
+    "Minix-Catalog-Shaded",
+    "Minix-Catalog"
 )

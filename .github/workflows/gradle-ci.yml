@@ -61,7 +61,9 @@ jobs:
         with:
           filters: |
             platform:
-              - 'Minix-Platform/**'
+              - 'Minix-Catalog/**'
+              - 'Minix-Catalog-Shaded/**'
+              - '**/libs.versions.toml'
 
       - name: Get version from gradle
         if: steps.changes.outputs.platform == 'true'
@@ -79,4 +81,4 @@ jobs:
           prerelease: false
           automatic_release_tag: v${{ steps.extract_version.outputs.version }}
           files: |
-            Minix-Platform/shaded/build/libs/*.platform
+            Minix-Catalog-Shaded/build/libs/*.platform

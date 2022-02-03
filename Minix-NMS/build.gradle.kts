@@ -8,4 +8,5 @@ plugins {
 
 dependencies {
     api(project(":"))
+    compileOnly(libs.kotlinx.serialization.json)
 }

@@ -27,7 +27,7 @@ Make sure to use the shadowJar plugin to shade this dependency.
 ```kotlin
 override suspend fun handleLoad() {
     // Load a .platform file in the plugin folder that starts with "racci"
-    MinixPlatforms.load(this, "racci")
+    MinixPlatforms.load(this, "minix")
     
     // Alternatively, write your own predicate to check which file to load (remember you can't use Kotlin stdlib until after this line)
     MinixPlatforms.load(this) { file -> Boolean }
