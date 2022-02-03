@@ -1,4 +1,3 @@
-include("platform")
 pluginManagement {
     repositories {
         mavenCentral()

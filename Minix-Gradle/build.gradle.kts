@@ -7,6 +7,7 @@ Properties()
 plugins {
     `kotlin-dsl`
     `maven-publish`
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
     id("com.github.ben-manes.versions") version "0.41.0"
 }
 

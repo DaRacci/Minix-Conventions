@@ -5,6 +5,7 @@ plugins {
     id("dev.racci.minix.purpurmc")
     id("dev.racci.minix.publication")
     kotlin("plugin.serialization")
+    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
 }
 
 subprojects {
@@ -36,6 +37,10 @@ tasks {
 
     publishToMavenLocal {
         dependsOn(gradle.includedBuilds.map { it.task(":publishToMavenLocal") })
+    }
+
+    ktlintFormat {
+        dependsOn(gradle.includedBuilds.map { it.task(":ktlintFormat") })
     }
 
     build {

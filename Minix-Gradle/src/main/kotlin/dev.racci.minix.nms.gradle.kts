@@ -9,7 +9,7 @@ repositories {
     maven("https://papermc.io/repo/repository/maven-public/")
 }
 
-//tasks.getByName("assemble").dependsOn("reobfJar")
+tasks.getByName("assemble").dependsOn("reobfJar")
 
 dependencies {
     paperDevBundle(serverVersion)

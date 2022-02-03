@@ -1,12 +1,12 @@
-import java.io.FileNotFoundException
+
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask
+import java.io.FileNotFoundException
 
 plugins {
     java
     kotlin("jvm")
-    id("dev.racci.minix.platform")
     id("org.jlleitschuh.gradle.ktlint")
 }
 
@@ -46,9 +46,9 @@ ktlint {
 
 tasks {
 
-//    compileKotlin {
-//        dependsOn(ktlintFormat)
-//    }
+    compileKotlin {
+        dependsOn(ktlintFormat)
+    }
 
     withType<BaseKtLintCheckTask> {
         workerMaxHeapSize.set("1024m")
