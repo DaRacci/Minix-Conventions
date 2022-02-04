@@ -6,11 +6,11 @@ plugins {
 }
 
 repositories {
-    maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://repo.purpurmc.org/snapshots")
 }
 
 tasks.getByName("assemble").dependsOn("reobfJar")
 
 dependencies {
-    paperDevBundle(serverVersion)
+    paperweightDevBundle("org.purpurmc.purpur", serverVersion)
 }
