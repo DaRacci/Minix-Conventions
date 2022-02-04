@@ -36,6 +36,7 @@ kotlinx-serialization-kaml = "com.charleskorn.kaml:kaml:0.40.0"
 
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
 exposed-dateTime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
 
 hikariCP = "com.zaxxer:HikariCP:5.0.1"
@@ -60,4 +61,4 @@ logging-kotlinLogging = "io.github.microutils:kotlin-logging-jvm:2.1.21"
 [bundles]
 kyori = ["adventure-api", "adventure-kotlin", "adventure-minimessage"]
 minecraft = ["minecraft-authLib", "minecraft-acfPaper", "minecraft-inventoryFramework"]
-exposed = ["exposed-core", "exposed-dao", "exposed-dateTime", "hikariCP"]
+exposed = ["exposed-core", "exposed-dao", "exposed-jdbc", "exposed-dateTime", "hikariCP"]
