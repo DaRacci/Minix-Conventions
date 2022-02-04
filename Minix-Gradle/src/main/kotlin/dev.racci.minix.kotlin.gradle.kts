@@ -1,4 +1,5 @@
 
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask
@@ -46,8 +47,9 @@ ktlint {
 
 tasks {
 
-    compileKotlin {
+    withType<KotlinCompile> {
         dependsOn(ktlintFormat)
+        kotlinOptions.jvmTarget = "17"
     }
 
     withType<BaseKtLintCheckTask> {
