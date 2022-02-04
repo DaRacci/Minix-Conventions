@@ -11,8 +11,7 @@ if (copyJar != "false" &&
 ) {
     tasks {
         register<Copy>("copyJar") {
-//            from(if (tasks.findByName("reobfJar") != null) getByName("reobfJar") else shadowJar)
-            from(shadowJar)
+            from(if (tasks.findByName("reobfJar") != null) getByName("reobfJar") else shadowJar)
             into(pluginPath ?: return@register)
             doLast {
                 println("Copied to plugin directory $pluginPath")

@@ -20,7 +20,7 @@ for Minecraft, gradle, publishing, testing and more.
 
 [![Minix-NMS](https://img.shields.io/static/v1?&label=Minix&message=NMS&color=purple&style=for-the-badge)](https://github.com/DaRacci/Minix-Conventions/tree/main/Minix-NMS)
 
-[![Minix-Platform](https://img.shields.io/static/v1?&label=Minix&message=Platform&color=purple&style=for-the-badge)](https://github.com/DaRacci/Minix-Conventions/tree/main/Minix-Platform)
+[comment]: <> ([![Minix-Platform]&#40;https://img.shields.io/static/v1?&label=Minix&message=Platform&color=purple&style=for-the-badge&#41;]&#40;https://github.com/DaRacci/Minix-Conventions/tree/main/Minix-Platform&#41;)
 
 [![Minix-Gradle](https://img.shields.io/static/v1?&label=Minix&message=Gradle&color=purple&style=for-the-badge)](https://github.com/DaRacci/Minix-Conventions/tree/main/Minix-Gradle)
 
