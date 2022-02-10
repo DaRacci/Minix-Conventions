@@ -6,7 +6,8 @@ plugins {
 val copyJar: String? by project
 val pluginPath: String? by project.properties
 
-if (copyJar != "false" &&
+if (System.getenv("CI") != "true" &&
+    copyJar != "false" &&
     pluginPath != null
 ) {
     tasks {
