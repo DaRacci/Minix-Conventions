@@ -16,6 +16,11 @@ val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "DEV"
 val minixVersion: String = "${project.ext["version"]}.$runNumber"
 version = "$kotlinVersion-$runNumber"
 
+val javaComponent = components["java"] as AdhocComponentWithVariants
+javaComponent.withVariantsFromConfiguration(configurations["runtimeElements"]) {
+    mapToOptional()
+}
+
 repositories {
     mavenCentral()
     gradlePluginPortal()
@@ -29,7 +34,7 @@ dependencies {
     implementation("org.jlleitschuh.gradle:ktlint-gradle:10.2.1")
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.6.10")
     implementation("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
-    implementation("io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.4") { isTransitive = false }
+    implementation("io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.4")
     implementation(kotlin("stdlib-jdk8", kotlinVersion))
     implementation(kotlin("reflect", kotlinVersion))
 }
