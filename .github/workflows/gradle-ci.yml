@@ -34,12 +34,6 @@ jobs:
       - name: Build
         run: ./gradlew build
 
-      - name: Run Formatter
-        run: ./gradlew ktlintFormat
-
-      - name: Run ktlintCheck
-        run: ./gradlew ktlintCheck
-
       - name: Extract Current Branch name
         shell: bash
         # bash pattern expansion to grab branch name without slashes
