@@ -50,7 +50,10 @@ tasks {
 
     withType<KotlinCompile> {
         dependsOn(ktlintFormat)
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions {
+            jvmTarget = "17"
+            freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
+        }
     }
 
     withType<BaseKtLintCheckTask> {
