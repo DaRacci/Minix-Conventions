@@ -38,6 +38,7 @@ ktlint {
     version.set("0.43.2")
     coloredOutput.set(true)
     outputToConsole.set(true)
+    enableExperimentalRules.set(false)
     reporters {
         reporter(ReporterType.PLAIN)
         reporter(ReporterType.HTML)
