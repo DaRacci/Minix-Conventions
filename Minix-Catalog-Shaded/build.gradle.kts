@@ -26,8 +26,9 @@ dependencies {
     implementation(libs.adventure.minimessage)
 
     implementation(libs.minecraft.authLib)
-    implementation(libs.minecraft.acfPaper)
+    implementation(libs.minecraft.commandAPI)
     implementation(libs.minecraft.inventoryFramework)
+    implementation(libs.minecraft.bstats)
 
     implementation(libs.minecraft.api.floodgate)
     implementation(libs.minecraft.api.protoclLib)
