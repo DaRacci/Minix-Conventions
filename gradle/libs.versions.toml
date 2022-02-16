@@ -10,10 +10,13 @@ koin = "3.1.5"
 adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
 adventure-kotlin = { module = "net.kyori:adventure-extra-kotlin", version.ref = "adventure" }
 adventure-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
+adventure-platform-bukkit = "net.kyori:adventure-platform-bukkit:4.0.1"
 
+minecraft-minix = "dev.racci:Minix:1.2.2"
 minecraft-authLib = "com.mojang:authlib:2.3.31"
-minecraft-acfPaper = "co.aikar:acf-paper:0.5.1-SNAPSHOT"
+minecraft-commandAPI = "dev.jorel.CommandAPI:commandapi-shade:6.5.3"
 minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.4"
+minecraft-bstats = "org.bstats:bstats-bukkit:3.0.0"
 
 minecraft-api-floodgate = "org.geysermc.floodgate:api:2.1.1-SNAPSHOT"
 minecraft-api-protoclLib = "com.comphenix.protocol:ProtocolLib:4.7.0"
@@ -22,6 +25,7 @@ minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:5.25.7"
 
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
 kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.0"
 kotlinx-dateTime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.2"
@@ -54,11 +58,13 @@ logging-sentry = "io.sentry:sentry:6.0.0-alpha.2"
 logging-slf4JAPI = "org.slf4j:slf4j-api:2.0.0-alpha6"
 logging-kotlinLogging = "io.github.microutils:kotlin-logging-jvm:2.1.21"
 
-#minix-API = "dev.racci:Minix:"
-#minix-NMS = "dev.racci:Minix-NMS:"
-#minix-Loader = "dev.racci:Minix-Platform-Loader:"
+testing-junit5 = "org.junit.jupiter:junit-jupiter:5.8.2"
+testing-strikt = "io.strikt:strikt-core:0.34.1"
 
 [bundles]
+kotlin = ["kotlin-stdlib", "kotlin-reflect"]
+kotlinx = ["kotlinx-coroutines", "kotlinx-dateTime", "kotlinx-immutableCollections"]
 kyori = ["adventure-api", "adventure-kotlin", "adventure-minimessage"]
 minecraft = ["minecraft-authLib", "minecraft-acfPaper", "minecraft-inventoryFramework"]
 exposed = ["exposed-core", "exposed-dao", "exposed-jdbc", "exposed-dateTime", "hikariCP"]
+testing = ["testing-junit5", "testing-strikt", "koin-test-junit5"]
