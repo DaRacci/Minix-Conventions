@@ -42,7 +42,7 @@ exposed-dateTime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", v
 hikariCP = "com.zaxxer:HikariCP:5.0.1"
 kotlin-statistics = "org.nield:kotlin-statistics:1.2.1"
 valiktor = "org.valiktor:valiktor-core:0.12.0"
-mordant = "com.github.ajalt.mordant:mordant-jvm:2.0.0-beta4"
+mordant = "com.github.ajalt.mordant:mordant-jvm:2.0.0-beta4.37-SNAPSHOT"
 caffeine = "com.github.ben-manes.caffeine:caffeine:3.0.5"
 
 koin-core = { module = "io.insert-koin:koin-core-jvm", version.ref = "koin" }
