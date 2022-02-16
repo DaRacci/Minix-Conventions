@@ -6,7 +6,7 @@ plugins {
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.8.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("io.kotest:kotest-runner-junit5:5.0.0")
+    testImplementation("io.kotest:kotest-runner-junit5:5.1.0")
     testImplementation("io.kotest:kotest-property:5.1.0")
     testImplementation("io.mockk:mockk:1.12.2")
     testImplementation("io.insert-koin:koin-test:3.1.5")
