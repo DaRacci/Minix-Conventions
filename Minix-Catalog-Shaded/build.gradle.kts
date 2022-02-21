@@ -2,7 +2,7 @@ plugins {
     id("dev.racci.minix.kotlin")
     id("dev.racci.minix.copyjar")
     id("com.github.johnrengelman.shadow")
-    id("com.github.ben-manes.versions") version "0.41.0"
+    id("com.github.ben-manes.versions") version "0.42.0"
 }
 
 val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "DEV"
