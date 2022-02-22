@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val serverVersion: String by project
+val useTentacles: Boolean? by project
 
 plugins {
     java
@@ -15,13 +16,13 @@ repositories {
 
 dependencies {
     val (major, minor) = serverVersion.split('.').take(2).map { it.toInt() }
-    // Use old purpurmc groupId with versions below 1.18
-    val purpurGroup = if (major == 1 && minor < 18) {
-        "net.pl3x.purpur"
-    } else "org.purpurmc.purpur"
-
-    compileOnly("$purpurGroup:purpur-api:$serverVersion")
-//    implementation("net.minecrell.plugin-yml.bukkit:0.5.1")
+    val groupAndModule = if (useTentacles == true) {
+        "dev.racci.tentacles:tentacles-api"
+    } else {
+        // Use old purpurmc groupId with versions below 1.18
+        "${if (major == 1 && minor < 18) "net.pl3x.purpur" else "org.purpurmc.purpur"}:purpur-api"
+    }
+    compileOnly("$groupAndModule:$serverVersion")
 }
 
 tasks {
