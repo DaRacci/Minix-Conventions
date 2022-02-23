@@ -1,6 +1,6 @@
 
 val serverVersion: String by project
-val useTentacles: Boolean? by project
+val useTentacles: String? by project
 
 plugins {
     id("io.papermc.paperweight.userdev")
@@ -15,7 +15,7 @@ repositories {
 tasks.getByName("assemble").dependsOn("reobfJar")
 
 dependencies {
-    if (useTentacles == true) {
+    if (useTentacles.toBoolean()) {
         paperDevBundle("dev.racci.tentacles", serverVersion)
     } else paperweightDevBundle("org.purpurmc.purpur", serverVersion)
 }

@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 val serverVersion: String by project
-val useTentacles: Boolean? by project
+val useTentacles: String? by project
 
 plugins {
     java
@@ -16,7 +16,7 @@ repositories {
 
 dependencies {
     val (major, minor) = serverVersion.split('.').take(2).map { it.toInt() }
-    val groupAndModule = if (useTentacles == true) {
+    val groupAndModule = if (useTentacles.toBoolean()) {
         "dev.racci.tentacles:tentacles-api"
     } else {
         // Use old purpurmc groupId with versions below 1.18
