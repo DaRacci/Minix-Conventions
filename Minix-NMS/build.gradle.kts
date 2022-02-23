@@ -10,3 +10,12 @@ dependencies {
     api(project(":"))
     compileOnly(libs.kotlinx.serialization.json)
 }
+
+artifacts {
+    apiElements(file("build/libs/${project.name}-${project.version}.jar"))
+    runtimeElements(file("build/libs/${project.name}-${project.version}.jar"))
+}
+
+tasks.getByName("generateMetadataFileForMavenPublication") {
+    dependsOn(tasks.reobfJar)
+}
