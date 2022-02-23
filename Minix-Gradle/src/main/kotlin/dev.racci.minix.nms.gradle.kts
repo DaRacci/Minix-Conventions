@@ -16,6 +16,6 @@ tasks.getByName("assemble").dependsOn("reobfJar")
 
 dependencies {
     if (useTentacles.toBoolean()) {
-        paperDevBundle("dev.racci.tentacles", serverVersion)
+        paperweightDevBundle("dev.racci.tentacles", serverVersion)
     } else paperweightDevBundle("org.purpurmc.purpur", serverVersion)
 }
