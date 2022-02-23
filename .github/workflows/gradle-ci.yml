@@ -32,7 +32,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build
-        run: ./gradlew build
+        run: ./gradlew build --info
 
       - name: Extract Current Branch name
         shell: bash
@@ -47,7 +47,7 @@ jobs:
           path: build/libs
 
       - name: Publish to repo
-        run: ./gradlew publish -PRacciRepoUsername=${{ secrets.REPO_PUBLISH_USERNAME }} -PRacciRepoPassword=${{ secrets.REPO_PUBLISH_PASSWORD }}
+        run: ./gradlew publish -PRacciRepoUsername=${{ secrets.REPO_PUBLISH_USERNAME }} -PRacciRepoPassword=${{ secrets.REPO_PUBLISH_PASSWORD }} --info
 
       - name: Check whether the gradle platform has been updated
         uses: dorny/paths-filter@v2
