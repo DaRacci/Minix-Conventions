@@ -22,8 +22,8 @@ configurations.all {
 }
 
 artifacts {
-    apiElements(tasks.jar.get().outputs.files.singleFile)
-    runtimeElements(tasks.jar.get().outputs.files.singleFile)
+    apiElements(project.buildDir.resolve("libs").resolve("${project.name}-${rootProject.version}.jar"))
+    runtimeElements(project.buildDir.resolve("libs").resolve("${project.name}-${rootProject.version}.jar"))
 }
 
 dependencies {
