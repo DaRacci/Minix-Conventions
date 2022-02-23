@@ -3,6 +3,7 @@ val serverVersion: String by project
 val useTentacles: String? by project
 
 plugins {
+    java
     id("io.papermc.paperweight.userdev")
 }
 
@@ -13,6 +14,17 @@ repositories {
 }
 
 tasks.getByName("assemble").dependsOn("reobfJar")
+
+configurations.all {
+    artifacts.removeIf {
+        it.file.name == tasks.jar.get().outputs.files.singleFile.name
+    }
+}
+
+artifacts {
+    apiElements(tasks.jar.get().outputs.files.singleFile)
+    runtimeElements(tasks.jar.get().outputs.files.singleFile)
+}
 
 dependencies {
     if (useTentacles.toBoolean()) {
