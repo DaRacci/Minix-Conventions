@@ -10,7 +10,3 @@ dependencies {
     api(project(":"))
     compileOnly(libs.kotlinx.serialization.json)
 }
-
-tasks {
-    withType<GenerateModuleMetadata> { dependsOn(reobfJar) }
-}

@@ -1,3 +1,4 @@
+import io.papermc.paperweight.tasks.RemapJar
 
 val serverVersion: String by project
 val useTentacles: String? by project
@@ -14,19 +15,33 @@ repositories {
     maven("https://papermc.io/repo/repository/maven-public/")
 }
 
-tasks.getByName("assemble").dependsOn("reobfJar")
+tasks {
+    named("assemble") { dependsOn(reobfJar) }
 
-tasks.reobfJar {
-    doLast {
-        configurations.all {
-            artifacts.removeIf {
-                it.file == inputJar.orNull?.asFile
+    withType<GenerateModuleMetadata> { dependsOn(reobfJar) }
+
+    withType<RemapJar> {
+        doLast {
+            try {
+                configurations.all {
+                    artifacts.removeIf {
+                        it.file == inputJar.orNull?.asFile
+                    }
+                }
+            } catch (e: Exception) {
+                println("Failed to remove input jar from configuration")
             }
-        }
-        if (removeDev.toBoolean()) { inputJar.orNull?.asFile?.delete() }
-        artifacts {
-            apiElements(outputJar)
-            runtimeElements(outputJar)
+            if (removeDev.toBoolean()) {
+                inputJar.orNull?.asFile?.delete()
+            }
+            try {
+                artifacts {
+                    apiElements(outputJar)
+                    runtimeElements(outputJar)
+                }
+            } catch (e: Exception) {
+                println("Failed to add output jar to artifacts")
+            }
         }
     }
 }
