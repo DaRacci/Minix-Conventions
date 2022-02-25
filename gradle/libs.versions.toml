@@ -21,7 +21,7 @@ minecraft-bstats = "org.bstats:bstats-bukkit:3.0.0"
 minecraft-api-floodgate = "org.geysermc.floodgate:api:2.1.1-SNAPSHOT"
 minecraft-api-protoclLib = "com.comphenix.protocol:ProtocolLib:4.7.0"
 minecraft-api-placeholderAPI = "me.clip:placeholderapi:2.11.1"
-minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:5.27.0"
+minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:5.25.7"
 
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
