@@ -1,6 +1,7 @@
 
 val serverVersion: String by project
 val useTentacles: String? by project
+val removeDev: String? by project
 
 plugins {
     java
@@ -15,15 +16,19 @@ repositories {
 
 tasks.getByName("assemble").dependsOn("reobfJar")
 
-configurations.all {
-    artifacts.removeIf {
-        it.file.name == tasks.jar.get().outputs.files.singleFile.name
+tasks.reobfJar {
+    doLast {
+        configurations.all {
+            artifacts.removeIf {
+                it.file == inputJar.orNull?.asFile
+            }
+        }
+        if (removeDev.toBoolean()) { inputJar.orNull?.asFile?.delete() }
+        artifacts {
+            apiElements(outputJar)
+            runtimeElements(outputJar)
+        }
     }
-}
-
-artifacts {
-    apiElements(project.buildDir.resolve("libs").resolve("${project.name}-${rootProject.version}.jar"))
-    runtimeElements(project.buildDir.resolve("libs").resolve("${project.name}-${rootProject.version}.jar"))
 }
 
 dependencies {
