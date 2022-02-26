@@ -13,8 +13,8 @@ repositories {
     maven("https://papermc.io/repo/repository/maven-public/")
 }
 
-//var publish: Boolean = false
-//project.afterEvaluate {
+// var publish: Boolean = false
+// project.afterEvaluate {
 //    publish = try {
 //        publishing.publications {
 //            println("Creating temp publication")
@@ -27,7 +27,7 @@ repositories {
 //        println("Publishing is disabled")
 //        false
 //    }
-//}
+// }
 
 tasks {
     named("assemble") { dependsOn(reobfJar) }
