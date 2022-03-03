@@ -12,7 +12,7 @@ adventure-kotlin = { module = "net.kyori:adventure-extra-kotlin", version.ref = 
 adventure-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "adventure" }
 adventure-platform-bukkit = "net.kyori:adventure-platform-bukkit:4.1.0"
 
-minecraft-minix = "dev.racci:Minix:2.0.1"
+minecraft-minix = "dev.racci:Minix:2.0.6"
 minecraft-authLib = "com.mojang:authlib:2.3.31"
 minecraft-commandAPI = "dev.jorel.CommandAPI:commandapi-shade:6.5.3"
 minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.5"
