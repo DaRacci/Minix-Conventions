@@ -41,7 +41,7 @@ jobs:
         id: ref
 
       - name: Upload build
-        uses: actions/upload-artifact@v2.3.1
+        uses: actions/upload-artifact@v3
         with:
           name: build-artifacts-${{ steps.ref.outputs.branch }}
           path: build/libs
