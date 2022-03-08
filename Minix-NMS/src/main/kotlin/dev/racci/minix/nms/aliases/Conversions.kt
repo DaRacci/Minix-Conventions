@@ -5,14 +5,14 @@ package dev.racci.minix.nms.aliases
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.Level
-import org.bukkit.craftbukkit.v1_18_R1.CraftWorld
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftCreature
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftEntity
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftHumanEntity
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftLivingEntity
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftMob
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer
-import org.bukkit.craftbukkit.v1_18_R1.entity.CraftSnowball
+import org.bukkit.craftbukkit.v1_18_R2.CraftWorld
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftCreature
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftEntity
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftHumanEntity
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftLivingEntity
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftMob
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftSnowball
 import org.bukkit.entity.Creature
 import org.bukkit.entity.HumanEntity
 import org.bukkit.entity.LivingEntity
@@ -74,7 +74,7 @@ inline fun Snowball.toNMS(): NMSSnowball = (this as CraftSnowball).handle
 /**
  * Converts the NMS Entity to its Bukkit Representation.
  */
-inline fun NMSEntity.toBukkit(): BukkitEntity = bukkitEntity as BukkitEntity
+inline fun NMSEntity.toBukkit(): BukkitEntity = bukkitEntity
 
 /**
  * Converts the NMS Living Entity to its Bukkit Representation.
@@ -94,12 +94,12 @@ inline fun NMSPathfindingMob.toBukkit(): Creature = bukkitEntity as Creature
 /**
  * Converts the NMS Player to its Bukkit Representation.
  */
-inline fun NMSPlayer.toBukkit(): HumanEntity = bukkitEntity as HumanEntity
+inline fun NMSPlayer.toBukkit(): HumanEntity = bukkitEntity
 
 /**
  * Converts the NMS Server Player to its Bukkit Representation.
  */
-inline fun NMSServerPlayer.toBukkit(): Player = bukkitEntity as Player
+inline fun NMSServerPlayer.toBukkit(): Player = bukkitEntity
 
 /**
  * Converts the NMS Snowball to its Bukkit Representation.
