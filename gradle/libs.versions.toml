@@ -21,15 +21,15 @@ cloud-kotlin-coroutines = { module = "cloud.commandframework:cloud-kotlin-corout
 cloud-kotlin-coroutinesAnnotations = { module = "cloud.commandframework:cloud-kotlin-coroutines-annotations", version.ref = "cloud" }
 cloud-kotlin-extensions = { module = "cloud.commandframework:cloud-kotlin-extensions", version.ref = "cloud" }
 
-cloud-minecraft-brigadier = { module = "cloud.commandframework:cloud-minecraft-brigadier", version.ref = "cloud" }
-cloud-minecraft-bukkit = { module = "cloud.commandframework:cloud-minecraft-bukkit", version.ref = "cloud" }
-cloud-minecraft-bungee = { module = "cloud.commandframework:cloud-minecraft-bungee", version.ref = "cloud" }
-cloud-minecraft-cloudburst = { module = "cloud.commandframework:cloud-minecraft-cloudburst", version.ref = "cloud" }
-cloud-minecraft-fabric = { module = "cloud.commandframework:cloud-minecraft-fabric", version.ref = "cloud" }
-cloud-minecraft-extras = { module = "cloud.commandframework:cloud-minecraft-extras", version.ref = "cloud" }
-cloud-minecraft-paper = { module = "cloud.commandframework:cloud-minecraft-paper", version.ref = "cloud" }
-cloud-minecraft-sponge7 = { module = "cloud.commandframework:cloud-minecraft-sponge7", version.ref = "cloud" }
-cloud-minecraft-velocity = { module = "cloud.commandframework:cloud-minecraft-velocity", version.ref = "cloud" }
+cloud-minecraft-brigadier = { module = "cloud.commandframework:cloud-brigadier", version.ref = "cloud" }
+cloud-minecraft-bukkit = { module = "cloud.commandframework:cloud-bukkit", version.ref = "cloud" }
+cloud-minecraft-bungee = { module = "cloud.commandframework:cloud-bungee", version.ref = "cloud" }
+cloud-minecraft-cloudburst = { module = "cloud.commandframework:cloud-cloudburst", version.ref = "cloud" }
+cloud-minecraft-fabric = { module = "cloud.commandframework:cloud-fabric", version.ref = "cloud" }
+cloud-minecraft-extras = { module = "cloud.commandframework:cloud-extras", version.ref = "cloud" }
+cloud-minecraft-paper = { module = "cloud.commandframework:cloud-paper", version.ref = "cloud" }
+cloud-minecraft-sponge7 = { module = "cloud.commandframework:cloud-sponge7", version.ref = "cloud" }
+cloud-minecraft-velocity = { module = "cloud.commandframework:cloud-velocity", version.ref = "cloud" }
 
 minecraft-minix = "dev.racci:Minix:2.3.1"
 minecraft-authLib = "com.mojang:authlib:2.3.31"
