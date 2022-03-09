@@ -26,7 +26,7 @@ cloud-minecraft-bukkit = { module = "cloud.commandframework:cloud-bukkit", versi
 cloud-minecraft-bungee = { module = "cloud.commandframework:cloud-bungee", version.ref = "cloud" }
 cloud-minecraft-cloudburst = { module = "cloud.commandframework:cloud-cloudburst", version.ref = "cloud" }
 cloud-minecraft-fabric = { module = "cloud.commandframework:cloud-fabric", version.ref = "cloud" }
-cloud-minecraft-extras = { module = "cloud.commandframework:cloud-extras", version.ref = "cloud" }
+cloud-minecraft-extras = { module = "cloud.commandframework:cloud-minecraft-extras", version.ref = "cloud" }
 cloud-minecraft-paper = { module = "cloud.commandframework:cloud-paper", version.ref = "cloud" }
 cloud-minecraft-sponge7 = { module = "cloud.commandframework:cloud-sponge7", version.ref = "cloud" }
 cloud-minecraft-velocity = { module = "cloud.commandframework:cloud-velocity", version.ref = "cloud" }
