@@ -84,6 +84,7 @@ testing-strikt = "io.strikt:strikt-core:0.34.1"
 kotlin = ["kotlin-stdlib", "kotlin-reflect"]
 kotlinx = ["kotlinx-coroutines", "kotlinx-dateTime", "kotlinx-immutableCollections"]
 kyori = ["adventure-api", "adventure-kotlin", "adventure-minimessage"]
+cloud-kotlin = ["cloud-kotlin-coroutines", "cloud-kotlin-coroutineAnnotations", "cloud-kotlin-extensions"]
 minecraft = ["minecraft-authLib", "minecraft-commandAPI", "minecraft-inventoryFramework"]
 exposed = ["exposed-core", "exposed-dao", "exposed-jdbc", "exposed-dateTime", "hikariCP"]
 testing = ["testing-junit5", "testing-strikt", "koin-test-junit5"]
