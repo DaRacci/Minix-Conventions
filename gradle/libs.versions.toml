@@ -73,7 +73,7 @@ koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 koin-test-junit5 = { module = "io.insert-koin:koin-test-junit5", version.ref = "koin" }
 koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
 
-logging-sentry = "io.sentry:sentry:6.0.0-alpha.2"
+logging-sentry = "io.sentry:sentry:6.0.0-alpha.3"
 logging-slf4JAPI = "org.slf4j:slf4j-api:2.0.0-alpha6"
 logging-kotlinLogging = "io.github.microutils:kotlin-logging-jvm:2.1.21"
 
