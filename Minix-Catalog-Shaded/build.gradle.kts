@@ -22,6 +22,7 @@ repositories {
 
 dependencies {
     implementation(libs.bundles.kyori)
+    implementation(libs.adventure.configurate)
     implementation(libs.adventure.platform.bukkit)
 
     implementation(libs.bundles.cloud)
@@ -30,6 +31,14 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.bundles.kotlinx)
     implementation(libs.bundles.exposed)
+
+    implementation(libs.configurate.gson)
+    implementation(libs.configurate.hocon)
+    implementation(libs.configurate.jackson)
+    implementation(libs.configurate.xml)
+    implementation(libs.configurate.yaml)
+    implementation(libs.configurate.extra.guice)
+    implementation(libs.configurate.extra.kotlin)
 
     implementation(libs.cloud.minecraft.brigadier)
     implementation(libs.cloud.minecraft.bukkit)
