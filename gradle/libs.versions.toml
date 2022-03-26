@@ -136,7 +136,7 @@ common = [
     "caffeine"
 ]
 testing = [
-    "kotlin-tests",
+    "kotlin-test",
     "testing-junit5",
     "testing-strikt",
     "koin-test-junit5",
