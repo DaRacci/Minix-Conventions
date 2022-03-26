@@ -46,7 +46,7 @@ cloud-minecraft-sponge7 = { module = "cloud.commandframework:cloud-sponge7", ver
 cloud-minecraft-velocity = { module = "cloud.commandframework:cloud-velocity", version.ref = "cloud" }
 
 minecraft-minix = { module = "dev.racci:Minix", version.ref = "minix" }
-minecraft-minix.core = { module = "dev.racci:Minix-Core", version.ref = "minix" }
+minecraft-minix-core = { module = "dev.racci:Minix-Core", version.ref = "minix" }
 minecraft-authLib = "com.mojang:authlib:2.3.31"
 minecraft-commandAPI = "dev.jorel.CommandAPI:commandapi-shade:6.5.4"
 minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.5"
