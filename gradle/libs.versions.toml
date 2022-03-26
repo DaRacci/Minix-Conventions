@@ -8,6 +8,7 @@ koin = "3.1.5"
 cloud = "1.6.2"
 sentry = "6.0.0-alpha.3"
 minix = "2.4.10"
+configurate = "4.1.2"
 
 [libraries]
 adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
