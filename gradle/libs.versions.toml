@@ -133,7 +133,7 @@ common = [
     "ktor-client-cio",
     "sentry-core",
     "sentry-kotlin",
-    "caffiene"
+    "caffeine"
 ]
 testing = [
     "kotlin-tests",
