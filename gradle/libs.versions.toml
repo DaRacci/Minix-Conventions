@@ -58,7 +58,7 @@ kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immuta
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm", version.ref = "serialization" }
 kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serialization-cbor-jvm", version.ref = "serialization" }
-kotlinx-serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon-jvm", version.ref = "serialization" }
+kotlinx-serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon", version.ref = "serialization" }
 kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf-jvm", version.ref = "serialization" }
 kotlinx-serialization-properties = { module = "org.jetbrains.kotlinx:kotlinx-serialization-properties-jvm", version.ref = "serialization" }
 kotlinx-serialization-kaml = "com.charleskorn.kaml:kaml-jvm:0.43.0"
