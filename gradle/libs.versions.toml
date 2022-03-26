@@ -45,7 +45,7 @@ cloud-minecraft-paper = { module = "cloud.commandframework:cloud-paper", version
 cloud-minecraft-sponge7 = { module = "cloud.commandframework:cloud-sponge7", version.ref = "cloud" }
 cloud-minecraft-velocity = { module = "cloud.commandframework:cloud-velocity", version.ref = "cloud" }
 
-minecraft-minix = { module = "dev.racci:Minix", version.ref = "minix" }
+minecraft-minix = "dev.racci:Minix:2.4.10"
 minecraft-minixCore = { module = "dev.racci:Minix-core", version.ref = "minix" }
 minecraft-authLib = "com.mojang:authlib:2.3.31"
 minecraft-commandAPI = "dev.jorel.CommandAPI:commandapi-shade:6.5.4"
