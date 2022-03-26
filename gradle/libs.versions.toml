@@ -101,13 +101,11 @@ ktor-server-plugins-sessions = { module = "io.ktor:ktor-server-sessions-jvm", ve
 ktor-server-plugins-defaultHeaders = { module = "io.ktor:ktor-server-default-headers-jvm", version.ref = "ktor" }
 ktor-server-plugins-callLogging = { module = "io.ktor:ktor-server-call-logging-jvm", version.ref = "ktor" }
 ktor-server-plugins-locations = { module = "io.ktor:ktor-server-locations-jvm", version.ref = "ktor" }
-ktor-server-plugins-routing = { module = "io.ktor:ktor-server-routing-jvm", version.ref = "ktor" }
 ktor-server-plugins-contentNegotiation = { module = "io.ktor:ktor-server-content-negotiation-jvm", version.ref = "ktor" }
 
 ktor-client-core = { module = "io.ktor:ktor-client-core-jvm", version.ref = "ktor" }
 ktor-client-apache = { module = "io.ktor:ktor-client-apache-jvm", version.ref = "ktor" }
 ktor-client-cio = { module = "io.ktor:ktor-client-cio-jvm", version.ref = "ktor" }
-ktor-client-curl = { module = "io.ktor:ktor-client-curl", version.ref = "ktor" }
 ktor-client-java = { module = "io.ktor:ktor-client-java-jvm", version.ref = "ktor" }
 ktor-client-jetty = { module = "io.ktor:ktor-client-jetty-jvm", version.ref = "ktor" }
 ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
@@ -119,8 +117,6 @@ ktor-client-plugins-encoding = { module = "io.ktor:ktor-client-encoding-jvm", ve
 ktor-client-plugins-gson = { module = "io.ktor:ktor-client-gson-jvm", version.ref = "ktor" }
 ktor-client-plugins-serialization = { module = "io.ktor:ktor-client-serialization-jvm", version.ref = "ktor" }
 ktor-client-plugins-logging = { module = "io.ktor:ktor-client-logging-jvm", version.ref = "ktor" }
-ktor-client-plugins-resources = { module = "io.ktor:ktor-client-resources-jvm", version.ref = "ktor" }
-ktor-client-plugins-tracing = { module = "io.ktor:ktor-client-tracing-jvm", version.ref = "ktor" }
 ktor-client-plugins-websockets = { module = "io.ktor:ktor-client-websockets-jvm", version.ref = "ktor" }
 
 [bundles]
