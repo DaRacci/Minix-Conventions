@@ -7,7 +7,6 @@ on:
 
 jobs:
   build:
-    if: "!contains(github.event.head_commit.message, '[ci-skip]')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,19 +16,8 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-          cache: gradle
 
-      - name: Cache Gradle packages
-        uses: actions/cache@v3
-        with:
-          path: |
-              ~/.gradle/caches
-              ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: ${{ runner.os }}-gradle-
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
+      - uses: gradle/gradle-build-action@v2
 
       - name: Build
         run: ./gradlew build
@@ -47,7 +35,7 @@ jobs:
           path: build/libs
 
       - name: Publish to repo
-        run: ./gradlew publish -PRacciRepoUsername=${{ secrets.REPO_PUBLISH_USERNAME }} -PRacciRepoPassword=${{ secrets.REPO_PUBLISH_PASSWORD }} --stacktrace
+        run: ./gradlew publish -PRacciRepoUsername=${{ secrets.REPO_PUBLISH_USERNAME }} -PRacciRepoPassword=${{ secrets.REPO_PUBLISH_PASSWORD }}
 
       - name: Check whether the gradle platform has been updated
         uses: dorny/paths-filter@v2
