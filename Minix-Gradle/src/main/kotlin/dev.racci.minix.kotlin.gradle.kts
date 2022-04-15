@@ -1,4 +1,3 @@
-
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
@@ -35,7 +34,7 @@ val kotlinVersion: String? by project
 val minixVersion: String? by project
 
 ktlint {
-    version.set("0.43.2")
+    version.set("0.45.2")
     coloredOutput.set(true)
     outputToConsole.set(true)
     enableExperimentalRules.set(false)
