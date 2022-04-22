@@ -2,6 +2,8 @@ package dev.racci.minix.gradle.extensions
 
 import net.minecrell.pluginyml.bukkit.BukkitPlugin
 import org.gradle.api.Project
+import org.gradle.api.internal.catalog.AbstractExternalDependencyFactory.VersionFactory
+import org.gradle.api.provider.Provider
 import org.gradle.api.publish.maven.tasks.PublishToMavenLocal
 import org.gradle.api.tasks.Input
 import org.gradle.kotlin.dsl.apply
@@ -9,6 +11,9 @@ import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.withType
 import org.gradle.language.jvm.tasks.ProcessResources
+import kotlin.reflect.full.declaredFunctions
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.jvm.isAccessible
 
 class MinixMinecraftExtension(private val project: Project) : Extension {
 
@@ -44,7 +49,18 @@ class MinixMinecraftExtension(private val project: Project) : Extension {
 
             if (addMinixDependency) {
                 repositories.maven("https://repo.racci.dev/releases")
-                // dependencies.add("compile", "dev.racci:Minix:") // TODO: VERSION
+                try {
+                    val clazz = extensions.getByName("libs")::class
+                    val inst = clazz.declaredMemberProperties.first { it.name == "vaccForVersionAccessors" }.let {
+                        it.isAccessible = true
+                        it.call(extensions.getByName("libs")) as VersionFactory
+                    }
+                    val version =
+                        inst::class.declaredFunctions.first { it.name == "getMinix" }.call(inst) as Provider<String>
+                    dependencies.add("compileOnly", "dev.racci:Minix:${version.get()}")
+                } catch (e: Exception) {
+                    println("Failed to add Minix dependency")
+                }
             }
 
             if (useNMS) {
