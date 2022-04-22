@@ -11,7 +11,9 @@ import org.jetbrains.dokka.utilities.cast
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlinx.serialization.gradle.SerializationGradleSubplugin
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
+import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 import org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask
 
@@ -20,12 +22,16 @@ class MinixKotlinExtension(private val project: Project) : Extension {
     @get:Input
     var enableKtlint: Boolean = true
 
+    @get:Input
+    var enableKotlinSerialization: Boolean = false
+
     override fun apply() {
         project.run {
             plugins.apply {
                 apply("java")
                 apply(KotlinPlatformJvmPlugin::class)
-                if (enableKtlint) apply("org.jlleitschuh.gradle.ktlint")
+                if (enableKtlint) apply(KtlintPlugin::class)
+                if (enableKotlinSerialization) apply(SerializationGradleSubplugin::class)
             }
 
             extensions.configure<KtlintExtension> {
