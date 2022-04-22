@@ -7,7 +7,9 @@ import dev.racci.minix.gradle.extensions.MinixPublicationExtension
 import dev.racci.minix.gradle.tasks.CopyJarTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.Input
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.register
 
 class MinixGradlePlugin : Plugin<Project> {
@@ -21,14 +23,16 @@ class MinixGradlePlugin : Plugin<Project> {
     @Input
     var publicationExtension: Boolean = true
 
+    @Input
+    var subprojectExtensions: MutableMap<String, List<String>> =
+        mutableMapOf("ALL" to listOf("ALL")) // Apply all enabled extensions to all subprojects
+
     private val ext = mutableListOf<Extension>()
 
     override fun apply(project: Project) {
         project.run {
             pluginManager.apply {
-                apply("org.gradle.java")
-                println("abcaouhef")
-                // apply(BukkitPlugin::class)
+                apply(JavaPlugin::class)
             }
 
             extensions.add("minix", this@MinixGradlePlugin)
@@ -55,6 +59,28 @@ class MinixGradlePlugin : Plugin<Project> {
 
             tasks.named("build").configure {
                 dependsOn(copyJar)
+            }
+
+            for (subproject in project.subprojects) {
+                val upperName = subproject.name.toUpperCase()
+                if (!subprojectExtensions.contains("ALL") ||
+                    upperName !in subprojectExtensions.keys ||
+                    subprojectExtensions[upperName]!!.isEmpty()
+                ) continue
+
+                if (subprojectExtensions[upperName]!!.contains("ALL")) {
+                    extensions.add("minixKotlin", MinixKotlinExtension(subproject))
+                    extensions.add("minixMinecraft", MinixMinecraftExtension(subproject))
+                    extensions.add("minixPublication", MinixPublicationExtension(subproject))
+                } else {
+                    for (extension in subprojectExtensions[subproject.name.toUpperCase()] ?: continue) {
+                        when (extension.toUpperCase()) {
+                            "KOTLIN" -> extensions.add("minixKotlin", MinixKotlinExtension(subproject))
+                            "MINECRAFT" -> extensions.add("minixMinecraft", MinixMinecraftExtension(subproject))
+                            "PUBLICATION" -> extensions.add("minixPublication", MinixPublicationExtension(subproject))
+                        }
+                    }
+                }
             }
         }
     }
