@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.konan.properties.Properties
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
-import org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask
 import java.io.FileNotFoundException
 
 plugins {
@@ -55,9 +54,9 @@ tasks {
         }
     }
 
-    withType<BaseKtLintCheckTask> {
-        workerMaxHeapSize.set("1024m")
-    }
+    // withType<BaseKtLintCheckTask> {
+    //     workerMaxHeapSize.set("1024m")
+    // }
 }
 
 if (kotlinVersion != null && minConventionsKotlinVersion != kotlinVersion) {
