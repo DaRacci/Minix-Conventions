@@ -14,6 +14,7 @@ import org.gradle.kotlin.dsl.get
 import org.gradle.kotlin.dsl.getByName
 import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.register
+import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
 
 class MinixPublicationExtension(private val project: Project) : Extension {
@@ -50,17 +51,10 @@ class MinixPublicationExtension(private val project: Project) : Extension {
 
     override fun apply() {
         project.run {
-            // beforeEvaluate {
-            //     val lib = configurations.create("lib")
-            //     plugins.withType<JavaPlugin> {
-            //         extensions.getByType<SourceSetContainer>().named(SourceSet.MAIN_SOURCE_SET_NAME) {
-            //             configurations.getByName(compileClasspathConfigurationName).extendsFrom(lib)
-            //             configurations.getByName(runtimeClasspathConfigurationName).extendsFrom(lib)
-            //         }
-            //     }
-            // }
-
-            pluginManager.apply(MavenPublishPlugin::class)
+            pluginManager.apply {
+                apply(MavenPublishPlugin::class)
+                apply(DokkaPlugin::class)
+            }
 
             if (addRunNumber != "false" &&
                 runNumber != null
