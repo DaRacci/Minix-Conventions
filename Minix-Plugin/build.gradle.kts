@@ -19,17 +19,18 @@ repositories {
 dependencies {
     // Align the version of all kotlin components
     implementation(platform(kotlin("bom")))
-    implementation(platform(kotlin("stdlib")))
+    implementation(kotlin("stdlib"))
 
     // All the plugins that are used to configure.
     // TODO: Figure out how to apply these without implementing specific versions
     compileOnly(gradleApi())
-    implementation("net.minecrell:plugin-yml:0.5.1")
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin")
-    implementation("org.jlleitschuh.gradle:ktlint-gradle:10.2.1")
-    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.6.20")
-    implementation("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
-    implementation("io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.5")
+    implementation(libs.gradle.serialization)
+    implementation(libs.gradle.pluginYML)
+    implementation(libs.gradle.kotlin)
+    implementation(libs.gradle.ktlint)
+    implementation(libs.gradle.dokka)
+    implementation(libs.gradle.shadow)
+    implementation(libs.gradle.usedev)
 }
 
 kotlin {
