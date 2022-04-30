@@ -85,7 +85,7 @@ hikariCP = "com.zaxxer:HikariCP:5.0.1"
 kotlin-statistics = "org.nield:kotlin-statistics:1.2.1"
 valiktor = "org.valiktor:valiktor-core:0.12.0"
 mordant = "com.github.ajalt.mordant:mordant-jvm:2.0.0-beta5"
-caffeine = "com.github.ben-manes.caffeine:caffeine:3.0.6"
+caffeine = "com.github.ben-manes.caffeine:caffeine:3.1.0"
 reflections = "org.reflections:reflections:0.10.2"
 
 koin-core = { module = "io.insert-koin:koin-core-jvm", version.ref = "koin" }
