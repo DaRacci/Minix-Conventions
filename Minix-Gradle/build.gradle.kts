@@ -34,7 +34,7 @@ dependencies {
     implementation("org.jlleitschuh.gradle:ktlint-gradle:10.2.1")
     implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.6.21")
     implementation("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
-    implementation("io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.5")
+    implementation("io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.6")
     implementation(kotlin("stdlib-jdk8", kotlinVersion))
     implementation(kotlin("reflect", kotlinVersion))
 }
