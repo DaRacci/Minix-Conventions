@@ -5,7 +5,7 @@ plugins {
     id("dev.racci.minix.purpurmc")
     id("dev.racci.minix.publication")
     kotlin("plugin.serialization")
-    id("org.jlleitschuh.gradle.ktlint") version "10.2.1"
+    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
 }
 
 subprojects {
