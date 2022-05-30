@@ -6,7 +6,7 @@ exposed = "0.38.2"
 ktor = "2.0.1"
 koin = "3.2.0"
 cloud = "1.6.2"
-sentry = "6.0.0-beta.4"
+sentry = "6.0.0-rc.1"
 minix = "2.10.0"
 configurate = "4.1.2"
 
