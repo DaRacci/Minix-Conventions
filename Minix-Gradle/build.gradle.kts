@@ -70,6 +70,10 @@ tasks {
         }
     }
 
+    withType<org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask> {
+        workerMaxHeapSize.set("1024m")
+    }
+
     publish { dependsOn("check") }
 
     build { dependsOn(processResources) }
