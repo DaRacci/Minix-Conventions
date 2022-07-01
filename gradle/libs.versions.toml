@@ -57,7 +57,7 @@ minecraft-api-protoclLib = "com.comphenix.protocol:ProtocolLib:4.8.0"
 minecraft-api-placeholderAPI = "me.clip:placeholderapi:2.11.1"
 minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:6.5.1"
 minecraft-api-eco = "com.willfp:eco:6.37.1"
-minecraft-api-ecoEnchants = "com.willfp:EcoEnchants:8.93.0"
+minecraft-api-ecoEnchants = "com.willfp:EcoEnchants:8.93.2"
 
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
