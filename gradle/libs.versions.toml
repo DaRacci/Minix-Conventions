@@ -49,7 +49,7 @@ minecraft-minix = { module = "dev.racci:Minix", version.ref = "minix" }
 minecraft-minix-core = { module = "dev.racci:Minix-Core", version.ref = "minix" }
 minecraft-authLib = "com.mojang:authlib:2.3.31"
 minecraft-commandAPI = "dev.jorel:commandapi-shade:8.4.1"
-minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.5"
+minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.6"
 minecraft-bstats = "org.bstats:bstats-bukkit:3.0.0"
 
 minecraft-api-floodgate = "org.geysermc.floodgate:api:2.1.1-SNAPSHOT"
@@ -57,16 +57,16 @@ minecraft-api-protoclLib = "com.comphenix.protocol:ProtocolLib:4.8.0"
 minecraft-api-placeholderAPI = "me.clip:placeholderapi:2.11.1"
 minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:6.5.1"
 minecraft-api-eco = "com.willfp:eco:6.37.1"
-minecraft-api-ecoEnchants = "com.willfp:EcoEnchants:8.93.0"
+minecraft-api-ecoEnchants = "com.willfp:EcoEnchants:8.93.2"
 
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
-kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.2"
-kotlinx-dateTime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.3.3"
+kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.3"
+kotlinx-dateTime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.4.0"
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.5"
-kotlinx-atomicfu = "org.jetbrains.kotlinx:atomicfu-jvm:0.17.3"
+kotlinx-atomicfu = "org.jetbrains.kotlinx:atomicfu-jvm:0.18.2"
 
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm", version.ref = "serialization" }
@@ -74,7 +74,7 @@ kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon", version.ref = "serialization" }
 kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf-jvm", version.ref = "serialization" }
 kotlinx-serialization-properties = { module = "org.jetbrains.kotlinx:kotlinx-serialization-properties-jvm", version.ref = "serialization" }
-kotlinx-serialization-kaml = "com.charleskorn.kaml:kaml-jvm:0.45.0"
+kotlinx-serialization-kaml = "com.charleskorn.kaml:kaml-jvm:0.46.0"
 
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
