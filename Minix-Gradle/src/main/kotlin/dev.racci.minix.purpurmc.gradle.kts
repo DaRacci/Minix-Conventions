@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    val (major, minor) = serverVersion.split('.').take(2).map { it.toInt() }
+    val (major, minor) = serverVersion.split('.').take(2).map { it.takeWhile(Char::isDigit).toInt() }
     val groupAndModule = if (useTentacles.toBoolean()) {
         "dev.racci.tentacles:tentacles-api"
     } else {
