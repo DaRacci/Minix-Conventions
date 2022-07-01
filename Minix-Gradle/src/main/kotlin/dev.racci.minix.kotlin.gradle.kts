@@ -50,13 +50,10 @@ tasks {
         dependsOn(ktlintFormat)
         kotlinOptions {
             jvmTarget = "17"
+            languageVersion = "1.7"
             freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
         }
     }
-
-    // withType<BaseKtLintCheckTask> {
-    //     workerMaxHeapSize.set("1024m")
-    // }
 }
 
 if (kotlinVersion != null && minConventionsKotlinVersion != kotlinVersion) {
@@ -86,5 +83,6 @@ repositories {
 }
 
 dependencies {
-    compileOnly(kotlin("stdlib-jdk8", kotlinVersion))
+    implementation(platform(kotlin("bom:$kotlinVersion")))
+    compileOnly(kotlin("stdlib-jdk8"))
 }

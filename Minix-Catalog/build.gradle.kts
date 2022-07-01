@@ -8,7 +8,6 @@ val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "DEV"
 
 version = "$kotlinVersion-$runNumber"
 
-@Suppress("UnstableApiUsage")
 catalog {
     versionCatalog {
         from(rootProject.files("gradle/libs.versions.toml"))

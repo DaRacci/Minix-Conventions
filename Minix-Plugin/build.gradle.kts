@@ -1,10 +1,16 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.util.Properties
+
+Properties()
+    .apply { load(rootDir.toPath().resolveSibling(Project.GRADLE_PROPERTIES).toFile().inputStream()) }
+    .forEach { key, value -> project.ext["$key"] = value }
+val kotlinVersion: String by project
 
 plugins {
-    `kotlin-dsl`
+    java
     `maven-publish`
     `java-gradle-plugin`
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm")
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
@@ -18,7 +24,7 @@ repositories {
 
 dependencies {
     // Align the version of all kotlin components
-    implementation(platform(kotlin("bom")))
+    implementation(platform(kotlin("bom:$kotlinVersion")))
     implementation(kotlin("stdlib"))
 
     // All the plugins that are used to configure.
@@ -30,13 +36,13 @@ dependencies {
     implementation(libs.gradle.ktlint)
     implementation(libs.gradle.dokka)
     implementation(libs.gradle.shadow)
-    implementation(libs.gradle.usedev)
+    implementation(libs.gradle.paperweight)
 }
 
 kotlin {
     sourceSets.all {
         languageSettings {
-            languageVersion = "1.6"
+            languageVersion = "1.7"
         }
     }
 }
@@ -46,8 +52,8 @@ tasks {
     withType<KotlinCompile> {
         kotlinOptions {
             jvmTarget = "17"
-            languageVersion = "1.6"
-            freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn", "-Xcontext-receivers")
+            languageVersion = "1.7"
+            freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn", "-Xcontext-receivers")
         }
     }
 }

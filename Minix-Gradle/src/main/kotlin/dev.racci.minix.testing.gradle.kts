@@ -1,6 +1,5 @@
 plugins {
     id("dev.racci.minix.kotlin")
-    java
 }
 
 dependencies {

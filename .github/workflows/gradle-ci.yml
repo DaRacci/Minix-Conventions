@@ -55,7 +55,7 @@ jobs:
           version=`./gradlew properties --no-daemon --console=plain -q | grep "^version:" | awk '{printf $2}'`
           echo "::set-output name=version::$version"
 
-      - name: Create GitHub Release for shaded Minix Platfrom
+      - name: Create GitHub Release for shaded Minix Platform
         if: steps.changes.outputs.platform == 'true'
         uses: marvinpinto/action-automatic-releases@latest
         with:

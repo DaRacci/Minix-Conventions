@@ -35,5 +35,6 @@ tasks {
 
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
+        kotlinOptions.languageVersion = "1.7"
     }
 }

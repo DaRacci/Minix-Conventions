@@ -2,11 +2,13 @@ import java.util.Properties
 
 Properties()
     .apply { load(rootDir.toPath().resolveSibling(Project.GRADLE_PROPERTIES).toFile().inputStream()) }
-    .forEach { (key, value) -> project.ext["$key"] = value }
+    .forEach { key, value -> project.ext["$key"] = value }
 
 plugins {
     `kotlin-dsl`
     `maven-publish`
+    `kotlin-dsl-precompiled-script-plugins`
+    kotlin("jvm")
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
     id("com.github.ben-manes.versions") version "0.42.0"
 }
@@ -29,14 +31,15 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("gradle-plugin", kotlinVersion))
-    implementation(kotlin("serialization", kotlinVersion))
-    implementation("org.jlleitschuh.gradle:ktlint-gradle:10.3.0")
-    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.6.21")
-    implementation("gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0")
-    implementation("io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.8")
-    implementation(kotlin("stdlib-jdk8", kotlinVersion))
-    implementation(kotlin("reflect", kotlinVersion))
+    implementation(libs.gradle.kotlin)
+    implementation(libs.gradle.serialization)
+    implementation(libs.gradle.ktlint)
+    implementation(libs.gradle.dokka)
+    implementation(libs.gradle.shadow)
+    implementation(libs.gradle.paperweight)
+
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlin.reflect)
 }
 
 java {
