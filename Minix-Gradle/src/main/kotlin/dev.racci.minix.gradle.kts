@@ -15,7 +15,7 @@ tasks {
         target.relocate("kotlin", "$prefix.kotlin")
         target.relocate("kotlinx", "$prefix.kotlinx")
         target.relocate("io.ktor", "$prefix.io.ktor")
-        target.relocate("io.koin", "$prefix.io.koin")
+        target.relocate("org.koin", "$prefix.org.koin")
         target.relocate("io.sentry", "$prefix.io.sentry")
         target.relocate("org.bstats", "$prefix.org.bstats")
         target.relocate("org.jetbrains.exposed", "$prefix.org.jetbrains.exposed")
