@@ -7,7 +7,7 @@ ktor = "2.0.3"
 koin = "3.2.0"
 cloud = "1.7.0"
 sentry = "6.2.1"
-minix = "3.1.1"
+minix = "3.1.2"
 configurate = "4.1.2"
 
 [libraries]
