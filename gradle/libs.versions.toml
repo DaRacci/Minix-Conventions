@@ -99,7 +99,7 @@ logging-kotlinLogging = "io.github.microutils:kotlin-logging-jvm:2.1.23"
 sentry-core = { module = "io.sentry:sentry", version.ref = "sentry" }
 sentry-kotlin = { module = "io.sentry:sentry-kotlin-extensions", version.ref = "sentry" }
 
-testing-junit5 = "org.junit.jupiter:junit-jupiter:5.8.2"
+testing-junit5 = "org.junit.jupiter:junit-jupiter:5.9.0"
 testing-strikt = "io.strikt:strikt-core:0.34.1"
 
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
