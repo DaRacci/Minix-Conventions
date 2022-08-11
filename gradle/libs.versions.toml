@@ -49,7 +49,7 @@ minecraft-minix = { module = "dev.racci:Minix", version.ref = "minix" }
 minecraft-minix-core = { module = "dev.racci:Minix-Core", version.ref = "minix" }
 minecraft-authLib = "com.mojang:authlib:2.3.31"
 minecraft-commandAPI = "dev.jorel:commandapi-shade:8.5.0"
-minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.6"
+minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.7"
 minecraft-bstats = "org.bstats:bstats-bukkit:3.0.0"
 
 minecraft-api-floodgate = "org.geysermc.floodgate:api:2.1.1-SNAPSHOT"
