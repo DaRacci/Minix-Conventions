@@ -48,14 +48,14 @@ cloud-minecraft-velocity = { module = "cloud.commandframework:cloud-velocity", v
 minecraft-minix = { module = "dev.racci:Minix", version.ref = "minix" }
 minecraft-minix-core = { module = "dev.racci:Minix-Core", version.ref = "minix" }
 minecraft-authLib = "com.mojang:authlib:2.3.31"
-minecraft-commandAPI = "dev.jorel:commandapi-shade:8.5.0"
+minecraft-commandAPI = "dev.jorel:commandapi-shade:8.5.1"
 minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.7"
 minecraft-bstats = "org.bstats:bstats-bukkit:3.0.0"
 
 minecraft-api-floodgate = "org.geysermc.floodgate:api:2.1.1-SNAPSHOT"
 minecraft-api-protoclLib = "com.comphenix.protocol:ProtocolLib:4.8.0"
 minecraft-api-placeholderAPI = "me.clip:placeholderapi:2.11.2"
-minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:6.8.3"
+minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:6.12.0"
 minecraft-api-eco = "com.willfp:eco:6.38.2"
 minecraft-api-ecoEnchants = "com.willfp:EcoEnchants:8.102.0"
 
