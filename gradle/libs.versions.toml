@@ -9,6 +9,7 @@ cloud = "1.7.0"
 sentry = "6.3.1"
 minix = "3.2.1"
 configurate = "4.1.2"
+kotest = "5.4.1"
 
 [libraries]
 adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
@@ -94,13 +95,15 @@ koin-test-junit5 = { module = "io.insert-koin:koin-test-junit5", version.ref = "
 koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
 
 logging-slf4JAPI = "org.slf4j:slf4j-api:2.0.0-beta1"
-logging-kotlinLogging = "io.github.microutils:kotlin-logging-jvm:2.1.23"
 
 sentry-core = { module = "io.sentry:sentry", version.ref = "sentry" }
 sentry-kotlin = { module = "io.sentry:sentry-kotlin-extensions", version.ref = "sentry" }
 
 testing-junit5 = "org.junit.jupiter:junit-jupiter:5.9.0"
 testing-strikt = "io.strikt:strikt-core:0.34.1"
+testing-kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+testing-kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+testing-kotest-properties = { module = "io.kotest:kotest-property", version.ref = "kotest" }
 
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
 ktor-server-cio = { module = "io.ktor:ktor-server-cio-jvm", version.ref = "ktor" }
@@ -155,6 +158,9 @@ common = [
 ]
 testing = [
     "kotlin-test",
+    "testing-kotest-junit5",
+    "testing-kotest-assertions",
+    "testing-kotest-properties",
     "testing-junit5",
     "testing-strikt",
     "koin-test-junit5",

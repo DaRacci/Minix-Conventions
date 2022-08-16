@@ -18,11 +18,11 @@ pluginManagement {
 rootProject.name = "Minix-Conventions"
 
 includeBuild("Minix-Gradle")
-// includeBuild("Minix-Plugin")
+includeBuild("Minix-Plugin")
 
 include(
     "Minix-NMS",
     "Minix-Platform-Loader",
     "Minix-Catalog-Shaded",
-    "Minix-Catalog",
+    "Minix-Catalog"
 )

@@ -1,9 +1,9 @@
 package dev.racci.minix.gradle
 
 import dev.racci.minix.gradle.extensions.Extension
-import dev.racci.minix.gradle.extensions.MinixKotlinExtension
 import dev.racci.minix.gradle.extensions.MinixMinecraftExtension
 import dev.racci.minix.gradle.extensions.MinixPublicationExtension
+import dev.racci.minix.gradle.extensions.MinixStandardExtension
 import dev.racci.minix.gradle.tasks.CopyJarTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -11,7 +11,11 @@ import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.Input
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.register
+import kotlin.reflect.KClass
+import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.primaryConstructor
 
+@Suppress("UNUSED")
 class MinixGradlePlugin : Plugin<Project> {
 
     @Input
@@ -24,10 +28,16 @@ class MinixGradlePlugin : Plugin<Project> {
     var publicationExtension: Boolean = true
 
     @Input
-    var subprojectExtensions: MutableMap<String, List<String>> =
-        mutableMapOf("ALL" to listOf("ALL")) // Apply all enabled extensions to all subprojects
+    var copyJarTask: Boolean = true
 
-    private val ext = mutableListOf<Extension>()
+    @Input
+    var subprojectExtensions: MutableMap<Project, List<KClass<out Extension>>> = mutableMapOf()
+
+    private var extensions = listOf(
+        MinixStandardExtension::class,
+        MinixMinecraftExtension::class,
+        MinixPublicationExtension::class
+    )
 
     override fun apply(project: Project) {
         project.run {
@@ -37,50 +47,30 @@ class MinixGradlePlugin : Plugin<Project> {
 
             extensions.add("minix", this@MinixGradlePlugin)
 
-            if (kotlinExtension) {
-                ext += MinixKotlinExtension(this)
-            }
+            for (extension in this@MinixGradlePlugin.extensions) {
+                val name = extension.simpleName!!.removeSuffix("Extension").replaceFirstChar(Char::lowercase)
+                val func = this@MinixGradlePlugin::class.declaredMemberProperties.first { it.name == name }
 
-            if (minecraftExtension) {
-                ext += MinixMinecraftExtension(this)
-            }
+                if (!(func.call(this@MinixGradlePlugin) as Boolean)) continue
 
-            if (publicationExtension) {
-                ext += MinixPublicationExtension(this)
-            }
-
-            ext.forEach {
-                val name = it::class.simpleName!!.substringAfter("Minix").substringBefore("Extension")
-                extensions.add("minix$name", it)
-                it.apply()
-            }
-
-            val copyJar = tasks.register<CopyJarTask>("copyJar")
-
-            tasks.named("build").configure {
-                dependsOn(copyJar)
-            }
-
-            for (subproject in project.subprojects) {
-                val upperName = subproject.name.toUpperCase()
-                if (!subprojectExtensions.contains("ALL") ||
-                    upperName !in subprojectExtensions.keys ||
-                    subprojectExtensions[upperName]!!.isEmpty()
-                ) continue
-
-                if (subprojectExtensions[upperName]!!.contains("ALL")) {
-                    extensions.add("minixKotlin", MinixKotlinExtension(subproject))
-                    extensions.add("minixMinecraft", MinixMinecraftExtension(subproject))
-                    extensions.add("minixPublication", MinixPublicationExtension(subproject))
-                } else {
-                    for (extension in subprojectExtensions[subproject.name.toUpperCase()] ?: continue) {
-                        when (extension.toUpperCase()) {
-                            "KOTLIN" -> extensions.add("minixKotlin", MinixKotlinExtension(subproject))
-                            "MINECRAFT" -> extensions.add("minixMinecraft", MinixMinecraftExtension(subproject))
-                            "PUBLICATION" -> extensions.add("minixPublication", MinixPublicationExtension(subproject))
-                        }
-                    }
+                fun getInst(project: Project): Extension {
+                    val inst = extension.primaryConstructor!!.call(project)
+                    inst.apply()
+                    return inst
                 }
+
+                this.extensions.add(name, getInst(this))
+                for (subproject in this.subprojects) {
+                    val extensions = subprojectExtensions[subproject]
+                    if (!extensions.isNullOrEmpty() && !extensions.contains(extension)) continue
+
+                    subproject.extensions.add(name, getInst(subproject))
+                }
+            }
+
+            if (copyJarTask) {
+                val copyJar = tasks.register<CopyJarTask>("copyJar")
+                tasks.named("build").get().dependsOn(copyJar)
             }
         }
     }

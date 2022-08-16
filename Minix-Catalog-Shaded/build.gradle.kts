@@ -71,7 +71,6 @@ dependencies {
     implementation(libs.koin.ktor)
 
     implementation(libs.logging.slf4JAPI)
-    implementation(libs.logging.kotlinLogging)
 
     implementation(libs.sentry.core)
     implementation(libs.sentry.kotlin)

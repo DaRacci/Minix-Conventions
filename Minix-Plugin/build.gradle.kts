@@ -25,11 +25,13 @@ repositories {
 dependencies {
     // Align the version of all kotlin components
     implementation(platform(kotlin("bom:$kotlinVersion")))
-    implementation(kotlin("stdlib"))
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlinx.immutableCollections)
 
     // All the plugins that are used to configure.
     // TODO: Figure out how to apply these without implementing specific versions
     compileOnly(gradleApi())
+    compileOnly(gradleKotlinDsl())
     implementation(libs.gradle.serialization)
     implementation(libs.gradle.pluginYML)
     implementation(libs.gradle.kotlin)
@@ -37,6 +39,9 @@ dependencies {
     implementation(libs.gradle.dokka)
     implementation(libs.gradle.shadow)
     implementation(libs.gradle.paperweight)
+
+    testImplementation(libs.bundles.testing)
+    testImplementation(gradleTestKit())
 }
 
 kotlin {

@@ -24,7 +24,7 @@ open class CopyJarTask : DefaultTask() {
     @TaskAction
     fun run() {
         if (System.getenv("CI") == "true") {
-            return logger.log(LogLevel.INFO, "Skipping copyJar task")
+            return logger.info("Skipping copyJar because of CI environment")
         }
 
         val file = when {
@@ -37,24 +37,22 @@ open class CopyJarTask : DefaultTask() {
             }
         }
 
-        val dir = destinationDir ?: project.properties["destinationDir"] as? String ?: return logger.log(
-            LogLevel.ERROR,
-            "No destination directory found for copyJar task"
-        )
+        val dir = destinationDir ?: project.properties["Minix.CopyJar.Destination"] as? String
+            ?: return logger.error("No destination directory found for copyJar task")
         val destination = File(dir, file.name)
 
         if (!destination.exists()) {
             try {
                 destination.ensureParentDirsCreated()
             } catch (e: IOException) {
-                return logger.log(LogLevel.ERROR, "Could not create destination directory $destination", e)
+                return logger.error("Could not create destination directory $destination", e)
             }
         }
 
         try {
             file.copyTo(destination)
         } catch (e: IOException) {
-            logger.log(LogLevel.ERROR, "Could not copy $file to $destination", e)
+            logger.error("Could not copy $file to $destination", e)
         }
     }
 }
