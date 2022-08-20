@@ -7,7 +7,7 @@ ktor = "2.1.0"
 koin = "3.2.0"
 cloud = "1.7.0"
 sentry = "6.3.1"
-minix = "3.2.1"
+minix = "3.2.3"
 configurate = "4.1.2"
 kotest = "5.4.1"
 
