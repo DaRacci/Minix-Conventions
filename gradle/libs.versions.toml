@@ -52,7 +52,7 @@ minecraft-authLib = "com.mojang:authlib:2.3.31"
 minecraft-commandAPI = "dev.jorel:commandapi-shade:8.5.1"
 minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.7"
 minecraft-bstats = "org.bstats:bstats-bukkit:3.0.0"
-minecraft-partciels = "xyz.xenondevs:particle:1.7.1"
+minecraft-partciels = "xyz.xenondevs:particle:1.8.1"
 
 minecraft-api-floodgate = "org.geysermc.floodgate:api:2.1.1-SNAPSHOT"
 minecraft-api-protoclLib = "com.comphenix.protocol:ProtocolLib:4.8.0"
