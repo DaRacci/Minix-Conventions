@@ -1,13 +1,14 @@
 package dev.racci.minix.gradle.extensions
 
-import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.Input
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.jvm.toolchain.JavaToolchainSpec
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.get
+import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.dokka.utilities.cast
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
@@ -18,38 +19,73 @@ import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
-class MinixStandardExtension(private val project: Project) : Extension {
+class MinixStandardExtension(override val project: Project) : Extension {
 
-    @get:Input
+    @Input
+    var enableKotlin: Boolean = true
+
+    @Input
     var enableKtlint: Boolean = true
 
-    @get:Input
-    var enableKotlinSerialization: Boolean = false
+    @Input
+    var enableKotlinSerialization: Boolean = true
 
     override fun apply() {
-        project.run {
-            plugins.apply {
-                apply("java")
-                apply(KotlinPlatformJvmPlugin::class)
-                if (enableKtlint) apply(KtlintPlugin::class)
-                if (enableKotlinSerialization) apply(SerializationGradleSubplugin::class)
-            }
+        project.beforeEvaluate {
+            addDependencies()
+            applyPlugins()
 
-            configureExtensions(this)
-            configureTasks(this)
+            configureExtensions()
+            configureTasks()
         }
     }
 
-    private fun configureExtensions(project: Project) {
-        project.extensions.configure<KotlinJvmProjectExtension> {
-            jvmToolchain {
-                cast<JavaToolchainSpec>().languageVersion.set(JavaLanguageVersion.of(17))
-            }
+    private fun addDependencies() {
+        val implementation = project.configurations.getByName("implementation")
+        val compileClasspath = project.configurations.getByName("compileClasspath")
+
+        project.dependencies {
+            implementation(platform(kotlin("bom:1.7.10")))
+
+            compileClasspath(KOTLIN_DEPENDENCY)
+            compileClasspath(KTLINT_DEPENDENCY)
+            compileClasspath(KOTLIN_SERIALIZATION_DEPENDENCY)
         }
 
-        project.extensions.configure<JavaPluginExtension>("java") { extension ->
-            extension.sourceCompatibility = JavaVersion.VERSION_17
-            extension.targetCompatibility = JavaVersion.VERSION_17
+//        project.gradle.addListener(object : DependencyResolutionListener {
+//            override fun beforeResolve(dependencies: ResolvableDependencies) {
+//                compileDeps.add(project.dependencies.create(KOTLIN_DEPENDENCY))
+//                compileDeps.add(project.dependencies.create(KTLINT_DEPENDENCY))
+//                compileDeps.add(project.dependencies.create(KOTLIN_SERIALIZATION_DEPENDENCY))
+//
+//                println("Added dependencies: $compileDeps")
+//
+//                project.gradle.removeListener(this)
+//            }
+//
+//            override fun afterResolve(dependencies: ResolvableDependencies) = Unit
+//        })
+    }
+
+    private fun applyPlugins() {
+//        project.beforeEvaluate { prg ->
+        project.pluginManager.apply {
+//                if (enableKotlin) apply("kotlin")
+//                if (enableKtlint) apply("ktlint-gradle")
+//                if (enableKotlinSerialization) apply("org.jetbrains.kotlin.plugin.serialization")
+            if (enableKotlin) apply(KotlinPlatformJvmPlugin::class)
+            if (enableKtlint) apply(KtlintPlugin::class)
+            if (enableKotlinSerialization) apply(SerializationGradleSubplugin::class)
+//            }
+        }
+    }
+
+    private fun configureExtensions() {
+//        project.afterEvaluate {
+        if (!enableKotlin) return
+
+        (project.extensions["kotlin"] as KotlinJvmProjectExtension).jvmToolchain {
+            cast<JavaToolchainSpec>().languageVersion.set(JavaLanguageVersion.of(17))
         }
 
         if (!enableKtlint) return
@@ -62,10 +98,14 @@ class MinixStandardExtension(private val project: Project) : Extension {
                 it.reporter(ReporterType.HTML)
                 it.reporter(ReporterType.CHECKSTYLE)
             }
+//            }
         }
     }
 
-    private fun configureTasks(project: Project) {
+    private fun configureTasks() {
+//        project.afterEvaluate {
+        if (!enableKotlin) return
+
         project.tasks.withType<KotlinCompile> {
             kotlinOptions {
                 languageVersion = "1.7"
@@ -74,5 +114,12 @@ class MinixStandardExtension(private val project: Project) : Extension {
                 useK2 = true
             }
         }
+//        }
+    }
+
+    companion object {
+        const val KOTLIN_DEPENDENCY = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.10" // "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin:1.7.10"
+        const val KTLINT_DEPENDENCY = "org.jlleitschuh.gradle:org.jlleitschuh.gradle.ktlint:11.0.0"
+        const val KOTLIN_SERIALIZATION_DEPENDENCY = "org.jetbrains.kotlin.plugin.serialization:org.jetbrains.kotlin.plugin.serialization.gradle.plugin:1.7.10"
     }
 }
