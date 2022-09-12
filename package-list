@@ -8,5 +8,3 @@ dev.racci.minix.nms.entity
 dev.racci.minix.nms.pathfindergoals
 dev.racci.minix.nms.player
 dev.racci.minix.nms.typeinjection
-module:Minix-Platform-Loader
-dev.racci.minix.platforms
