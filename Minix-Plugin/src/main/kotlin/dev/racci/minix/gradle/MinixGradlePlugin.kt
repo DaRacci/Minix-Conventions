@@ -10,16 +10,16 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.tasks.Input
 import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.register
 import kotlin.reflect.KClass
-import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.full.primaryConstructor
 
-@Suppress("UNUSED")
 class MinixGradlePlugin : Plugin<Project> {
+    private lateinit var project: Project
 
     @Input
-    var kotlinExtension: Boolean = true
+    var standardExtension: Boolean = true
 
     @Input
     var minecraftExtension: Boolean = true
@@ -33,45 +33,64 @@ class MinixGradlePlugin : Plugin<Project> {
     @Input
     var subprojectExtensions: MutableMap<Project, List<KClass<out Extension>>> = mutableMapOf()
 
-    private var extensions = listOf(
+    private var minixExtensions = listOf(
         MinixStandardExtension::class,
         MinixMinecraftExtension::class,
         MinixPublicationExtension::class
     )
 
+    fun MinixGradlePlugin.options(block: MinixStandardExtension.() -> Unit) {
+        if (!standardExtension) return
+
+        project.extensions.getByType<MinixStandardExtension>().block()
+    }
+
     override fun apply(project: Project) {
-        project.run {
-            pluginManager.apply {
-                apply(JavaPlugin::class)
-            }
+        this.project = project
+        project.pluginManager.apply(JavaPlugin::class)
+        project.extensions.add("minix", this@MinixGradlePlugin)
 
-            extensions.add("minix", this@MinixGradlePlugin)
-
-            for (extension in this@MinixGradlePlugin.extensions) {
-                val name = extension.simpleName!!.removeSuffix("Extension").replaceFirstChar(Char::lowercase)
-                val func = this@MinixGradlePlugin::class.declaredMemberProperties.first { it.name == name }
-
-                if (!(func.call(this@MinixGradlePlugin) as Boolean)) continue
-
-                fun getInst(project: Project): Extension {
-                    val inst = extension.primaryConstructor!!.call(project)
-                    inst.apply()
-                    return inst
+        project.afterEvaluate {
+            for (extension in minixExtensions) {
+                if (!shouldEnable(extension)) {
+                    println("Skipping extension ${extension.simpleName}")
+                    continue
                 }
 
-                this.extensions.add(name, getInst(this))
-                for (subproject in this.subprojects) {
+                val name = extension.simpleName!!.removeSuffix("Extension").replaceFirstChar(Char::lowercase)
+
+                println("Applying extension $name")
+                extension.primaryConstructor!!.call(project).also { ext ->
+                    project.extensions.add(name, ext)
+                    ext.apply()
+                }
+
+                for (subproject in project.subprojects) {
                     val extensions = subprojectExtensions[subproject]
                     if (!extensions.isNullOrEmpty() && !extensions.contains(extension)) continue
 
-                    subproject.extensions.add(name, getInst(subproject))
+                    println("Applying extension $name to subproject ${subproject.name}")
+                    extension.primaryConstructor!!.call(subproject).also { ext ->
+                        subproject.extensions.add(name, ext)
+                        ext.apply()
+                    }
                 }
             }
 
-            if (copyJarTask) {
-                val copyJar = tasks.register<CopyJarTask>("copyJar")
-                tasks.named("build").get().dependsOn(copyJar)
+            if (!copyJarTask) return@afterEvaluate
+            project.tasks.apply {
+                val copyJar = project.tasks.register<CopyJarTask>("copyJar") {
+                    onlyIf { System.getenv("CI") != "true" }
+                }
+                named("build").get().dependsOn(copyJar)
             }
         }
+    }
+
+    private fun shouldEnable(instance: KClass<out Extension>) = when (instance) {
+        MinixStandardExtension::class -> standardExtension
+        MinixMinecraftExtension::class -> minecraftExtension
+        MinixPublicationExtension::class -> publicationExtension
+        else -> throw IllegalArgumentException("Unknown extension type: ${instance::class.simpleName}")
     }
 }
