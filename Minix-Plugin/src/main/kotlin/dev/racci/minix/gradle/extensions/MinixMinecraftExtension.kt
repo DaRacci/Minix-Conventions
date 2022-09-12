@@ -1,5 +1,6 @@
 package dev.racci.minix.gradle.extensions
 
+import io.papermc.paperweight.userdev.PaperweightUser
 import net.minecrell.pluginyml.bukkit.BukkitPlugin
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 import net.minecrell.pluginyml.bungee.BungeePlugin
@@ -12,16 +13,18 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.withType
 import org.gradle.language.jvm.tasks.ProcessResources
+import paperweightDevBundle
 import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
 
-class MinixMinecraftExtension(private val project: Project) : Extension {
+class MinixMinecraftExtension(override val project: Project) : Extension {
 
     @Input
     var useTentacles: Boolean = false
@@ -39,82 +42,86 @@ class MinixMinecraftExtension(private val project: Project) : Extension {
     var projectType: MinecraftProjectType = MinecraftProjectType.BUKKIT
 
     override fun apply() {
-        with(project) {
-            addMinecraftDependency(this)
-            addMinixDependencies(this)
+        addMinecraftDependency()
+        addMinixDependencies()
+        configurePluginYML()
 
-            val lib: Configuration = configurations.maybeCreate("lib")
-            extensions.getByType<SourceSetContainer>().named(SourceSet.MAIN_SOURCE_SET_NAME) {
-                configurations.getByName(it.compileClasspathConfigurationName).extendsFrom(lib)
-                configurations.getByName(it.runtimeClasspathConfigurationName).extendsFrom(lib)
-                configurations.getByName(it.apiElementsConfigurationName).extendsFrom(lib)
-            }
-
-            when (projectType) {
-                MinecraftProjectType.BUKKIT -> {
-                    this.afterEvaluate { project ->
-                        val ext =
-                            findHighestExtension<BukkitPluginDescription>(project, "bukkit") ?: return@afterEvaluate
-                        val mappedDeps = lib.dependencies.map { "${it.group}:${it.name}:${it.version}" }
-
-                        if (ext.libraries == null) ext.libraries = emptyList()
-                        ext.libraries = ext.libraries!! + mappedDeps
-                    }
-
-                    BukkitPlugin::class
-                }
-
-                MinecraftProjectType.BUNGEECORD -> BungeePlugin::class
-            }.apply(pluginManager::apply)
-
-            @Suppress("UnstableApiUsage")
-            tasks.named<ProcessResources>("processResources") {
-                filesMatching("plugin.yml") {
-                    expand(mutableMapOf("version" to version))
-                }
+        @Suppress("UnstableApiUsage")
+        project.tasks.named<ProcessResources>("processResources") {
+            filesMatching("plugin.yml") {
+                expand(mutableMapOf("version" to project.version))
             }
         }
     }
 
-    private fun addMinecraftDependency(project: Project) {
-        val dependencyStr = StringBuilder()
+    private fun addMinecraftDependency() {
+        val group = this.getAPIGroup()
+        this.addRepositories(group)
+        this.applyNMS(group)
+        this.applyAPI(group)
+    }
+
+    private fun getAPIGroup(): String {
         val (major, minor) = mcVersion.split('.').take(2).map(String::toInt)
 
-        val module = when {
+        return when {
             useTentacles -> TENTACLES_MODULE
             major == 1 && minor < 18 -> OLD_PURPUR_MODULE
             else -> NEW_PURPUR_MODULE
         }
+    }
 
-        when (module) {
+    private fun addRepositories(group: String) {
+        project.beforeEvaluate {
+            project.buildscript.dependencies.add("classpath", PLUGIN_YML)
+        }
+
+        when (group) {
             TENTACLES_MODULE -> project.repositories.maven("$RACCI_REPO/snapshots")
             else -> project.repositories.maven(PURPUR_REPO)
         }
 
-        if (useNMS) {
-            project.plugins.apply("io.papermc.paperweight.userdev")
-            project.tasks.named("assemble") { it.dependsOn("reobfJar") }
-            project.tasks.withType<PublishToMavenLocal> { dependsOn("reobfJar") }
-
-            project.dependencies.apply {
-                val paperweightDevelopmentBundle =
-                    project.configurations.getByName("paperweightDevelopmentBundle").dependencies
-                dependencyStr.append(":$mcVersion")
-                paperweightDevelopmentBundle.add(project.dependencies.create(dependencyStr.toString()))
-            }
-
-            return
-        }
-
-        dependencyStr.append(':')
-        dependencyStr.append(if (useTentacles) "tentacles" else "purpur")
-        dependencyStr.append(':')
-        dependencyStr.append(mcVersion)
-
-        project.dependencies.add("compileOnly", dependencyStr.toString())
+        if (!this.useNMS) return
+        project.repositories.maven("https://papermc.io/repo/repository/maven-public/")
     }
 
-    private fun addMinixDependencies(project: Project) {
+    private fun applyNMS(group: String) {
+//        project.beforeEvaluate {
+//            project.buildscript.dependencies.add("classpath", USERDEV)
+//        }
+        project.pluginManager.apply(PaperweightUser::class)
+//        project.plugins.apply("io.papermc.paperweight.userdev")
+
+        project.tasks.apply {
+            named("assemble") { it.dependsOn("reobfJar") }
+            withType<PublishToMavenLocal> { dependsOn("reobfJar") }
+        }
+
+        project.dependencies {
+            this.paperweightDevBundle(group, mcVersion)
+        }
+    }
+
+    private fun applyAPI(group: String) {
+        // We already have API through UserDev
+        if (this.useNMS) return
+
+        val dependency = buildString {
+            append(group)
+            append(":")
+
+            if (useTentacles) {
+                append("tentacles")
+            } else append("purpur")
+
+            append(":")
+            append(mcVersion)
+        }
+
+        project.dependencies.add("compileOnly", dependency)
+    }
+
+    private fun addMinixDependencies() {
         if (!addMinixDependency) return
 
         project.repositories.maven("$RACCI_REPO/releases")
@@ -132,7 +139,32 @@ class MinixMinecraftExtension(private val project: Project) : Extension {
         }
     }
 
-    private fun getRealRoot(project: Project): Project {
+    private fun configurePluginYML() {
+        val lib: Configuration = project.configurations.maybeCreate("lib")
+        project.extensions.getByType<SourceSetContainer>().named(SourceSet.MAIN_SOURCE_SET_NAME) {
+            project.configurations.getByName(it.compileClasspathConfigurationName).extendsFrom(lib)
+            project.configurations.getByName(it.runtimeClasspathConfigurationName).extendsFrom(lib)
+            project.configurations.getByName(it.apiElementsConfigurationName).extendsFrom(lib)
+        }
+
+        when (projectType) {
+            MinecraftProjectType.BUKKIT -> {
+                project.afterEvaluate { _ ->
+                    val ext = findHighestExtension<BukkitPluginDescription>("bukkit") ?: return@afterEvaluate
+                    val mappedDeps = lib.dependencies.map { "${it.group}:${it.name}:${it.version}" }
+
+                    if (ext.libraries == null) ext.libraries = emptyList()
+                    ext.libraries = ext.libraries!! + mappedDeps
+                }
+
+                BukkitPlugin::class
+            }
+
+            MinecraftProjectType.BUNGEECORD -> BungeePlugin::class
+        }.apply(project.pluginManager::apply)
+    }
+
+    private fun getRealRoot(): Project {
         var root = project.rootProject
         var attempts = -1
         while (root.project != root || attempts++ < 5) {
@@ -142,10 +174,7 @@ class MinixMinecraftExtension(private val project: Project) : Extension {
         return root
     }
 
-    private inline fun <reified T> findHighestExtension(
-        project: Project,
-        extension: String
-    ): T? {
+    private inline fun <reified T> findHighestExtension(extension: String): T? {
         val roots = mutableListOf(project)
 
         var attempts = -1
@@ -172,6 +201,10 @@ class MinixMinecraftExtension(private val project: Project) : Extension {
 
         const val RACCI_REPO = "https://repo.racci.dev"
         const val PURPUR_REPO = "https://repo.purpurmc.org/snapshots"
+
+        // TODO -> Dynamic versions.
+        const val PLUGIN_YML = "net.minecrell:plugin-yml:0.5.2"
+        const val USERDEV = "io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.8"
     }
 
     enum class MinecraftProjectType { BUKKIT, BUNGEECORD }

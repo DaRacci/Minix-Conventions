@@ -24,7 +24,7 @@ import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.dokka.utilities.cast
 
-class MinixPublicationExtension(private val project: Project) : Extension {
+class MinixPublicationExtension(override val project: Project) : Extension {
 
     @Input
     var runNumber: String? = System.getenv("GITHUB_RUN_NUMBER")
@@ -58,11 +58,9 @@ class MinixPublicationExtension(private val project: Project) : Extension {
         }
 
     override fun apply() {
-        project.run {
-            pluginManager.apply {
-                apply(MavenPublishPlugin::class)
-                apply(DokkaPlugin::class)
-            }
+        with(project) {
+            // addDependencies(this)
+            applyPlugins(this)
 
             afterEvaluate {
                 if (addRunNumber != "false" && runNumber != null) {
@@ -73,6 +71,17 @@ class MinixPublicationExtension(private val project: Project) : Extension {
             configureExtensions(this)
             configureTasks(this)
         }
+    }
+
+    private fun addDependencies(project: Project) {
+        project.beforeEvaluate { _ ->
+            project.buildscript.dependencies.add("classpath", DOKKA_DEPENDENCY)
+        }
+    }
+
+    private fun applyPlugins(project: Project) {
+        project.pluginManager.apply(MavenPublishPlugin::class)
+        project.pluginManager.apply(DokkaPlugin::class)
     }
 
     private fun configureTasks(project: Project) {
@@ -155,5 +164,9 @@ class MinixPublicationExtension(private val project: Project) : Extension {
                 }
             }
         }
+    }
+
+    companion object {
+        const val DOKKA_DEPENDENCY = "org.jetbrains.dokka:dokka-gradle-plugin:1.7.10"
     }
 }
