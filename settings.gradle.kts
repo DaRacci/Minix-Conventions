@@ -22,7 +22,6 @@ includeBuild("Minix-Plugin")
 
 include(
     "Minix-NMS",
-    "Minix-Platform-Loader",
     "Minix-Catalog-Shaded",
     "Minix-Catalog"
 )
