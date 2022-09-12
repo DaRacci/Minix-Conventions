@@ -64,7 +64,7 @@ tasks {
                 mutableMapOf(
                     "minixConventionsVersion" to version,
                     "minixConventionsKotlinVersion" to kotlinVersion,
-                    "minixVersion" to minixVersion,
+                    "minixVersion" to minixVersion
                 )
             )
         }
