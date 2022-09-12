@@ -9,7 +9,7 @@ dependencies {
     testImplementation("io.kotest:kotest-property:5.4.2")
     testImplementation("io.mockk:mockk:1.12.7")
     testImplementation("io.insert-koin:koin-test:3.2.1")
-    testImplementation("io.insert-koin:koin-test-junit5:3.2.0")
+    testImplementation("io.insert-koin:koin-test-junit5:3.2.1")
 }
 
 tasks.test {
