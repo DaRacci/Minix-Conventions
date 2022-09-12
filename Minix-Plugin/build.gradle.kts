@@ -12,7 +12,7 @@ plugins {
     `java-gradle-plugin`
     kotlin("jvm")
     id("com.gradle.plugin-publish") version "0.21.0"
-    id("org.jlleitschuh.gradle.ktlint") version "10.3.0"
+    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
