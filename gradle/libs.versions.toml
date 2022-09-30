@@ -1,10 +1,10 @@
 [versions]
 adventure = "4.11.0"
-kotlin = "1.7.10"
+kotlin = "1.7.20"
 serialization = "1.4.0"
 exposed = "0.39.2"
 ktor = "2.1.1"
-koin = "3.2.1"
+koin = "3.2.2"
 cloud = "1.7.1"
 sentry = "6.4.2"
 minix = "4.1.2"
@@ -58,7 +58,7 @@ minecraft-api-floodgate = "org.geysermc.floodgate:api:2.1.1-SNAPSHOT"
 minecraft-api-protoclLib = "com.comphenix.protocol:ProtocolLib:4.8.0"
 minecraft-api-placeholderAPI = "me.clip:placeholderapi:2.11.2"
 minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:6.15.0"
-minecraft-api-eco = "com.willfp:eco:6.41.1"
+minecraft-api-eco = "com.willfp:eco:6.41.3"
 minecraft-api-ecoEnchants = "com.willfp:EcoEnchants:8.111.0"
 minecraft-api-luckperms = "net.luckperms:api:5.4"
 minecraft-api-lightAPI = "com.github.BeYkeRYkt.LightAPI:lightapi-bukkit-common:5.3.0-Bukkit"
@@ -107,7 +107,7 @@ sentry-kotlin = { module = "io.sentry:sentry-kotlin-extensions", version.ref = "
 
 testing-junit5 = "org.junit.jupiter:junit-jupiter:5.9.0"
 testing-strikt = "io.strikt:strikt-core:0.34.1"
-testing-mockK = "io.mockk:mockk:1.12.8"
+testing-mockK = "io.mockk:mockk:1.13.2"
 testing-kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 testing-kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 testing-kotest-properties = { module = "io.kotest:kotest-property", version.ref = "kotest" }
