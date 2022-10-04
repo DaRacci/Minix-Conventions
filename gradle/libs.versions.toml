@@ -9,7 +9,7 @@ cloud = "1.7.1"
 sentry = "6.4.2"
 minix = "4.1.2"
 configurate = "4.1.2"
-kotest = "5.4.2"
+kotest = "5.5.0"
 
 [libraries]
 adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
@@ -79,7 +79,7 @@ kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon", version.ref = "serialization" }
 kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf-jvm", version.ref = "serialization" }
 kotlinx-serialization-properties = { module = "org.jetbrains.kotlinx:kotlinx-serialization-properties-jvm", version.ref = "serialization" }
-kotlinx-serialization-kaml = "com.charleskorn.kaml:kaml-jvm:0.48.0"
+kotlinx-serialization-kaml = "com.charleskorn.kaml:kaml-jvm:0.49.0"
 
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
