@@ -31,6 +31,8 @@ class MinixStandardExtension(override val project: Project) : Extension {
     var enableKotlinSerialization: Boolean = true
 
     override fun apply() {
+
+
         project.beforeEvaluate {
             addDependencies()
             applyPlugins()

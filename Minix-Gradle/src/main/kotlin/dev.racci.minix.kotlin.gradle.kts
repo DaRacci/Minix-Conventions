@@ -9,14 +9,10 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint")
 }
 
-kotlin {
-    jvmToolchain {
-        (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(17))
-    }
-}
+kotlin.jvmToolchain(17)
 
 fun loadPropertiesFromResources(
-    propFileName: String,
+    propFileName: String
 ): Properties {
     val props = Properties()
     val inputStream = javaClass.classLoader!!.getResourceAsStream(propFileName)

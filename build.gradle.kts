@@ -4,8 +4,8 @@ plugins {
     id("dev.racci.minix.kotlin")
     id("dev.racci.minix.purpurmc")
     id("dev.racci.minix.publication")
-    kotlin("plugin.serialization")
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.ktlint)
 }
 
 subprojects {
@@ -29,22 +29,26 @@ subprojects {
 
 fun included(build: String, task: String) = gradle.includedBuild(build).task(task)
 
+fun Task.recDepend(task: String) {
+    this.dependsOn(gradle.includedBuilds.mapNotNull { runCatching { it.task(":$task") }.getOrNull() })
+}
+
 tasks {
 
     publish {
-        dependsOn(gradle.includedBuilds.map { it.task(":publish") })
+        recDepend("publish")
     }
 
     publishToMavenLocal {
-        dependsOn(gradle.includedBuilds.map { it.task(":publishToMavenLocal") })
+        recDepend("publishToMavenLocal")
     }
 
     ktlintFormat {
-        dependsOn(gradle.includedBuilds.map { it.task(":ktlintFormat") })
+        recDepend("ktlintFormat")
     }
 
     build {
-        dependsOn(gradle.includedBuilds.map { it.task(":build") })
+        recDepend("build")
     }
 
     clean {

@@ -151,6 +151,16 @@ gradle-dokka = "org.jetbrains.dokka:dokka-gradle-plugin:1.7.10"
 gradle-shadow = "gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0"
 gradle-paperweight = "io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.8"
 
+[plugins]
+dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+pluginYML = "net.minecrell.plugin-yml.bukkit:0.5.2"
+ktlint = "org.jlleitschuh.gradle.ktlint:11.0.0"
+shadow = "com.github.johnrengelman.shadow:7.0.0"
+paperweight = "io.papermc.paperweight.userdev:1.3.8"
+runPaper = "xyz.jpenilla.run-paper:1.0.6"
+
 [bundles]
 common = [
     "koin-core",

@@ -74,10 +74,10 @@ tasks {
             freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn", "-Xcontext-receivers")
         }
     }
-
-    withType<Zip> {
-        isZip64 = true
-    }
+//
+//    withType<Zip> {
+//        isZip64 = true
+//    }
 }
 
 gradlePlugin {

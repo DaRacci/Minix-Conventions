@@ -1,27 +1,17 @@
 enableFeaturePreview("VERSION_CATALOGS")
-pluginManagement {
-    val kotlinVersion: String by settings
-
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-        maven("https://repo.racci.dev/releases/")
-        maven("https://papermc.io/repo/repository/maven-public/")
-    }
-
-    plugins {
-        kotlin("jvm") version kotlinVersion
-        kotlin("plugin.serialization") version kotlinVersion
-    }
-}
 
 rootProject.name = "Minix-Conventions"
 
 includeBuild("Minix-Gradle")
 // includeBuild("Minix-Plugin")
 
-include(
-    "Minix-NMS",
-    "Minix-Catalog-Shaded",
-    "Minix-Catalog"
-)
+include("catalog", "Minix-NMS")
+
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven("https://repo.racci.dev/releases/")
+        maven("https://papermc.io/repo/repository/maven-public/")
+    }
+}

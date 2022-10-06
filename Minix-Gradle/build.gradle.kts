@@ -8,9 +8,8 @@ plugins {
     `kotlin-dsl`
     `maven-publish`
     `kotlin-dsl-precompiled-script-plugins`
-    kotlin("jvm")
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
-    id("com.github.ben-manes.versions") version "0.42.0"
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.ktlint)
 }
 
 val kotlinVersion: String by project
@@ -59,7 +58,7 @@ publishing {
 tasks {
 
     processResources {
-        filesMatching("Minix-Conventions.properties") {
+        filesMatching(listOf("Minix-Conventions.properties", "dev.racci.minix.*.gradle.kts")) {
             expand(
                 mutableMapOf(
                     "minixConventionsVersion" to version,
