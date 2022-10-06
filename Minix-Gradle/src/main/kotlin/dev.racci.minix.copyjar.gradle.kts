@@ -1,3 +1,5 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
 plugins {
     java
     id("com.github.johnrengelman.shadow")
@@ -5,22 +7,22 @@ plugins {
 
 val copyJar: String? by project
 val pluginPath: String? by project.properties
+val CI: String? by System.getenv()
 
-if (System.getenv("CI") != "true" &&
-    copyJar != "false" &&
-    pluginPath != null
-) {
+if (shouldCopy()) {
     tasks {
         register<Copy>("copyJar") {
-            from(if (tasks.findByName("reobfJar") != null) getByName("reobfJar") else shadowJar)
-            into(pluginPath ?: return@register)
+            val sourceJar = findByName("reobfJar") ?: getByName("shadowJar", ShadowJar::class)
+
+            from(sourceJar)
+            into(pluginPath!!)
             doLast {
                 println("Copied to plugin directory $pluginPath")
             }
         }
-
-        named<DefaultTask>("build") {
-            dependsOn("copyJar")
-        }
     }
+}
+
+fun shouldCopy(): Boolean {
+    return CI != "true" && copyJar != "false" && pluginPath == null
 }
