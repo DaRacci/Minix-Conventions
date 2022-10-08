@@ -24,5 +24,5 @@ if (shouldCopy()) {
 }
 
 fun shouldCopy(): Boolean {
-    return CI != "true" && copyJar != "false" && pluginPath == null
+    return CI != "true" && copyJar != "false" && pluginPath != null
 }
