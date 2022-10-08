@@ -76,6 +76,7 @@ if (minixVersion == null) {
 repositories {
     mavenCentral()
     maven("https://repo.racci.dev/releases/")
+    maven("https://repo.racci.dev/snapshots/")
 }
 
 dependencies {

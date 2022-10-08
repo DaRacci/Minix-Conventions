@@ -3,7 +3,7 @@ plugins {
     id("dev.racci.minix.nms")
     id("dev.racci.minix.purpurmc")
     id("dev.racci.minix.publication")
-    alias(libs.plugins.serialization)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies {

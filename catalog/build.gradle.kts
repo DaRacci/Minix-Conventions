@@ -2,10 +2,6 @@ plugins {
     `version-catalog`
     `maven-publish`
 }
-//
-// java.util.Properties()
-//    .apply { load(rootDir.toPath().resolveSibling(Project.GRADLE_PROPERTIES).toFile().inputStream()) }
-//    .forEach { key, value -> project.ext["$key"] = value }
 
 val kotlinVersion: String by project
 val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "DEV"
