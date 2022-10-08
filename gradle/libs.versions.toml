@@ -10,6 +10,11 @@ sentry = "6.4.3"
 minix = "4.2.3"
 configurate = "4.1.2"
 kotest = "5.5.0"
+dokka = "1.7.10"
+pluginYML = "0.5.2"
+ktlint = "11.0.0"
+shadow = "7.0.0"
+paperweight = "1.3.8"
 
 [libraries]
 adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
@@ -145,27 +150,27 @@ ktor-client-plugins-websockets = { module = "io.ktor:ktor-client-websockets-jvm"
 
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle-serialization = { module = "org.jetbrains.kotlin.plugin.serialization:org.jetbrains.kotlin.plugin.serialization.gradle.plugin", version.ref = "kotlin" }
-gradle-pluginYML = "net.minecrell:plugin-yml:0.5.2"
-gradle-ktlint = "org.jlleitschuh.gradle:ktlint-gradle:11.0.0"
-gradle-dokka = "org.jetbrains.dokka:dokka-gradle-plugin:1.7.10"
-gradle-shadow = "gradle.plugin.com.github.jengelman.gradle.plugins:shadow:7.0.0"
-gradle-paperweight = "io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.8"
+gradle-pluginYML = { module = "net.minecrell:plugin-yml", version.ref = "pluginYML" }
+gradle-ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint" }
+gradle-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
+gradle-shadow = { module = "gradle.plugin.com.github.jengelman.gradle.plugins:shadow", version.ref = "shadow" }
+gradle-paperweight = { module = "io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin", version.ref = "paperweight" }
 
 [plugins]
 
 slimjar = "dev.racci.slimjar:1.3.3"
-shadow = "com.github.johnrengelman.shadow:7.0.0"
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 
-ktlint = "org.jlleitschuh.gradle.ktlint:11.0.0"
-dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-atomicfu = { id = "org.jetbrains.kotlin.plugin.atomicfu", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-binaryValidator = "org.jetbrains.kotlinx.binary-compatibility-validator:0.11.1"
 
 minecraft-runPaper = "xyz.jpenilla.run-paper:1.0.6"
-minecraft-pluginYML = "net.minecrell.plugin-yml.bukkit:0.5.2"
-minecraft-paperweight = "io.papermc.paperweight.userdev:1.3.8"
+minecraft-pluginYML = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "pluginYML" }
+minecraft-paperweight = { id = "io.papermc.paperweight.userdev:1.3.8", version.ref = "paperweight" }
 
 [bundles]
 common = [
