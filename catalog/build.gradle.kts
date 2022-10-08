@@ -25,7 +25,7 @@ catalog {
 
         minixPlugin("nms")
         minixPlugin("kotlin")
-        minixPlugin("copyJar")
+        minixPlugin("copyjar")
         minixPlugin("purpurmc")
         minixPlugin("publication")
 
