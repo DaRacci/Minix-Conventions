@@ -4,10 +4,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <title>dev.racci.minix.nms.typeinjection</title>
 <link href="../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script>    <script>const storage = localStorage.getItem("dokka-dark-mode")
-const savedDarkMode = storage ? JSON.parse(storage) : false
-if(savedDarkMode === true){
-    document.getElementsByTagName("html")[0].classList.add("theme-dark")
-}</script>
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
 <script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async></script>
 <link href="../../styles/style.css" rel="Stylesheet">
 <link href="../../styles/jetbrains-mono.css" rel="Stylesheet">
@@ -18,14 +26,15 @@ if(savedDarkMode === true){
 <script type="text/javascript" src="../../scripts/navigation-loader.js" async></script>
 <script type="text/javascript" src="../../scripts/platform-content-handler.js" async></script>
 <script type="text/javascript" src="../../scripts/main.js" defer></script>
-<script type="text/javascript" src="../../scripts/prism.js" async></script></head>
+<script type="text/javascript" src="../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
 <body>
 <div class="navigation-wrapper" id="navigation-wrapper">
     <div id="leftToggler"><span class="icon-toggler"></span></div>
     <div class="library-name">
 <a href="../../index.html">
 <span>Minix-Conventions</span>            </a>    </div>
-    <div>0.7.219
+    <div>0.7.233
     </div>
     <div class="pull-right d-flex">
         <button id="theme-toggle-button"><span id="theme-toggle"></span></button>
@@ -38,9 +47,9 @@ if(savedDarkMode === true){
     </div>
     <div id="main">
 <div class="main-content" id="content" pageids="Minix-NMS::dev.racci.minix.nms.typeinjection////PointingToDeclaration//1047097298">
-  <div class="breadcrumbs"><a href="../index.html">Minix-NMS</a><span class="delimiter">/</span><a href="index.html">dev.racci.minix.nms.typeinjection</a></div>
+  <div class="breadcrumbs"><a href="../index.html">Minix-NMS</a><span class="delimiter">/</span><span class="current">dev.racci.minix.nms.typeinjection</span></div>
   <div class="cover ">
-    <h1 class="cover"><span><span>Package</span></span> <span>dev.</span><wbr><span>racci.</span><wbr><span>minix.</span><wbr><span>nms.</span><wbr><span><span>typeinjection</span></span></h1>
+    <h1 class="cover"><span><span>Package-level</span></span> <span><span>declarations</span></span></h1>
   </div>
   <div class="tabbedcontent">
     <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Functions">Functions</button></div>
@@ -56,7 +65,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#-911890140%2FClasslikes%2F1047097298">NMSAttributeBuilder</a><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.world.entity.ai.attributes/AttributeSupplier.Builder///PointingToDeclaration/">AttributeSupplier.Builder</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#-911890140%2FClasslikes%2F1047097298">NMSAttributeBuilder</a><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.world.entity.ai.attributes/AttributeSupplier.Builder///PointingToDeclaration/">AttributeSupplier.Builder</span></div></div></div>
               </div>
             </div>
           </div>
@@ -71,7 +80,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#644868338%2FClasslikes%2F1047097298">NMSAttributeProvider</a><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.world.entity.ai.attributes/AttributeSupplier///PointingToDeclaration/">AttributeSupplier</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#644868338%2FClasslikes%2F1047097298">NMSAttributeProvider</a><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.world.entity.ai.attributes/AttributeSupplier///PointingToDeclaration/">AttributeSupplier</span></div></div></div>
               </div>
             </div>
           </div>
@@ -86,7 +95,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-n-m-s-attributes/index.html">NMSAttributes</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Represents Attributes in NMS Form.</p></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-n-m-s-attributes/index.html">NMSAttributes</a></div><div class="brief "><p class="paragraph">Represents Attributes in NMS Form.</p></div></div></div>
               </div>
             </div>
           </div>
@@ -101,7 +110,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-n-m-s-data-converter-registry/index.html">NMSDataConverterRegistry</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">NMS Data converter Registry Util.</p></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-n-m-s-data-converter-registry/index.html">NMSDataConverterRegistry</a></div><div class="brief "><p class="paragraph">NMS Data converter Registry Util.</p></div></div></div>
               </div>
             </div>
           </div>
@@ -116,7 +125,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-n-m-s-data-converter-types-wrapper/index.html">NMSDataConverterTypesWrapper</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">NMS Data converter types wrapper.</p></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-n-m-s-data-converter-types-wrapper/index.html">NMSDataConverterTypesWrapper</a></div><div class="brief "><p class="paragraph">NMS Data converter types wrapper.</p></div></div></div>
               </div>
             </div>
           </div>
@@ -131,7 +140,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#982828961%2FClasslikes%2F1047097298">NMSEntityTypeBuilder</a><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.world.entity/EntityType.Builder///PointingToDeclaration/">EntityType.Builder</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../dev.racci.minix.nms.aliases/index.html#-751780641%2FClasslikes%2F1047097298">NMSEntity</a><span class="token operator">&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#982828961%2FClasslikes%2F1047097298">NMSEntityTypeBuilder</a><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.world.entity/EntityType.Builder///PointingToDeclaration/">EntityType.Builder</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../dev.racci.minix.nms.aliases/index.html#-751780641%2FClasslikes%2F1047097298">NMSEntity</a><span class="token operator">&gt;</span></div></div></div>
               </div>
             </div>
           </div>
@@ -146,7 +155,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#1319350546%2FClasslikes%2F1047097298">NMSEntityTypeFactory</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html#1319350546%2FClasslikes%2F1047097298">T</a><span class="token operator">&gt;</span><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.world.entity/EntityType.EntityFactory///PointingToDeclaration/">EntityType.EntityFactory</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html#1319350546%2FClasslikes%2F1047097298">T</a><span class="token operator">&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#1319350546%2FClasslikes%2F1047097298">NMSEntityTypeFactory</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html#1319350546%2FClasslikes%2F1047097298">T</a><span class="token operator">&gt;</span><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.world.entity/EntityType.EntityFactory///PointingToDeclaration/">EntityType.EntityFactory</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html#1319350546%2FClasslikes%2F1047097298">T</a><span class="token operator">&gt;</span></div></div></div>
               </div>
             </div>
           </div>
@@ -161,7 +170,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#-596385231%2FClasslikes%2F1047097298">NMSGenericAttributes</a><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.world.entity.ai.attributes/Attributes///PointingToDeclaration/">Attributes</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#-596385231%2FClasslikes%2F1047097298">NMSGenericAttributes</a><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.world.entity.ai.attributes/Attributes///PointingToDeclaration/">Attributes</span></div></div></div>
               </div>
             </div>
           </div>
@@ -176,7 +185,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#1240410505%2FClasslikes%2F1047097298">NMSNamespacedKey</a><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.resources/ResourceLocation///PointingToDeclaration/">ResourceLocation</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#1240410505%2FClasslikes%2F1047097298">NMSNamespacedKey</a><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.resources/ResourceLocation///PointingToDeclaration/">ResourceLocation</span></div></div></div>
               </div>
             </div>
           </div>
@@ -191,7 +200,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#1044731398%2FClasslikes%2F1047097298">NMSRegistry</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html#1044731398%2FClasslikes%2F1047097298">T</a><span class="token operator">&gt;</span><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.core/MappedRegistry///PointingToDeclaration/">MappedRegistry</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html#1044731398%2FClasslikes%2F1047097298">T</a><span class="token operator">&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">typealias </span><a href="index.html#1044731398%2FClasslikes%2F1047097298">NMSRegistry</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html#1044731398%2FClasslikes%2F1047097298">T</a><span class="token operator">&gt;</span><span class="token operator"> = </span><span data-unresolved-link="net.minecraft.core/MappedRegistry///PointingToDeclaration/">MappedRegistry</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="index.html#1044731398%2FClasslikes%2F1047097298">T</a><span class="token operator">&gt;</span></div></div></div>
               </div>
             </div>
           </div>
@@ -206,7 +215,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-n-m-s-registry-wrapper/index.html">NMSRegistryWrapper</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">NMS Registry Wrapper.</p></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword">object </span><a href="-n-m-s-registry-wrapper/index.html">NMSRegistryWrapper</a></div><div class="brief "><p class="paragraph">NMS Registry Wrapper.</p></div></div></div>
               </div>
             </div>
           </div>
@@ -223,7 +232,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html#1319350546%2FClasslikes%2F1047097298">NMSEntityTypeFactory</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../dev.racci.minix.nms.aliases/index.html#-751780641%2FClasslikes%2F1047097298">NMSEntity</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="builder-for-creature-type.html"><span class="token function">builderForCreatureType</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">creatureType<span class="token operator">: </span><span data-unresolved-link="net.minecraft.world.entity/MobCategory///PointingToDeclaration/">MobCategory</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="net.minecraft.world.entity/EntityType.Builder///PointingToDeclaration/">EntityType.Builder</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../dev.racci.minix.nms.aliases/index.html#-751780641%2FClasslikes%2F1047097298">NMSEntity</a><span class="token operator">&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Returns an <a href="index.html#982828961%2FClasslikes%2F1047097298">NMSEntityTypeBuilder</a> for this specified <span data-unresolved-link="net.minecraft.world.entity/MobCategory///PointingToDeclaration/">MobCategory</span>.</p></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html#1319350546%2FClasslikes%2F1047097298">NMSEntityTypeFactory</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../dev.racci.minix.nms.aliases/index.html#-751780641%2FClasslikes%2F1047097298">NMSEntity</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="builder-for-creature-type.html"><span class="token function">builderForCreatureType</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">creatureType<span class="token operator">: </span><span data-unresolved-link="net.minecraft.world.entity/MobCategory///PointingToDeclaration/">MobCategory</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><span data-unresolved-link="net.minecraft.world.entity/EntityType.Builder///PointingToDeclaration/">EntityType.Builder</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../dev.racci.minix.nms.aliases/index.html#-751780641%2FClasslikes%2F1047097298">NMSEntity</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns an <a href="index.html#982828961%2FClasslikes%2F1047097298">NMSEntityTypeBuilder</a> for this specified <span data-unresolved-link="net.minecraft.world.entity/MobCategory///PointingToDeclaration/">MobCategory</span>.</p></div></div></div>
               </div>
             </div>
           </div>
@@ -238,7 +247,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html#982828961%2FClasslikes%2F1047097298">NMSEntityTypeBuilder</a><span class="token punctuation">.</span><a href="inject-type.html"><span class="token function">injectType</span></a><span class="token punctuation">(</span><span class="parameters wrapped"><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;namespace<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;key<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter indented">&nbsp;&nbsp;&nbsp;&nbsp;extendFrom<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../dev.racci.minix.nms.aliases/index.html#-1772467259%2FClasslikes%2F1047097298">NMSEntityType</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../dev.racci.minix.nms.aliases/index.html#-751780641%2FClasslikes%2F1047097298">NMSEntity</a><span class="token operator">&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Injects an entity into the server</p></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html#982828961%2FClasslikes%2F1047097298">NMSEntityTypeBuilder</a><span class="token punctuation">.</span><a href="inject-type.html"><span class="token function">injectType</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">namespace<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">extendFrom<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../dev.racci.minix.nms.aliases/index.html#-1772467259%2FClasslikes%2F1047097298">NMSEntityType</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../dev.racci.minix.nms.aliases/index.html#-751780641%2FClasslikes%2F1047097298">NMSEntity</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Injects an entity into the server</p></div></div></div>
               </div>
             </div>
           </div>
@@ -253,7 +262,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="register-entity-type.html">T</a><span class="token operator"> : </span><a href="../dev.racci.minix.nms.aliases/index.html#-751780641%2FClasslikes%2F1047097298">NMSEntity</a><span class="token operator">&gt; </span><a href="../dev.racci.minix.nms.aliases/index.html#-1772467259%2FClasslikes%2F1047097298">NMSEntityType</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="register-entity-type.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="register-entity-type.html"><span class="token function">registerEntityType</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">namespace<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../dev.racci.minix.nms.aliases/index.html#-1772467259%2FClasslikes%2F1047097298">NMSEntityType</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="register-entity-type.html">T</a><span class="token operator">&gt;</span><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Registers an <a href="../dev.racci.minix.nms.aliases/index.html#-1772467259%2FClasslikes%2F1047097298">NMSEntityType</a> with the server.</p></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="register-entity-type.html">T</a><span class="token operator"> : </span><a href="../dev.racci.minix.nms.aliases/index.html#-751780641%2FClasslikes%2F1047097298">NMSEntity</a><span class="token operator">&gt; </span><a href="../dev.racci.minix.nms.aliases/index.html#-1772467259%2FClasslikes%2F1047097298">NMSEntityType</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="register-entity-type.html">T</a><span class="token operator">&gt;</span><span class="token punctuation">.</span><a href="register-entity-type.html"><span class="token function">registerEntityType</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">namespace<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">key<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../dev.racci.minix.nms.aliases/index.html#-1772467259%2FClasslikes%2F1047097298">NMSEntityType</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="register-entity-type.html">T</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Registers an <a href="../dev.racci.minix.nms.aliases/index.html#-1772467259%2FClasslikes%2F1047097298">NMSEntityType</a> with the server.</p></div></div></div>
               </div>
             </div>
           </div>
@@ -268,7 +277,7 @@ if(savedDarkMode === true){
                 </span></span></div>
             <div>
               <div class="title">
-                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html#-911890140%2FClasslikes%2F1047097298">NMSAttributeBuilder</a><span class="token punctuation">.</span><a href="set.html"><span class="token function">set</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">attribute<span class="token operator">: </span><span data-unresolved-link="net.minecraft.world.entity.ai.attributes/Attribute///PointingToDeclaration/">Attribute</span><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html#-911890140%2FClasslikes%2F1047097298">NMSAttributeBuilder</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><p class="paragraph">Sets an attribute value for this builder.</p></div></div></div>
+                <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":Minix-NMS:dokkaHtmlPartial/main"><div class="symbol monospace"><span class="token keyword"></span><span class="token keyword">fun </span><a href="index.html#-911890140%2FClasslikes%2F1047097298">NMSAttributeBuilder</a><span class="token punctuation">.</span><a href="set.html"><span class="token function">set</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">attribute<span class="token operator">: </span><span data-unresolved-link="net.minecraft.world.entity.ai.attributes/Attribute///PointingToDeclaration/">Attribute</span><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html#-911890140%2FClasslikes%2F1047097298">NMSAttributeBuilder</a></div><div class="brief "><p class="paragraph">Sets an attribute value for this builder.</p></div></div></div>
               </div>
             </div>
           </div>
