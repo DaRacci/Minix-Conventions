@@ -65,9 +65,9 @@ minecraft-authLib = "com.mojang:authlib:2.3.31"
 minecraft-commandAPI = "dev.jorel:commandapi-shade:8.5.1"
 minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.7"
 minecraft-particles = "xyz.xenondevs:particle:1.8.1"
-minecraft-bstats-base = { id = "org.bstats:bstats-base", version.ref = "bstats" }
-minecraft-bstats-bukkit = { id = "org.bstats:bstats-bukkit", version.ref = "bstats" }
-minecraft-bstats-velocity = { id = "org.bstats:bstats-velocity", version.ref = "bstats" }
+minecraft-bstats-base = { module = "org.bstats:bstats-base", version.ref = "bstats" }
+minecraft-bstats-bukkit = { module = "org.bstats:bstats-bukkit", version.ref = "bstats" }
+minecraft-bstats-velocity = { module = "org.bstats:bstats-velocity", version.ref = "bstats" }
 minecraft-interfaces-paper = { module = "org.incendo.interfaces:interfaces-paper", version.ref = "interfaces" }
 minecraft-interfaces-kotlin = { module = "org.incendo.interfaces:interfaces-kotlin", version.ref = "interfaces" }
 
