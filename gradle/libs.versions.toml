@@ -74,7 +74,7 @@ minecraft-interfaces-kotlin = { module = "org.incendo.interfaces:interfaces-kotl
 minecraft-api-floodgate = "org.geysermc.floodgate:api:2.1.1-SNAPSHOT"
 minecraft-api-protoclLib = "com.comphenix.protocol:ProtocolLib:4.8.0"
 minecraft-api-placeholderAPI = "me.clip:placeholderapi:2.11.2"
-minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:6.20.0"
+minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:6.22.0"
 minecraft-api-eco = "com.willfp:eco:6.45.0"
 minecraft-api-ecoEnchants = "com.willfp:EcoEnchants:9.6.0"
 minecraft-api-libreforge = "com.willfp:libreforge:3.104.0"
