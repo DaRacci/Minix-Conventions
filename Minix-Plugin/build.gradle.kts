@@ -11,7 +11,7 @@ plugins {
     `maven-publish`
     `java-gradle-plugin`
     kotlin("jvm")
-    id("com.gradle.plugin-publish") version "1.0.0"
+    id("com.gradle.plugin-publish") version "1.1.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
