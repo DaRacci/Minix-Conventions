@@ -1,79 +1,62 @@
 package dev.racci.minix.gradle.tasks
 
+import arrow.core.None
+import arrow.core.Option
+import arrow.core.getOrElse
+import arrow.core.orElse
 import org.gradle.api.file.FileCollection
 import org.gradle.api.tasks.Copy
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.OutputDirectory
+import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.bundling.AbstractArchiveTask
+import org.gradle.jvm.tasks.Jar
+import org.gradle.kotlin.dsl.getByName
 import java.io.File
 
 open class CopyJarTask : Copy() {
 
     @InputFile
-    val inputFile: java.util.Optional<File> = java.util.Optional.empty()
+    var inputFile: Option<File> = None
+
+    @InputFile
+    var inputTask: Option<AbstractArchiveTask> = Option.catch { project.tasks.getByName<Jar>("reobfJar") }
+        .orElse { Option.catch { project.tasks.getByName<Jar>("shadowJar") } }
+        .orElse { Option.catch { project.tasks.getByName<Jar>("jar") } }
 
     @OutputDirectory
-    val outputDirectory: java.util.Optional<File> = java.util.Optional.ofNullable(
-        project.properties["Minix.CopyJar.Destination"]?.toString()?.let(::File)
-    )
+    var outputDirectory: File = project.properties["Minix.CopyJar.Destination"]?.toString()?.let(::File) ?: error("Minix.CopyJar.Destination not set")
 
-    // @TaskAction
-    // fun run() {
-    //
-    //     // val file = this.getFile()
-    //     // if (file == null) {
-    //     //     logger.error("No input file found for copyJar task.")
-    //     //     return
-    //     // }
-    //     //
-    //     // val destination = this.getDestination(file)
-    //     // if (destination == null) {
-    //     //     logger.error("No destination directory found for copyJar task.")
-    //     //     return
-    //     // }
-    //     val destination = this.destinationDir
-    //
-    //     if (!destination.exists()) {
-    //         try {
-    //             destination.ensureParentDirsCreated()
-    //         } catch (e: IOException) {
-    //             return logger.error("Could not create destination directory $destination", e)
-    //         }
-    //     }
-    //
-    //     // destination.walk().forEach {
-    //     //     if (!it.isFile) return@forEach
-    //     //     if (!it.canWrite()) return@forEach
-    //     //     if (!it.name.startsWith(file.name.substringBefore('-'))) return@forEach
-    //     //
-    //     //     it.delete()
-    //     // }
-    //
-    //     // try {
-    //     //     file.copyTo(destination)
-    //     // } catch (e: IOException) {
-    //     //     logger.error("Could not copy $file to $destination", e)
-    //     // }
-    // }
+    /** This action is penitently dangerous. */
+    @Input
+    var removeOldCopies: Boolean = false
+
+    @TaskAction
+    fun run() {
+        from(source)
+        into(destinationDir)
+
+        doLast {
+            if (!removeOldCopies) return@doLast
+
+            destinationDir.walk()
+                .filter(File::isFile)
+                .filter(File::canWrite)
+                .filter { file -> file.name.startsWith(source.first().name.substringBefore("-")) }
+                .onEach { file -> logger.info("Deleting old copy: ${file.name}") }
+                .forEach(File::delete)
+        }
+    }
 
     override fun getSource(): FileCollection {
-        val file = this.inputFile
-            .filter { file -> file.exists() }
-            .orElseGet {
-                project.tasks.findByName("reobfJar")?.outputs?.files?.singleFile?.also { file ->
-                    logger.info("Using reobfJar output as input for copyJar: $file")
-                    return@orElseGet file
-                }
-
-                project.tasks.findByName("shadowJar")?.outputs?.files?.singleFile?.also { file ->
-                    logger.info("Using shadowJar output as input for copyJar: $file")
-                    return@orElseGet file
-                }
-
-                null
-            }
-
+        val file = inputFile.getOrElse { inputTask.getOrElse { error("No input file or task found") }.archiveFile }
         return project.files(file)
     }
 
-    override fun getDestinationDir(): File = this.outputDirectory.get()
+    override fun getDestinationDir(): File = this.outputDirectory
+
+    override fun setDestinationDir(destinationDir: File) {
+        this.outputDirectory = destinationDir
+    }
 }

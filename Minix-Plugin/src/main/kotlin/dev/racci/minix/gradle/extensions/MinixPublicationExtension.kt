@@ -1,7 +1,6 @@
 package dev.racci.minix.gradle.extensions
 
-import groovy.util.Node
-import groovy.util.NodeList
+import dev.racci.minix.gradle.Constants
 import io.papermc.paperweight.tasks.RemapJar
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.RepositoryHandler
@@ -22,7 +21,6 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.dokka.Platform
 import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
-import org.jetbrains.dokka.utilities.cast
 
 class MinixPublicationExtension(override val project: Project) : Extension {
 
@@ -42,6 +40,9 @@ class MinixPublicationExtension(override val project: Project) : Extension {
     var documentationDir: String? = project.findProperty("minix.buildDir") as? String
 
     @Input
+    var configureMavenPublish: Boolean = true
+
+    @Input
     var preRelease: Boolean = run {
         val preReleaseRegex = Regex("(?<![0-9])([a-zA-Z])(?![a-zA-Z])")
         preReleaseRegex.containsMatchIn(project.version.toString())
@@ -59,7 +60,6 @@ class MinixPublicationExtension(override val project: Project) : Extension {
 
     override fun apply() {
         with(project) {
-            // addDependencies(this)
             applyPlugins(this)
 
             afterEvaluate {
@@ -70,12 +70,6 @@ class MinixPublicationExtension(override val project: Project) : Extension {
 
             configureExtensions(this)
             configureTasks(this)
-        }
-    }
-
-    private fun addDependencies(project: Project) {
-        project.beforeEvaluate { _ ->
-            project.buildscript.dependencies.add("classpath", DOKKA_DEPENDENCY)
         }
     }
 
@@ -94,10 +88,8 @@ class MinixPublicationExtension(override val project: Project) : Extension {
                 builder.skipEmptyPackages.set(true)
                 builder.displayName.set(project.name.split("-").getOrElse(1) { project.name })
                 builder.platform.set(Platform.jvm)
-                builder.jdkVersion.set(17)
-                builder.sourceLink { link ->
-                    link.remoteLineSuffix.set("#L")
-                }
+                builder.jdkVersion.set(Constants.JDK_VERSION)
+                builder.sourceLink { link -> link.remoteLineSuffix.set("#L") }
             }
         }
     }
@@ -113,33 +105,7 @@ class MinixPublicationExtension(override val project: Project) : Extension {
                 publication.artifactId = project.rootProject.name
                 publication.groupId = project.rootProject.group.toString()
 
-                publication.pom.withXml { xml ->
-                    val dependencies = listOfNotNull(
-                        project.configurations.findByName("lib")?.resolvedConfiguration?.firstLevelModuleDependencies?.toTypedArray(),
-                        project.configurations.findByName("libSlim")?.resolvedConfiguration?.firstLevelModuleDependencies?.toTypedArray()
-                    ).toTypedArray().flatten()
-
-                    if (dependencies.isEmpty()) return@withXml
-
-                    val node = Node(xml.asNode(), "dependencies")
-                    for (dep in dependencies) {
-                        val existing = node.children().cast<NodeList>()
-                            .filterIsInstance<Node>()
-                            .find {
-                                it["groupId"] == dep.moduleGroup &&
-                                    it["artifactId"] == dep.moduleName &&
-                                    it["version"] == dep.moduleVersion &&
-                                    it["scope"] == "compile"
-                            }
-                        if (existing != null) continue
-
-                        val innerNode = Node(node, "dependency")
-                        innerNode.appendNode("groupId", dep.moduleGroup)
-                        innerNode.appendNode("artifactId", dep.moduleName)
-                        innerNode.appendNode("version", dep.moduleVersion)
-                        innerNode.appendNode("scope", "compile")
-                    }
-                }
+                if (!configureMavenPublish) return@register
 
                 if (this.publishComponentName != null) {
                     return@register publication.from(project.components[this.publishComponentName!!])
@@ -160,13 +126,9 @@ class MinixPublicationExtension(override val project: Project) : Extension {
                 }
 
                 if (publication.artifacts.isEmpty()) {
-                    publication.from(project.components["java"])
+                    publication.from(project.components["kotlin"])
                 }
             }
         }
-    }
-
-    companion object {
-        const val DOKKA_DEPENDENCY = "org.jetbrains.dokka:dokka-gradle-plugin:1.7.10"
     }
 }

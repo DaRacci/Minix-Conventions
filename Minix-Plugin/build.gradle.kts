@@ -13,7 +13,7 @@ plugins {
     kotlin("jvm")
     id("com.gradle.plugin-publish") version "1.1.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
-    id("com.github.johnrengelman.shadow") version "7.1.2"
+//    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 repositories {
@@ -28,6 +28,7 @@ dependencies {
     implementation(platform(kotlin("bom:$kotlinVersion")))
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.immutableCollections)
+    implementation(libs.arrow.core)
 
     // All the plugins that are used to configure.
     // TODO: Figure out how to apply these without implementing specific versions

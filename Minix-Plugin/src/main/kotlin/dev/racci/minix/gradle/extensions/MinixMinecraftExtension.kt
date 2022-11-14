@@ -1,5 +1,6 @@
 package dev.racci.minix.gradle.extensions
 
+import dev.racci.minix.gradle.Constants.RACCI_REPO
 import io.papermc.paperweight.userdev.PaperweightUser
 import net.minecrell.pluginyml.bukkit.BukkitPlugin
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
@@ -16,9 +17,7 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.maven
-import org.gradle.kotlin.dsl.named
 import org.gradle.kotlin.dsl.withType
-import org.gradle.language.jvm.tasks.ProcessResources
 import paperweightDevBundle
 import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.full.declaredMemberProperties
@@ -45,13 +44,6 @@ class MinixMinecraftExtension(override val project: Project) : Extension {
         addMinecraftDependency()
         addMinixDependencies()
         configurePluginYML()
-
-        @Suppress("UnstableApiUsage")
-        project.tasks.named<ProcessResources>("processResources") {
-            filesMatching("plugin.yml") {
-                expand(mutableMapOf("version" to project.version))
-            }
-        }
     }
 
     private fun addMinecraftDependency() {
@@ -80,17 +72,10 @@ class MinixMinecraftExtension(override val project: Project) : Extension {
             TENTACLES_MODULE -> project.repositories.maven("$RACCI_REPO/snapshots")
             else -> project.repositories.maven(PURPUR_REPO)
         }
-
-        if (!this.useNMS) return
-        project.repositories.maven("https://papermc.io/repo/repository/maven-public/")
     }
 
     private fun applyNMS(group: String) {
-//        project.beforeEvaluate {
-//            project.buildscript.dependencies.add("classpath", USERDEV)
-//        }
         project.pluginManager.apply(PaperweightUser::class)
-//        project.plugins.apply("io.papermc.paperweight.userdev")
 
         project.tasks.apply {
             named("assemble") { it.dependsOn("reobfJar") }
@@ -199,12 +184,10 @@ class MinixMinecraftExtension(override val project: Project) : Extension {
         const val OLD_PURPUR_MODULE = "net.pl3x.purpur"
         const val NEW_PURPUR_MODULE = "org.purpurmc.purpur"
 
-        const val RACCI_REPO = "https://repo.racci.dev"
         const val PURPUR_REPO = "https://repo.purpurmc.org/snapshots"
 
         // TODO -> Dynamic versions.
         const val PLUGIN_YML = "net.minecrell:plugin-yml:0.5.2"
-        const val USERDEV = "io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin:1.3.8"
     }
 
     enum class MinecraftProjectType { BUKKIT, BUNGEECORD }
