@@ -183,7 +183,7 @@ gradle-paperweight = { module = "io.papermc.paperweight.userdev:io.papermc.paper
 
 [plugins]
 
-ksp = "com.google.devtools.ksp:1.7.21-1.0.8"
+ksp = "com.google.devtools.ksp:1.7.22-1.0.8"
 slimjar = "dev.racci.slimjar:1.3.3"
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 arrow-analysis = { id = "io.arrow-kt.analysis.kotlin", version.ref = "arrow-analysis" }
