@@ -9,7 +9,8 @@ import org.bukkit.entity.Entity
 
 /**
  * @param other Another entity.
- * @return The distance between the current entity and other entity's locations.
+ * @return The distance between the current entity and other entity's
+ *     locations.
  */
 fun Entity.distanceSqrTo(
     other: Entity
@@ -29,18 +30,17 @@ fun Entity.distanceSqrTo(
  */
 fun Entity.findNearbyPlayer(
     range: Double
-): NMSPlayer = world.toNMS().findNearbyPlayer(this.toNMS(), range) { true }
+): NMSPlayer = world.toNMS().findNearbyPlayer(this.toNMS(), range) { true } as NMSPlayer
 
 /**
- *  A custom definition of whether this entity should be able to reach and hit another one.
+ * A custom definition of whether this entity should be able to reach and
+ * hit another one.
  */
 fun Entity.canReach(
     target: Entity
 ): Boolean = distanceSqrTo(target) < reachDistance(target)
 
-/**
- * TBH Idk.
- */
+/** TBH Idk. */
 fun Entity.reachDistance(
     target: Entity
 ): Double = width * width + target.width * target.width
