@@ -17,7 +17,7 @@ shadow = "7.0.0"
 paperweight = "1.3.11"
 interfaces = "1.0.0-SNAPSHOT"
 arrow = "1.1.3"
-arrow-analsis = "2.0.2"
+arrow-analysis = "2.0.2"
 bstats = "3.0.0"
 
 [libraries]
