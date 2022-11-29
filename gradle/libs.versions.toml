@@ -137,7 +137,7 @@ sentry-kotlin = { module = "io.sentry:sentry-kotlin-extensions", version.ref = "
 
 testing-junit5 = "org.junit.jupiter:junit-jupiter:5.9.1"
 testing-strikt = "io.strikt:strikt-core:0.34.1"
-testing-mockK = "io.mockk:mockk:1.13.2"
+testing-mockK = "io.mockk:mockk:1.13.3"
 testing-kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 testing-kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 testing-kotest-properties = { module = "io.kotest:kotest-property", version.ref = "kotest" }
