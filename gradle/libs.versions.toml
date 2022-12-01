@@ -1,5 +1,5 @@
 [versions]
-adventure = "4.11.0"
+adventure = "4.12.0"
 kotlin = "1.7.22"
 serialization = "1.4.1"
 exposed = "0.41.1"
