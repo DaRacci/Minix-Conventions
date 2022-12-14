@@ -1,18 +1,26 @@
+@file:Suppress("UnstableApiUsage")
+
 enableFeaturePreview("VERSION_CATALOGS")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-dependencyResolutionManagement {
-
-    versionCatalogs.create("libs") {
-        from(files("../gradle/libs.versions.toml"))
+pluginManagement {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven("https://repo.racci.dev/releases")
     }
 }
 
-pluginManagement {
-    val kotlinVersion = java.util.Properties()
-        .apply { load(rootDir.toPath().resolveSibling(Project.GRADLE_PROPERTIES).toFile().inputStream()) }
-        .getProperty("kotlinVersion")
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    versionCatalogs.create("libs") {
+        from(files("../gradle/libs.versions.toml"))
+    }
 
-    plugins {
-        kotlin("jvm") version kotlinVersion
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+        maven("https://repo.racci.dev/releases/")
+        maven("https://papermc.io/repo/repository/maven-public/")
     }
 }

@@ -8,8 +8,8 @@ plugins {
     `kotlin-dsl`
     `maven-publish`
     `kotlin-dsl-precompiled-script-plugins`
-    alias(libs.plugins.kotlin)
-    alias(libs.plugins.ktlint)
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.plugin.ktlint)
 }
 
 val kotlinVersion: String by project
@@ -22,20 +22,13 @@ javaComponent.withVariantsFromConfiguration(configurations["runtimeElements"]) {
     mapToOptional()
 }
 
-repositories {
-    mavenCentral()
-    gradlePluginPortal()
-    maven("https://repo.racci.dev/releases/")
-    maven("https://papermc.io/repo/repository/maven-public/")
-}
-
 dependencies {
-    implementation(libs.gradle.kotlin)
-    implementation(libs.gradle.serialization)
-    implementation(libs.gradle.ktlint)
-    implementation(libs.gradle.dokka)
+    implementation(libs.gradle.kotlin.jvm)
+    implementation(libs.gradle.kotlin.plugin.serialization)
+    implementation(libs.gradle.kotlin.plugin.ktlint)
+    implementation(libs.gradle.kotlin.plugin.dokka)
     implementation(libs.gradle.shadow)
-    implementation(libs.gradle.paperweight)
+    implementation(libs.gradle.minecraft.paperweight)
 
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.reflect)

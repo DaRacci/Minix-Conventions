@@ -10,17 +10,11 @@ plugins {
     java
     `maven-publish`
     `java-gradle-plugin`
-    kotlin("jvm")
+    alias(libs.plugins.kotlin.dsl)
+    alias(libs.plugins.kotlin.jvm)
     id("com.gradle.plugin-publish") version "1.1.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
 //    id("com.github.johnrengelman.shadow") version "7.1.2"
-}
-
-repositories {
-    mavenCentral()
-    gradlePluginPortal()
-    maven("https://repo.racci.dev/releases/")
-    maven("https://papermc.io/repo/repository/maven-public/")
 }
 
 dependencies {
@@ -35,13 +29,16 @@ dependencies {
     compileOnly(gradleApi())
     compileOnly(gradleKotlinDsl())
 
-    compileOnly(libs.gradle.serialization)
-    compileOnly(libs.gradle.pluginYML)
-    compileOnly(libs.gradle.kotlin)
-    compileOnly(libs.gradle.ktlint)
-    compileOnly(libs.gradle.dokka)
+    compileOnly(libs.gradle.kotlin.plugin.serialization)
+    compileOnly(libs.gradle.minecraft.pluginYML)
+    compileOnly(libs.gradle.kotlin.jvm)
+    compileOnly(libs.gradle.kotlin.plugin.ktlint)
+    compileOnly(libs.gradle.kotlin.plugin.dokka)
     compileOnly(libs.gradle.shadow)
-    compileOnly(libs.gradle.paperweight)
+    compileOnly(libs.gradle.minecraft.paperweight)
+    compileOnly(libs.gradle.kotlin.dsl)
+    compileOnly(libs.gradle.kotlin.mpp)
+    compileOnly("org.gradle.kotlin:gradle-kotlin-dsl-plugins:3.2.6")
 
     testImplementation(libs.bundles.kotlin)
     testImplementation(libs.kotlin.test)
@@ -60,6 +57,7 @@ dependencies {
 
 kotlin {
     sourceSets.all {
+        explicitApi()
         languageSettings {
             languageVersion = "1.7"
         }
