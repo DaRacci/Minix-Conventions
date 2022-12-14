@@ -63,7 +63,7 @@ public class MinixStandardExtension(override val project: Project) : Extension {
             else -> this.name.toLowerCase()
         }.also { strDir -> this.buildDir = this.rootProject.buildDir.resolve(strDir) }
 
-        configurations.all {
+        configurations {
             val slim by this.compileClasspath.get().extendsFrom(slim)
             runtimeClasspath.get().extendsFrom(slim)
             apiElements.get().extendsFrom(slim)

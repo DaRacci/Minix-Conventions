@@ -1,12 +1,11 @@
 plugins {
-    id("dev.racci.minix.kotlin")
+    id("dev.racci.minix.common")
     id("dev.racci.minix.nms")
     id("dev.racci.minix.purpurmc")
     id("dev.racci.minix.publication")
-    alias(libs.plugins.kotlin.plugin.serialization)
+    id(libs.plugins.kotlin.jvm.get().pluginId)
 }
 
 dependencies {
-    api(project(":"))
-    compileOnly(libs.kotlinx.serialization.json)
+    (project(":"))
 }

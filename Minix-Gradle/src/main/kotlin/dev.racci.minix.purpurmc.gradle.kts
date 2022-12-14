@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 val serverVersion: String by project
 val useTentacles: String? by project
 
@@ -23,18 +21,4 @@ dependencies {
         "${if (major == 1 && minor < 18) "net.pl3x.purpur" else "org.purpurmc.purpur"}:purpur-api"
     }
     compileOnly("$groupAndModule:$serverVersion")
-}
-
-tasks {
-
-    processResources {
-        filesMatching("plugin.yml") {
-            expand(mutableMapOf("version" to version))
-        }
-    }
-
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-        kotlinOptions.languageVersion = "1.7"
-    }
 }

@@ -8,7 +8,6 @@ plugins {
     `kotlin-dsl`
     `maven-publish`
     `kotlin-dsl-precompiled-script-plugins`
-    alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.plugin.ktlint)
 }
 
@@ -27,7 +26,6 @@ dependencies {
     implementation(libs.gradle.kotlin.plugin.serialization)
     implementation(libs.gradle.kotlin.plugin.ktlint)
     implementation(libs.gradle.kotlin.plugin.dokka)
-    implementation(libs.gradle.shadow)
     implementation(libs.gradle.minecraft.paperweight)
 
     implementation(libs.kotlin.stdlib)

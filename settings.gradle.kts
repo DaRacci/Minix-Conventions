@@ -6,7 +6,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "Minix-Conventions"
 
 includeBuild("Minix-Gradle")
-includeBuild("Minix-Plugin")
+// includeBuild("Minix-Plugin")
 
 include("catalog", "Minix-NMS")
 
@@ -15,6 +15,7 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven("https://repo.racci.dev/releases")
+        maven("https://papermc.io/repo/repository/maven-public/")
     }
 }
 

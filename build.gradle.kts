@@ -1,22 +1,17 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-    id("dev.racci.minix.kotlin")
+    `kotlin-dsl`
+    `kotlin-dsl-precompiled-script-plugins`
+    id("dev.racci.minix.common")
     id("dev.racci.minix.purpurmc")
     id("dev.racci.minix.publication")
+    // Fix for "Multiple incompatible variants of org.jetbrains.kotlin:kotlin-gradle-plugin-api:1.7.22 were selected". Should be fixed in 1.8.20
+    // See: https://youtrack.jetbrains.com/issue/KT-54691/Kotlin-Gradle-Plugin-libraries-alignment-platform
+    id("org.jetbrains.kotlin.plugin.sam.with.receiver") version "1.7.22"
     alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.kotlin.plugin.ktlint)
 }
 
 subprojects {
-
-    tasks.withType<KotlinCompile> {
-        kotlinOptions {
-            freeCompilerArgs = listOf(
-                "-opt-in=kotlin.RequiresOptIn"
-            )
-        }
-    }
 
     if (buildscript.sourceFile?.extension?.toLowerCase() == "kts" &&
         parent != rootProject
@@ -29,31 +24,19 @@ subprojects {
 
 fun included(build: String, task: String) = gradle.includedBuild(build).task(task)
 
-fun Task.recDepend(task: String) {
-    this.dependsOn(gradle.includedBuilds.mapNotNull { runCatching { it.task(":$task") }.getOrNull() })
+fun TaskProvider<*>.recDep() {
+    this {
+        dependsOn(gradle.includedBuilds.mapNotNull { runCatching { it.task(":$name") }.getOrNull() })
+    }
 }
 
 tasks {
 
-    publish {
-        recDepend("publish")
-    }
-
-    publishToMavenLocal {
-        recDepend("publishToMavenLocal")
-    }
-
-    ktlintFormat {
-        recDepend("ktlintFormat")
-    }
-
-    build {
-        recDepend("build")
-    }
-
-    clean {
-        dependsOn(gradle.includedBuilds.map { it.task(":clean") })
-    }
+    publish.recDep()
+    publishToMavenLocal.recDep()
+    ktlintFormat.recDep()
+    build.recDep()
+    clean.recDep()
 
     dokkaHtmlMultiModule {
         outputDirectory.set(File("$rootDir/docs"))
