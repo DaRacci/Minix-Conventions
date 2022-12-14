@@ -38,7 +38,7 @@ dependencies {
     compileOnly(libs.gradle.minecraft.paperweight)
     compileOnly(libs.gradle.kotlin.dsl)
     compileOnly(libs.gradle.kotlin.mpp)
-    compileOnly("org.gradle.kotlin:gradle-kotlin-dsl-plugins:3.2.6")
+    compileOnly("org.gradle.kotlin:gradle-kotlin-dsl-plugins:3.2.7")
 
     testImplementation(libs.bundles.kotlin)
     testImplementation(libs.kotlin.test)
