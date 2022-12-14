@@ -2,7 +2,7 @@ package dev.racci.minix.gradle.tasks
 
 import org.gradle.api.DefaultTask
 
-class QuickBuildTask : DefaultTask() {
+public class QuickBuildTask : DefaultTask() {
     init {
         group = "build"
         description = "Builds the project with minimal tasks (No testing or documentation, etc.)"

@@ -15,23 +15,23 @@ import org.gradle.kotlin.dsl.register
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
-class MinixGradlePlugin : Plugin<Project> {
+public class MinixGradlePlugin : Plugin<Project> {
     private lateinit var project: Project
 
     @Input
-    var standardExtension: Boolean = true
+    public var standardExtension: Boolean = true
 
     @Input
-    var minecraftExtension: Boolean = true
+    public var minecraftExtension: Boolean = true
 
     @Input
-    var publicationExtension: Boolean = true
+    public var publicationExtension: Boolean = true
 
     @Input
-    var copyJarTask: Boolean = true
+    public var copyJarTask: Boolean = true
 
     @Input
-    var subprojectExtensions: MutableMap<Project, List<KClass<out Extension>>> = mutableMapOf()
+    public var subprojectExtensions: MutableMap<Project, List<KClass<out Extension>>> = mutableMapOf()
 
     private var minixExtensions = listOf(
         MinixStandardExtension::class,
@@ -39,7 +39,7 @@ class MinixGradlePlugin : Plugin<Project> {
         MinixPublicationExtension::class
     )
 
-    fun MinixGradlePlugin.options(block: MinixStandardExtension.() -> Unit) {
+    public fun MinixGradlePlugin.options(block: MinixStandardExtension.() -> Unit) {
         if (!standardExtension) return
 
         project.extensions.getByType<MinixStandardExtension>().block()
@@ -57,7 +57,7 @@ class MinixGradlePlugin : Plugin<Project> {
                     continue
                 }
 
-                val name = extension.simpleName!!.removeSuffix("Extension").replaceFirstChar(Char::lowercase)
+                val name = extension.simpleName!!.removeSuffix("Extension").decapitalize()
 
                 println("Applying extension $name")
                 extension.primaryConstructor!!.call(project).also { ext ->

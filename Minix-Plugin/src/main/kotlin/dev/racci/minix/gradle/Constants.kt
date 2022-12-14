@@ -1,8 +1,7 @@
 package dev.racci.minix.gradle
 
-object Constants {
-    const val KOTLIN_VERSION = "1.7.21"
-    const val JDK_VERSION = 17
+public object Constants {
+    public const val JDK_VERSION: Int = 17
 
-    const val RACCI_REPO = "https://repo.racci.dev/"
+    public const val RACCI_REPO: String = "https://repo.racci.dev/"
 }

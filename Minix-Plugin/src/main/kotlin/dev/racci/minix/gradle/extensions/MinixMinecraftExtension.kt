@@ -23,22 +23,22 @@ import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
 
-class MinixMinecraftExtension(override val project: Project) : Extension {
+public class MinixMinecraftExtension(override val project: Project) : Extension {
 
     @Input
-    var useTentacles: Boolean = false
+    public var useTentacles: Boolean = false
 
     @Input
-    var mcVersion: String = "1.19.2-R0.1-SNAPSHOT"
+    public var mcVersion: String = "1.19.2-R0.1-SNAPSHOT"
 
     @Input
-    var useNMS: Boolean = false
+    public var useNMS: Boolean = false
 
     @Input
-    var addMinixDependency: Boolean = true
+    public var addMinixDependency: Boolean = true
 
     @Input
-    var projectType: MinecraftProjectType = MinecraftProjectType.BUKKIT
+    public var projectType: MinecraftProjectType = MinecraftProjectType.BUKKIT
 
     override fun apply() {
         addMinecraftDependency()
@@ -78,7 +78,7 @@ class MinixMinecraftExtension(override val project: Project) : Extension {
         project.pluginManager.apply(PaperweightUser::class)
 
         project.tasks.apply {
-            named("assemble") { it.dependsOn("reobfJar") }
+            named("assemble") { dependsOn("reobfJar") }
             withType<PublishToMavenLocal> { dependsOn("reobfJar") }
         }
 
@@ -127,14 +127,14 @@ class MinixMinecraftExtension(override val project: Project) : Extension {
     private fun configurePluginYML() {
         val lib: Configuration = project.configurations.maybeCreate("lib")
         project.extensions.getByType<SourceSetContainer>().named(SourceSet.MAIN_SOURCE_SET_NAME) {
-            project.configurations.getByName(it.compileClasspathConfigurationName).extendsFrom(lib)
-            project.configurations.getByName(it.runtimeClasspathConfigurationName).extendsFrom(lib)
-            project.configurations.getByName(it.apiElementsConfigurationName).extendsFrom(lib)
+            project.configurations.getByName(compileClasspathConfigurationName).extendsFrom(lib)
+            project.configurations.getByName(runtimeClasspathConfigurationName).extendsFrom(lib)
+            project.configurations.getByName(apiElementsConfigurationName).extendsFrom(lib)
         }
 
         when (projectType) {
             MinecraftProjectType.BUKKIT -> {
-                project.afterEvaluate { _ ->
+                project.afterEvaluate {
                     val ext = findHighestExtension<BukkitPluginDescription>("bukkit") ?: return@afterEvaluate
                     val mappedDeps = lib.dependencies.map { "${it.group}:${it.name}:${it.version}" }
 
@@ -190,5 +190,5 @@ class MinixMinecraftExtension(override val project: Project) : Extension {
         const val PLUGIN_YML = "net.minecrell:plugin-yml:0.5.2"
     }
 
-    enum class MinecraftProjectType { BUKKIT, BUNGEECORD }
+    public enum class MinecraftProjectType { BUKKIT, BUNGEECORD }
 }

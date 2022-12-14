@@ -2,8 +2,8 @@ package dev.racci.minix.gradle.extensions
 
 import org.gradle.api.Project
 
-interface Extension {
-    val project: Project
+public interface Extension {
+    public val project: Project
 
-    fun apply()
+    public fun apply()
 }

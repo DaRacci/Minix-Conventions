@@ -15,25 +15,25 @@ import org.gradle.jvm.tasks.Jar
 import org.gradle.kotlin.dsl.getByName
 import java.io.File
 
-open class CopyJarTask : Copy() {
+public open class CopyJarTask : Copy() {
 
     @InputFile
-    var inputFile: Option<File> = None
+    public var inputFile: Option<File> = None
 
     @InputFile
-    var inputTask: Option<AbstractArchiveTask> = Option.catch { project.tasks.getByName<Jar>("reobfJar") }
+    public var inputTask: Option<AbstractArchiveTask> = Option.catch { project.tasks.getByName<Jar>("reobfJar") }
         .orElse { Option.catch { project.tasks.getByName<Jar>("shadowJar") } }
         .orElse { Option.catch { project.tasks.getByName<Jar>("jar") } }
 
     @OutputDirectory
-    var outputDirectory: File = project.properties["Minix.CopyJar.Destination"]?.toString()?.let(::File) ?: error("Minix.CopyJar.Destination not set")
+    public var outputDirectory: File = project.properties["Minix.CopyJar.Destination"]?.toString()?.let(::File) ?: error("Minix.CopyJar.Destination not set")
 
     /** This action is penitently dangerous. */
     @Input
-    var removeOldCopies: Boolean = false
+    public var removeOldCopies: Boolean = false
 
     @TaskAction
-    fun run() {
+    public fun run() {
         from(source)
         into(destinationDir)
 
