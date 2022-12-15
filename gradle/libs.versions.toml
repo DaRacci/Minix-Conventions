@@ -22,7 +22,7 @@ slimjar = "1.3.3"
 eco = "6.48.1"
 eco-bosses = "8.110.1"
 eco-enchants = "9.14.2"
-eco-libreforge = "3.126.1"
+eco-libreforge = "8.110.1"
 
 adventure = "4.12.0"
 adventure-platform = "4.2.0"
