@@ -72,7 +72,9 @@ val Project.recursiveSubprojects: Sequence<Project>
     }
 
 fun applyToTarget(target: Project) {
-    target.buildDir = trueRoot.buildDir.resolve(target.name.toLowerCase())
+    if (target != target.trueRoot) {
+        target.buildDir = trueRoot.buildDir.resolve(target.name.toLowerCase())
+    }
 
     target.plugins.withType<KotlinMultiplatformPlugin> {
         commonKotlin()
