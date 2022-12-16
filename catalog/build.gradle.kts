@@ -1,12 +1,9 @@
 plugins {
     `version-catalog`
-    `maven-publish`
+    id("dev.racci.minix.publication")
 }
 
-val kotlinVersion: String by project
-val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "DEV"
-
-version = "$kotlinVersion-$runNumber"
+minixPublishing.publishComponentName = "versionCatalog"
 
 catalog {
     versionCatalog {
@@ -21,20 +18,16 @@ catalog {
 
         gradle.includedBuilds.find { it.name == "Minix-Gradle" }!!.projectDir.resolve("src/main/kotlin").listFiles { file ->
             file.isFile
-        }.forEach { file -> minixPlugin(file) }
+        }?.forEach { file -> minixPlugin(file) }
 
         from(files("../gradle/libs.versions.toml"))
     }
 }
 
-publishing {
-    repositories.maven("https://repo.racci.dev/releases") {
-        name = "RacciRepo"
-        credentials(PasswordCredentials::class)
-    }
-
-    publications.create<MavenPublication>("maven") {
-        artifactId = "catalog"
-        from(components["versionCatalog"])
-    }
-}
+// publishing {
+//    publications.named<MavenPublication>("maven") {
+//        artifactId = "catalog"
+// //        components.clear()
+// //        from(components["versionCatalog"])
+//    }
+// }

@@ -13,7 +13,7 @@ plugins {
 }
 
 val kotlinVersion: String by project
-val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "DEV"
+val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "SNAPSHOT"
 val minixVersion: String = "${project.ext["version"]}.$runNumber"
 version = "$kotlinVersion-$runNumber"
 

@@ -1,3 +1,5 @@
+import gradle.kotlin.dsl.accessors._6f77941ef037b0b91092ede508229a8e.java
+import gradle.kotlin.dsl.accessors._6f77941ef037b0b91092ede508229a8e.publishing
 import org.jetbrains.dokka.Platform
 import org.jetbrains.dokka.gradle.DokkaTask
 
@@ -15,6 +17,8 @@ plugins {
     `maven-publish`
     id("org.jetbrains.dokka")
 }
+
+val publishingExtension = extensions.create<MinixPublishingExtension>("minixPublishing", project)
 
 val trueRoot = project.trueRoot
 if (trueRoot == project) {
@@ -35,27 +39,50 @@ if (trueRoot == project) {
 
 // tasks.withType<DokkaMultiModuleTask> { outputDirectory.set(File("$rootDir/docs")) }
 
-val runNumber: String? = System.getenv("GITHUB_RUN_NUMBER")
-val runNumberDelimiter: String? by project
-val addRunNumber: String? by project
-val publishComponentName: String? by project
-
-if (addRunNumber != "false" && runNumber != null) {
-    version = "$version${runNumberDelimiter ?: '.'}$runNumber"
-}
-
 java.withSourcesJar()
 
-publishing {
-    repositories {
-        maven("https://repo.racci.dev/releases") {
-            name = "RacciRepo"
-            credentials(PasswordCredentials::class)
+if (publishingExtension.addRunNumber && publishingExtension.runNumber != null) {
+    version = "$version${publishingExtension.runNumberDelimiter}${publishingExtension.runNumber}"
+}
+
+fun isSnapshot(version: String): Boolean = publishingExtension.runNumber == null || version.endsWith("SNAPSHOT")
+
+afterEvaluate {
+    publishing {
+        repositories {
+            maven("https://repo.racci.dev/") {
+                url = if (isSnapshot(version.toString())) {
+                    url.resolve("snapshots")
+                } else url.resolve("releases")
+
+                name = "RacciRepo"
+                credentials(PasswordCredentials::class)
+            }
+        }
+        publications {
+            register("maven", MavenPublication::class) {
+                from(components[publishingExtension.publishComponentName])
+                if (isSnapshot(version) && !version.endsWith("-SNAPSHOT")) {
+                    version = "$version-SNAPSHOT"
+                }
+            }
         }
     }
-    publications {
-        register("maven", MavenPublication::class) {
-            from(components[publishComponentName ?: "java"])
-        }
-    }
+}
+
+open class MinixPublishingExtension(
+    target: Project
+) {
+    @get:Input
+    @get:Optional
+    val runNumber: String? = System.getenv("GITHUB_RUN_NUMBER")
+
+    @Input
+    var runNumberDelimiter: String = target.properties["runNumberDelimiter"]?.toString() ?: "."
+
+    @Input
+    var addRunNumber: Boolean = target.properties["addRunNumber"]?.toString().toBoolean()
+
+    @Input
+    var publishComponentName: String = target.properties["publishComponentName"]?.toString() ?: "java"
 }
