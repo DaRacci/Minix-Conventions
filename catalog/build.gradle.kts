@@ -12,22 +12,16 @@ catalog {
     versionCatalog {
         version("version", version.toString())
 
-        fun minixPlugin(string: String) {
-            val id = buildString {
-                append("dev.racci.minix.")
-                append(string)
-            }
+        fun minixPlugin(file: File) {
+            val removedExtension = file.name.removeSuffix(".gradle.kts")
+            val scriptName = removedExtension.substringAfter("dev.racci.minix.")
 
-            println("Adding plugin $id")
-
-            plugin("minix-$string", id).version(version.toString())
+            plugin("minix-$scriptName", removedExtension).version(version.toString())
         }
 
-        minixPlugin("nms")
-        minixPlugin("kotlin")
-        minixPlugin("copyjar")
-        minixPlugin("purpurmc")
-        minixPlugin("publication")
+        gradle.includedBuilds.find { it.name == "Minix-Gradle" }!!.projectDir.resolve("src/main/kotlin").listFiles { file ->
+            file.isFile
+        }.forEach { file -> minixPlugin(file) }
 
         from(files("../gradle/libs.versions.toml"))
     }
@@ -43,8 +37,4 @@ publishing {
         artifactId = "catalog"
         from(components["versionCatalog"])
     }
-}
-
-tasks.create("build") {
-    dependsOn("publishToMavenLocal")
 }
