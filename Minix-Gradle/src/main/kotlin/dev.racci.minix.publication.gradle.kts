@@ -1,5 +1,4 @@
-import gradle.kotlin.dsl.accessors._6f77941ef037b0b91092ede508229a8e.java
-import gradle.kotlin.dsl.accessors._6f77941ef037b0b91092ede508229a8e.publishing
+import gradle.kotlin.dsl.accessors._ca59d7b33a587bae1dcf00e1f22a5064.java
 import org.jetbrains.dokka.Platform
 import org.jetbrains.dokka.gradle.DokkaTask
 
@@ -11,12 +10,6 @@ val Project.trueRoot: Project
         }
         return root
     }
-
-plugins {
-    java
-    `maven-publish`
-    id("org.jetbrains.dokka")
-}
 
 val publishingExtension = extensions.create<MinixPublishingExtension>("minixPublishing", project)
 
@@ -37,7 +30,10 @@ if (trueRoot == project) {
     }
 }
 
-// tasks.withType<DokkaMultiModuleTask> { outputDirectory.set(File("$rootDir/docs")) }
+plugins {
+    java
+    id("org.jetbrains.dokka")
+}
 
 java.withSourcesJar()
 
@@ -48,7 +44,11 @@ if (publishingExtension.addRunNumber && publishingExtension.runNumber != null) {
 fun isSnapshot(version: String): Boolean = publishingExtension.runNumber == null || version.endsWith("SNAPSHOT")
 
 afterEvaluate {
-    publishing {
+    if (publishingExtension.noPublishing) return@afterEvaluate
+
+    apply<MavenPublishPlugin>()
+
+    extensions.configure<PublishingExtension> {
         repositories {
             maven("https://repo.racci.dev/") {
                 url = if (isSnapshot(version.toString())) {
@@ -73,6 +73,10 @@ afterEvaluate {
 open class MinixPublishingExtension(
     target: Project
 ) {
+    @Input
+    @Internal
+    var noPublishing: Boolean = false
+
     @get:Input
     @get:Optional
     val runNumber: String? = System.getenv("GITHUB_RUN_NUMBER")

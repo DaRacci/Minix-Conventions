@@ -23,11 +23,3 @@ catalog {
         from(files("../gradle/libs.versions.toml"))
     }
 }
-
-// publishing {
-//    publications.named<MavenPublication>("maven") {
-//        artifactId = "catalog"
-// //        components.clear()
-// //        from(components["versionCatalog"])
-//    }
-// }

@@ -10,7 +10,7 @@ plugins {
     java
     `maven-publish`
     `java-gradle-plugin`
-    alias(libs.plugins.kotlin.dsl)
+    `kotlin-dsl`
     alias(libs.plugins.kotlin.jvm)
     id("com.gradle.plugin-publish") version "1.1.0"
     id("org.jlleitschuh.gradle.ktlint") version "11.0.0"

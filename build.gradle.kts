@@ -5,6 +5,10 @@ plugins {
     alias(libs.plugins.kotlin.plugin.ktlint)
 }
 
+minixPublishing {
+    this.noPublishing = true
+}
+
 subprojects {
 
     if (buildscript.sourceFile?.extension?.toLowerCase() == "kts" &&
@@ -23,9 +27,24 @@ fun TaskProvider<*>.recDep() {
 }
 
 tasks {
+    val publish by registering {
+        group = "publishing"
+        description = "Publishes all publications produced by this project."
 
-    publish.recDep()
-    publishToMavenLocal.recDep()
+        dependsOn(
+            gradle.includedBuilds.mapNotNull { runCatching { it.task(":publish") }.getOrNull() }
+        )
+    }
+
+    val publishToMavenLocal by registering {
+        group = "publishing"
+        description = "Publishes all publications produced by this project to the local Maven repository."
+
+        dependsOn(
+            gradle.includedBuilds.mapNotNull { runCatching { it.task(":publishToMavenLocal") }.getOrNull() }
+        )
+    }
+
     ktlintFormat.recDep()
     build.recDep()
     clean.recDep()
