@@ -1,15 +1,20 @@
 plugins {
-    `kotlin-dsl`
+    `kotlin-dsl-base`
     id("dev.racci.minix.common")
     id("dev.racci.minix.publication")
     alias(libs.plugins.kotlin.plugin.ktlint)
 }
+
+val kotlinVersion: String by project
+val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "SNAPSHOT"
+version = "$kotlinVersion-$runNumber"
 
 minixPublishing {
     this.noPublishing = true
 }
 
 subprojects {
+    this.version = rootProject.version
 
     if (buildscript.sourceFile?.extension?.toLowerCase() == "kts" &&
         parent != rootProject

@@ -37,13 +37,13 @@ plugins {
 
 java.withSourcesJar()
 
-if (publishingExtension.addRunNumber && publishingExtension.runNumber != null) {
-    version = "$version${publishingExtension.runNumberDelimiter}${publishingExtension.runNumber}"
-}
-
 fun isSnapshot(version: String): Boolean = publishingExtension.runNumber == null || version.endsWith("SNAPSHOT")
 
 afterEvaluate {
+    if (publishingExtension.addRunNumber && publishingExtension.runNumber != null) {
+        version = "$version${publishingExtension.runNumberDelimiter}${publishingExtension.runNumber}"
+    }
+
     if (publishingExtension.noPublishing) return@afterEvaluate
 
     apply<MavenPublishPlugin>()
@@ -79,7 +79,7 @@ open class MinixPublishingExtension(
 
     @get:Input
     @get:Optional
-    val runNumber: String? = System.getenv("GITHUB_RUN_NUMBER")
+    var runNumber: String? = System.getenv("GITHUB_RUN_NUMBER")
 
     @Input
     var runNumberDelimiter: String = target.properties["runNumberDelimiter"]?.toString() ?: "."
