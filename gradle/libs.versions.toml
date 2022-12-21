@@ -18,6 +18,7 @@ arrow-analysis = "2.0.2"
 bstats = "3.0.0"
 ksp = "1.7.22-1.0.8"
 slimjar = "1.4.1"
+minotaur = "2.5.0"
 
 eco = "6.48.1"
 eco-bosses = "8.110.1"
@@ -216,12 +217,10 @@ kotlin-plugin-atomicfu = { id = "org.jetbrains.kotlin.plugin.atomicfu", version.
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-plugin-binaryValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlin-plugin-binaryValidator" }
 
-
-kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-
 minecraft-runPaper = "xyz.jpenilla.run-paper:2.0.1"
 minecraft-pluginYML = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "pluginYML" }
 minecraft-paperweight = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight" }
+minecraft-minotaur = { id = "com.modrinth.minotaur", version.ref = "minotaur" }
 
 [bundles]
 common = [
