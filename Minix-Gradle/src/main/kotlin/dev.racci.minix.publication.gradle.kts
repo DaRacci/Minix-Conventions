@@ -17,7 +17,7 @@ val trueRoot = project.trueRoot
 if (trueRoot == project) {
     allprojects {
         (tasks.findByName("dokkaHtml") as? DokkaTask)?.apply {
-            outputDirectory.set(trueRoot.rootDir.resolve("docs"))
+            outputDirectory.set(trueRoot.projectDir.resolve("docs"))
             dokkaSourceSets.configureEach {
                 includeNonPublic.set(false)
                 skipEmptyPackages.set(true)

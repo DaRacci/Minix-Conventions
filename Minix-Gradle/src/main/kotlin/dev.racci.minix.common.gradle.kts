@@ -17,6 +17,16 @@ fun loadPropertiesFromResources(
     return props
 }
 
+inline fun <reified T : Task> TaskContainer.maybeTargeted(
+    taskName: String,
+    target: String? = null,
+    configure: T.() -> Unit = {}
+): T = buildString {
+    if (target != null) {
+        append(target).append(taskName.capitalize())
+    } else append(taskName)
+}.let<String, T>(::getByName).also(configure)
+
 val savedProps: Properties = loadPropertiesFromResources("Minix-Conventions.properties")
 val minVersion: String by savedProps
 val minConventionsKotlinVersion: String by savedProps
@@ -51,8 +61,8 @@ fun commonKotlin() {
     }
 
     dependencies {
-        "implementation"(platform(kotlin("bom:$kotlinVersion")))
-        "compileOnly"(kotlin("stdlib-jdk8"))
+        implementation(platform(kotlin("bom", kotlinVersion)))
+        compileOnly(kotlin("stdlib-jdk8"))
     }
 }
 
@@ -72,6 +82,8 @@ val Project.recursiveSubprojects: Sequence<Project>
     }
 
 fun applyToTarget(target: Project) {
+    target.plugins.apply(JavaPlugin::class.java)
+
     if (target != target.trueRoot) {
         target.buildDir = trueRoot.buildDir.resolve(target.name.toLowerCase())
     }
@@ -84,7 +96,7 @@ fun applyToTarget(target: Project) {
         commonKotlin()
     }
 
-    configurations {
+    target.configurations {
         val slim = maybeCreate("slim")
 
         compileClasspath.get().extendsFrom(slim)
@@ -107,17 +119,11 @@ fun applyToTarget(target: Project) {
     }
 }
 
-@Suppress("UnstableApiUsage")
-gradle.settingsEvaluated {
-    dependencyResolutionManagement {
-        repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-
-        repositories {
-            mavenCentral()
-            maven("https://repo.racci.dev/releases/")
-            maven("https://repo.racci.dev/snapshots/")
-        }
-    }
+// TODO: Don't apply if gradle is set to only accept settings file repositories.
+repositories {
+    mavenCentral()
+    maven("https://repo.racci.dev/releases/")
+    maven("https://repo.racci.dev/snapshots/")
 }
 
 fun Task.recDep() {
