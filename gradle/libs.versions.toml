@@ -34,6 +34,9 @@ kotlin-plugin-dokka = "1.7.20"
 kotlin-plugin-ktlint = "11.0.0"
 kotlin-plugin-binaryValidator = "0.12.1"
 
+gradle-publish = "1.1.0"
+gradle-license = "0.16.1"
+
 [libraries]
 adventure-api = { module = "net.kyori:adventure-api", version.ref = "adventure" }
 adventure-kotlin = { module = "net.kyori:adventure-extra-kotlin", version.ref = "adventure" }
@@ -126,6 +129,7 @@ exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exp
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
 exposed-dateTime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
 
+# TODO: Sort these
 hikariCP = "com.zaxxer:HikariCP:5.0.1"
 h2 = "com.h2database:h2:2.1.214"
 kotlin-statistics = "org.nield:kotlin-statistics:1.2.1"
@@ -134,7 +138,7 @@ mordant = "com.github.ajalt.mordant:mordant-jvm:2.0.0-beta9.65-SNAPSHOT"
 caffeine = "com.github.ben-manes.caffeine:caffeine:3.1.2"
 reflections = "org.reflections:reflections:0.10.2"
 classgraph = "io.github.classgraph:classgraph:4.8.152"
-slimjar = "dev.racci.slimjar:slimjar:1.4.1"
+slimjar = { module = "dev.racci.slimjar:slimjar", version.ref = "slimjar" }
 mariadb = "org.mariadb.jdbc:mariadb-java-client:3.1.0"
 toolfactory = "io.github.toolfactory:jvm-driver:9.4.2"
 apiguardian = "org.apiguardian:apiguardian-api:1.1.2"
@@ -209,6 +213,9 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 slimjar = { id = "dev.racci.slimjar", version.ref = "slimjar" }
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 arrow-analysis = { id = "io.arrow-kt.analysis.kotlin", version.ref = "arrow-analysis" }
+
+gradle-publish = { id = "com.gradle.plugin-publish", version.ref = "gradle-publish" }
+gradle-license = { id = "com.github.hierynomus.license-base", version.ref = "gradle-license" }
 
 kotlin-dsl = { id = "org.gradle.kotlin.kotlin-dsl", version.ref = "kotlin-dsl" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

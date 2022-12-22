@@ -78,7 +78,7 @@ val Project.trueRoot: Project
 val Project.recursiveSubprojects: Sequence<Project>
     get() = sequence {
         yield(this@recursiveSubprojects)
-        subprojects.forEach { yieldAll(it.recursiveSubprojects) }
+        subprojects.forEach { innerSub -> yieldAll(innerSub.recursiveSubprojects) }
     }
 
 fun applyToTarget(target: Project) {

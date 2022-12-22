@@ -17,6 +17,10 @@ import java.io.File
 
 public open class CopyJarTask : Copy() {
 
+    init {
+        throw UnsupportedOperationException("This task is not yet implemented!")
+    }
+
     @InputFile
     public var inputFile: Option<File> = None
 
@@ -26,7 +30,7 @@ public open class CopyJarTask : Copy() {
         .orElse { Option.catch { project.tasks.getByName<Jar>("jar") } }
 
     @OutputDirectory
-    public var outputDirectory: File = project.properties["Minix.CopyJar.Destination"]?.toString()?.let(::File) ?: error("Minix.CopyJar.Destination not set")
+    public var outputDirectory: File = project.properties["minix.CopyJar.Destination"]?.toString()?.let(::File) ?: error("minix.CopyJar.Destination not set")
 
     /** This action is penitently dangerous. */
     @Input

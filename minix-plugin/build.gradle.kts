@@ -1,5 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.util.Properties
+import java.util.*
 
 Properties()
     .apply { load(rootDir.toPath().resolveSibling(Project.GRADLE_PROPERTIES).toFile().inputStream()) }
@@ -8,17 +8,18 @@ val kotlinVersion: String by project
 
 plugins {
     java
+    `kotlin-dsl`
     `maven-publish`
     `java-gradle-plugin`
-    `kotlin-dsl`
+    `version-catalog`
     alias(libs.plugins.kotlin.jvm)
-    id("com.gradle.plugin-publish") version "1.1.0"
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
+    alias(libs.plugins.gradle.publish)
+    alias(libs.plugins.kotlin.plugin.ktlint)
 }
 
 dependencies {
     // Align the version of all kotlin components
-    implementation(platform(kotlin("bom:$kotlinVersion")))
+    implementation(platform(kotlin("bom", kotlinVersion)))
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.immutableCollections)
     implementation(libs.arrow.core)
@@ -27,7 +28,6 @@ dependencies {
     // TODO: Figure out how to apply these without implementing specific versions
     compileOnly(gradleApi())
     compileOnly(gradleKotlinDsl())
-
     compileOnly(libs.gradle.kotlin.plugin.serialization)
     compileOnly(libs.gradle.minecraft.pluginYML)
     compileOnly(libs.gradle.kotlin.jvm)
@@ -55,27 +55,18 @@ dependencies {
 }
 
 kotlin {
-    sourceSets.all {
+    jvmToolchain(17)
+    sourceSets.configureEach {
         explicitApi()
         languageSettings {
             languageVersion = "1.7"
+            apiVersion = "1.7"
         }
     }
 }
 
-tasks {
-
-    withType<KotlinCompile> {
-        kotlinOptions {
-            jvmTarget = "17"
-            languageVersion = "1.7"
-            freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn", "-Xcontext-receivers")
-        }
-    }
-//
-//    withType<Zip> {
-//        isZip64 = true
-//    }
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "17"
 }
 
 gradlePlugin {
