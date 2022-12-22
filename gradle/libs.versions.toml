@@ -29,7 +29,7 @@ adventure = "4.12.0"
 adventure-platform = "4.2.0"
 
 kotlin = "1.7.22"
-kotlin-dsl = "3.2.7"
+kotlin-dsl = "3.2.6"
 kotlin-plugin-dokka = "1.7.20"
 kotlin-plugin-ktlint = "11.0.0"
 kotlin-plugin-binaryValidator = "0.12.1"

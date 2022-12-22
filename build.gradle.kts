@@ -1,5 +1,5 @@
 plugins {
-    `kotlin-dsl-base`
+    `kotlin-dsl`
     id("dev.racci.minix.common")
     id("dev.racci.minix.publication")
     alias(libs.plugins.kotlin.plugin.ktlint)

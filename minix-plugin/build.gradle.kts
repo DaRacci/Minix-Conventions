@@ -1,45 +1,45 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.*
 
 Properties()
     .apply { load(rootDir.toPath().resolveSibling(Project.GRADLE_PROPERTIES).toFile().inputStream()) }
     .forEach { key, value -> project.ext["$key"] = value }
-val kotlinVersion: String by project
 
 plugins {
-    java
-    `kotlin-dsl`
     `maven-publish`
-    `java-gradle-plugin`
-    `version-catalog`
+    alias(libs.plugins.kotlin.dsl)
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.gradle.publish)
     alias(libs.plugins.kotlin.plugin.ktlint)
 }
 
+val compileAndTest by configurations.creating
+configurations {
+    compileOnly.get().extendsFrom(compileAndTest)
+    testImplementation.get().extendsFrom(compileAndTest, implementation.get())
+}
+
+@Suppress("UnstableApiUsage")
 dependencies {
     // Align the version of all kotlin components
-    implementation(platform(kotlin("bom", kotlinVersion)))
+    implementation(platform(kotlin("bom", libs.versions.kotlin.asProvider().get())))
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlinx.immutableCollections)
     implementation(libs.arrow.core)
 
     // All the plugins that are used to configure.
     // TODO: Figure out how to apply these without implementing specific versions
-    compileOnly(gradleApi())
-    compileOnly(gradleKotlinDsl())
-    compileOnly(libs.gradle.kotlin.plugin.serialization)
-    compileOnly(libs.gradle.minecraft.pluginYML)
-    compileOnly(libs.gradle.kotlin.jvm)
-    compileOnly(libs.gradle.kotlin.plugin.ktlint)
-    compileOnly(libs.gradle.kotlin.plugin.dokka)
-    compileOnly(libs.gradle.shadow)
-    compileOnly(libs.gradle.minecraft.paperweight)
-    compileOnly(libs.gradle.kotlin.dsl)
-    compileOnly(libs.gradle.kotlin.mpp)
-    compileOnly("org.gradle.kotlin:gradle-kotlin-dsl-plugins:3.2.7")
+    compileAndTest(gradleApi())
+    compileAndTest(gradleKotlinDsl())
+    compileAndTest(libs.gradle.kotlin.plugin.serialization)
+    compileAndTest(libs.gradle.minecraft.pluginYML)
+    compileAndTest(libs.gradle.kotlin.jvm)
+    compileAndTest(libs.gradle.kotlin.plugin.ktlint)
+    compileAndTest(libs.gradle.kotlin.plugin.dokka)
+    compileAndTest(libs.gradle.shadow)
+    compileAndTest(libs.gradle.minecraft.paperweight)
+    compileAndTest(libs.gradle.kotlin.dsl)
+    compileAndTest(libs.gradle.kotlin.mpp)
 
-    testImplementation(libs.bundles.kotlin)
     testImplementation(libs.kotlin.test)
     testImplementation(libs.testing.junit5)
     testImplementation(libs.testing.kotest.junit5)
@@ -48,10 +48,6 @@ dependencies {
     testImplementation(libs.testing.mockK)
     testImplementation(libs.testing.strikt)
     testImplementation(gradleTestKit())
-
-    configurations.forEach {
-        // it.exclude(group = "")
-    }
 }
 
 kotlin {
@@ -63,10 +59,6 @@ kotlin {
             apiVersion = "1.7"
         }
     }
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "17"
 }
 
 gradlePlugin {
