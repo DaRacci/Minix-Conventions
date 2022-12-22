@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.Properties
 
 Properties()
     .apply { load(rootDir.toPath().resolveSibling(Project.GRADLE_PROPERTIES).toFile().inputStream()) }
@@ -12,7 +12,7 @@ plugins {
     alias(libs.plugins.kotlin.plugin.ktlint)
 }
 
-val compileAndTest by configurations.creating
+val compileAndTest: Configuration by configurations.creating
 configurations {
     compileOnly.get().extendsFrom(compileAndTest)
     testImplementation.get().extendsFrom(compileAndTest, implementation.get())
