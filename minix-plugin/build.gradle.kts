@@ -66,6 +66,15 @@ kotlin {
     }
 }
 
+publishing.repositories.maven("https://repo.racci.dev/") {
+    url = if (version.toString().endsWith("SNAPSHOT")) {
+        url.resolve("snapshots")
+    } else url.resolve("releases")
+
+    name = "RacciRepo"
+    credentials(PasswordCredentials::class)
+}
+
 gradlePlugin {
     plugins {
         create("minix-gradle") {

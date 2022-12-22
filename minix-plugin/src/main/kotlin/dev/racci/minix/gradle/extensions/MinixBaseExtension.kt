@@ -44,7 +44,7 @@ public abstract class MinixBaseExtension(
 ) {
     /** Explicitly sets what type of support to apply, otherwise support will be added if the plugin is found. */
     @Input
-    public var kotlinSupport: Option<KotlinType> = Option.fromNullable(project.property("minix.kotlinType")?.toString()?.let(KotlinType::valueOf)); private set
+    public var kotlinSupport: Option<KotlinType> = Option.fromNullable(project.findProject("minix.kotlinType")?.toString()?.let(KotlinType::valueOf)); private set
 
     /**
      * A list of the subprojects and kotlin mpp targets that aren't touched by the plugin.
