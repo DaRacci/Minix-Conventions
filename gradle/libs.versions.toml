@@ -190,14 +190,16 @@ ktor-client-plugins-serialization = { module = "io.ktor:ktor-client-serializatio
 ktor-client-plugins-logging = { module = "io.ktor:ktor-client-logging-jvm", version.ref = "ktor" }
 ktor-client-plugins-websockets = { module = "io.ktor:ktor-client-websockets-jvm", version.ref = "ktor" }
 
-gradle-shadow = { module = "gradle.plugin.com.github.jengelman.gradle.plugins:shadow", version.ref = "shadow" }
+gradle-shadow = { module = "gradle.plugin.com.github.jengelman.gradle.plugins:shadow", version = "7.0.0" } # For some reason can only resolve up to 7.0.0
 gradle-slimjar = { module = "gradle.plugin.com.github.slimjar:slimjar-gradle-plugin", version.ref = "slimjar" }
+
 gradle-kotlin-dsl = { module = "org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin", version.ref = "kotlin-dsl" }
 gradle-kotlin-jvm = { module = "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin", version.ref = "kotlin" }
 gradle-kotlin-mpp = { module = "org.jetbrains.kotlin.multiplatform:org.jetbrains.kotlin.multiplatform.gradle.plugin", version.ref = "kotlin" }
 gradle-kotlin-plugin-serialization = { module = "org.jetbrains.kotlin.plugin.serialization:org.jetbrains.kotlin.plugin.serialization.gradle.plugin", version.ref = "kotlin" }
 gradle-kotlin-plugin-ktlint = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "kotlin-plugin-ktlint" }
 gradle-kotlin-plugin-dokka = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlin-plugin-dokka" }
+
 gradle-minecraft-pluginYML = { module = "net.minecrell:plugin-yml", version.ref = "pluginYML" }
 gradle-minecraft-paperweight = { module = "io.papermc.paperweight.userdev:io.papermc.paperweight.userdev.gradle.plugin", version.ref = "paperweight" }
 
