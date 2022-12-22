@@ -37,7 +37,6 @@ dependencies {
     compileAndTest(libs.gradle.kotlin.plugin.dokka)
     compileAndTest(libs.gradle.shadow)
     compileAndTest(libs.gradle.minecraft.paperweight)
-    compileAndTest(libs.gradle.kotlin.dsl)
     compileAndTest(libs.gradle.kotlin.mpp)
 
     testImplementation(libs.kotlin.test)
@@ -48,6 +47,14 @@ dependencies {
     testImplementation(libs.testing.mockK)
     testImplementation(libs.testing.strikt)
     testImplementation(gradleTestKit())
+
+    constraints.add("compileAndTest", "org.apache.logging.log4j:log4j-core") {
+        version {
+            strictly("[2.17, 3[")
+            prefer("2.17.0")
+        }
+        because("CVE-2021-44228, CVE-2021-45046, CVE-2021-45105: Log4j vulnerable to remote code execution and other critical security vulnerabilities")
+    }
 }
 
 kotlin {
