@@ -3,7 +3,8 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ main ]
-    paths-ignore: [ "**.md", "/minix-plugin" ]
+    paths: [ "/gradle/libs.versions.toml", "/settings.gradle.kts", "/build.gradle.kts", "/minix-plugin/**.*" ]
+    paths-ignore: [ "**.md" ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -22,19 +23,10 @@ jobs:
           java-version: 17
 
       - name: Build
-        run: ./gradlew clean build
-
-      - name: Extract Current Branch name
-        shell: bash
-        # bash pattern expansion to grab branch name without slashes
-        run: ref="${GITHUB_REF#refs/heads/}" && echo "::set-output name=branch::${ref////-}"
-        id: ref
+        run: ./gradlew :minix-plugin:clean :minix-plugin:build
 
       - name: Upload build
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts-${{ steps.ref.outputs.branch }}
-          path: build/libs
-
-      - name: Publish to repo
-        run: ./gradlew publish -PRacciRepoUsername=${{ secrets.REPO_PUBLISH_USERNAME }} -PRacciRepoPassword=${{ secrets.REPO_PUBLISH_PASSWORD }}
+          path: build/libs/minix-plugin/
