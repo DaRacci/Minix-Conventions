@@ -48,12 +48,10 @@ dependencies {
     testImplementation(libs.testing.strikt)
     testImplementation(gradleTestKit())
 
-    constraints.add("compileAndTest", "org.apache.logging.log4j:log4j-core") {
-        version {
-            strictly("[2.17, 3[")
-            prefer("2.17.0")
-        }
-        because("CVE-2021-44228, CVE-2021-45046, CVE-2021-45105: Log4j vulnerable to remote code execution and other critical security vulnerabilities")
+    configurations.configureEach {
+        exclude(group = "org.apache.logging.log4j", module = "log4j-core")
+        exclude(group = "org.apache.logging.log4j", module = "log4j-api")
+        exclude(group = "org.apache.logging.log4j", module = "log4j-slf4j-impl")
     }
 }
 
