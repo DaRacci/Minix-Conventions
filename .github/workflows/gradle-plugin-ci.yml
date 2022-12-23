@@ -3,7 +3,7 @@ name: Gradle plugin CI
 on:
   push:
     branches: [ main ]
-    paths: [ "./**.gradle.kts", "gradle", "minix-plugin", "gradle.properties", ".github/workflow/gradle-plugin-ci.yml" ]
+    paths: [ "./**.gradle.kts", "gradle", "minix-plugin", "gradle.properties", ".github/workflows/gradle-plugin-ci.yml" ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
