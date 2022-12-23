@@ -22,7 +22,7 @@ jobs:
           java-version: 17
 
       - name: Build
-        run: ./gradlew :minix-plugin:clean :minix-plugin:build
+        run: ./gradlew clean :minix-plugin:build
 
       - name: Upload build
         uses: actions/upload-artifact@v3
