@@ -115,15 +115,9 @@ public abstract class MinixBaseExtension(
             }
 
             override fun configureExtension(project: Project): Unit = with(project) {
-                kotlinExtension.explicitApi() // TODO: Check for known error causers and change to warning
-                kotlinExtension.jvmToolchain(Constants.JDK_VERSION)
-                kotlinExtension.coreLibrariesVersion = KotlinVersion.CURRENT.toString()
-                kotlinExtension.sourceSets.map(KotlinSourceSet::languageSettings).forEach { settings ->
-                    settings.apiVersion = KotlinVersion.CURRENT.let { ver -> "${ver.major}.${ver.minor}" }
-                    settings.languageVersion = settings.apiVersion
-                }
+                commonKotlinConfiguration()
 
-                project.dependencies {
+                dependencies {
                     "implementation"(platform(kotlin("bom", KotlinVersion.CURRENT.toString())))
                     "compileOnly"(kotlin("stdlib-jdk8"))
                 }
@@ -136,9 +130,7 @@ public abstract class MinixBaseExtension(
             }
 
             override fun configureExtension(project: Project): Unit = with(project) {
-                extensions.configure<KotlinProjectExtension> {
-                    JVM.configureExtension(project)
-                }
+                commonKotlinConfiguration()
             }
 
             override fun configureTasks(project: Project): Unit = with(project) {
