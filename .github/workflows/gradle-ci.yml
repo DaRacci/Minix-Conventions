@@ -3,7 +3,7 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ main ]
-    paths: [ "./**.gradle.kts", "Minix-Gradle", "Minix-NMS", "gradle.properties", ".github/workflows/gradle-ci.yml", "gradle", "catalog" ] # TODO: Remove catalog and have it publish its own artifacts
+    paths: [ "./**.gradle.kts", "Minix-Gradle/**", "Minix-NMS/**", "gradle.properties", ".github/workflows/gradle-ci.yml", "gradle/**", "catalog/**" ] # TODO: Remove catalog and have it publish its own artifacts
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
