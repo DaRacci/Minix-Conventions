@@ -90,13 +90,13 @@ public abstract class MinixBaseExtension(
         NONE {
             override fun configureRootProject(project: Project): Unit = with(project) {
                 plugins.maybeApply<JavaLibraryPlugin>()
-                if (!isTestEnvironment()) apply(plugin = "kotlin-dsl")
+//                if (!isTestEnvironment()) plugins.maybeApply<KotlinDslBasePlugin>()
             }
 
             override fun configureSubproject(project: Project): Unit = with(project) {
                 super.configureSubproject(project)
                 plugins.maybeApply<JavaLibraryPlugin>()
-                if (!isTestEnvironment()) apply(plugin = "kotlin-dsl")
+//                if (!isTestEnvironment()) plugins.maybeApply<KotlinDslBasePlugin>()
             }
 
             override fun configureExtension(project: Project): Unit = with(project) {
