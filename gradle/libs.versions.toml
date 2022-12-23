@@ -2,9 +2,7 @@
 serialization = "1.4.1"
 exposed = "0.41.1"
 ktor = "2.2.1"
-koin = "3.3.0"
 cloud = "1.8.0"
-koin-annotations = "1.0.3"
 sentry = "6.9.2"
 minix = "4.3.14"
 configurate = "4.1.2"
@@ -27,6 +25,10 @@ eco-libreforge = "8.110.1"
 
 adventure = "4.12.0"
 adventure-platform = "4.2.0"
+
+koin = "3.3.0"
+koin-ktor = "3.2.2"
+koin-annotations = "1.0.3"
 
 kotlin = "1.7.22"
 kotlin-dsl = "3.2.6"
@@ -147,7 +149,7 @@ aedile = "com.sksamuel.aedile:aedile-core:1.1.2"
 koin-core = { module = "io.insert-koin:koin-core-jvm", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 koin-test-junit5 = { module = "io.insert-koin:koin-test-junit5", version.ref = "koin" }
-koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
+koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin-ktor" }
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotations" }
 koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotations" }
 
