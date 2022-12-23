@@ -43,12 +43,9 @@ dependencies {
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.testing.junit5)
-    testImplementation(libs.testing.kotest.junit5)
-    testImplementation(libs.testing.kotest.properties)
-    testImplementation(libs.testing.kotest.assertions)
-    testImplementation(libs.testing.mockK)
     testImplementation(libs.testing.strikt)
     testImplementation(gradleTestKit())
+    testImplementation(gradleKotlinDsl())
 
     configurations.configureEach {
         exclude(group = "org.apache.logging.log4j", module = "log4j-core")
@@ -66,6 +63,10 @@ kotlin {
             apiVersion = "1.7"
         }
     }
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 publishing.repositories.maven("https://repo.racci.dev/") {

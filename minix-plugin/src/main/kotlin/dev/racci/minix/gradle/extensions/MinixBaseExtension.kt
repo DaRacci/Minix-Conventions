@@ -8,6 +8,7 @@ import dev.racci.minix.gradle.Constants
 import dev.racci.minix.gradle.MinixGradlePlugin
 import dev.racci.minix.gradle.ex.recursiveSubprojects
 import dev.racci.minix.gradle.exceptions.MissingPluginException
+import dev.racci.minix.gradle.isTestEnvironment
 import dev.racci.minix.gradle.support.DokkaPluginSupport
 import dev.racci.minix.gradle.support.KtlintPluginSupport
 import dev.racci.minix.gradle.tasks.QuickBuildTask
@@ -91,14 +92,14 @@ public abstract class MinixBaseExtension(
     public enum class KotlinType {
         NONE {
             override fun configureRootProject(project: Project): Unit = with(project) {
-                plugins.apply(JavaLibraryPlugin::class)
-                plugins.apply("kotlin-dsl")
+                plugins.maybeApply<JavaLibraryPlugin>()
+                if (!isTestEnvironment()) apply(plugin = "kotlin-dsl")
             }
 
             override fun configureSubproject(project: Project): Unit = with(project) {
                 super.configureSubproject(project)
-                plugins.apply(JavaLibraryPlugin::class)
-                plugins.apply("kotlin-dsl")
+                plugins.maybeApply<JavaLibraryPlugin>()
+                if (!isTestEnvironment()) apply(plugin = "kotlin-dsl")
             }
 
             override fun configureExtension(project: Project): Unit = with(project) {
@@ -113,7 +114,7 @@ public abstract class MinixBaseExtension(
 
             override fun configureSubproject(project: Project): Unit = with(project) {
                 NONE.configureSubproject(project)
-                plugins.apply(KotlinPlatformJvmPlugin::class)
+                plugins.maybeApply<KotlinPlatformJvmPlugin>()
             }
 
             override fun configureExtension(project: Project): Unit = with(project) {
@@ -178,6 +179,14 @@ public abstract class MinixBaseExtension(
 
             configureExtension(project)
             configureTasks(project)
+        }
+
+        protected fun PluginContainer.maybeApply(id: String) {
+            /*if (!hasPlugin(id))*/ apply(id)
+        }
+
+        protected inline fun <reified T : Plugin<*>> PluginContainer.maybeApply() {
+            /*if (!hasPlugin(T::class))*/ apply(T::class)
         }
 
         @Throws(MissingPluginException::class)

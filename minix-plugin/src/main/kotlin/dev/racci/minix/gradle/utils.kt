@@ -6,6 +6,8 @@ import java.io.File
 
 // public fun Project.emptySources() = project.allprojects.sourceSets.none { set -> set.allSource.any { file -> file.extension == "kt" } }
 
+internal fun isTestEnvironment(): Boolean = System.getProperty("MINIX_TESTING_ENV") == "true"
+
 public fun SourceDirectorySet.maybeExtend(
     project: Project,
     vararg objects: Any

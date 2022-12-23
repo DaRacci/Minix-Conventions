@@ -6,7 +6,6 @@ cloud = "1.8.0"
 sentry = "6.9.2"
 minix = "4.3.14"
 configurate = "4.1.2"
-kotest = "5.5.4"
 pluginYML = "0.5.2"
 shadow = "7.1.2"
 paperweight = "1.4.0"
@@ -17,6 +16,7 @@ bstats = "3.0.0"
 ksp = "1.7.22-1.0.8"
 slimjar = "1.4.1"
 minotaur = "2.5.0"
+strikt = "0.34.1"
 
 eco = "6.48.1"
 eco-bosses = "8.110.1"
@@ -35,6 +35,10 @@ kotlin-dsl = "3.2.6"
 kotlin-plugin-dokka = "1.7.20"
 kotlin-plugin-ktlint = "11.0.0"
 kotlin-plugin-binaryValidator = "0.12.1"
+
+kotest = "5.5.4"
+kotest-ktor = "1.0.3"
+kotest-koin = "1.1.0"
 
 gradle-publish = "1.1.0"
 gradle-license = "0.16.1"
@@ -159,11 +163,17 @@ sentry-core = { module = "io.sentry:sentry", version.ref = "sentry" }
 sentry-kotlin = { module = "io.sentry:sentry-kotlin-extensions", version.ref = "sentry" }
 
 testing-junit5 = "org.junit.jupiter:junit-jupiter:5.9.1"
-testing-strikt = "io.strikt:strikt-core:0.34.1"
 testing-mockK = "io.mockk:mockk:1.13.3"
+
+testing-strikt = { module = "io.strikt:strikt-core", version.ref = "strikt" }
+testing-strikt-arrow = { module = "io.strikt:strikt-arrow", version.ref = "strikt" }
+testing-strikt-mockk = { module = "io.strikt:strikt-mockk", version.ref = "strikt" }
+
 testing-kotest-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 testing-kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 testing-kotest-properties = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+testing-kotest-ktor = { module = "io.kotest.assertions:kotest-assertions-ktor", version.ref = "kotest-ktor" }
+testing-kotest-koin = { module = "io.kotest.extensions:kotest-extensions-koin", version.ref = "kotest-koin" }
 
 ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
 ktor-server-cio = { module = "io.ktor:ktor-server-cio-jvm", version.ref = "ktor" }
