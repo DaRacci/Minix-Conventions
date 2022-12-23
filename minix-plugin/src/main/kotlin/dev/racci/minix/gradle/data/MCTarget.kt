@@ -59,11 +59,11 @@ public data class MCTarget @PublishedApi internal constructor(
 
     public enum class Platform {
         PAPER {
-            override fun getDefaultDependencies(version: String?) = listOf("io.papermc.paper:paper-api:${version ?: Constants.LATEST_MC_VERSION}")
+            override fun getDefaultDependencies(version: String?) = listOf("io.papermc.paper:paper-api:${getFullVersion(version) ?: Constants.LATEST_MC_VERSION}")
             override fun getMinixDependencies() = listOf("dev.racci.minix:minix-paper:${Constants.Dependencies.MINIX_VERSION}")
         },
         TENTACLES {
-            override fun getDefaultDependencies(version: String?) = listOf("dev.racci.tentacles:tentacles-api:${version ?: Constants.LATEST_MC_VERSION}")
+            override fun getDefaultDependencies(version: String?) = listOf("dev.racci.tentacles:tentacles-api:${getFullVersion(version) ?: Constants.LATEST_MC_VERSION}")
             override fun getMinixDependencies() = PAPER.getMinixDependencies()
         },
         VELOCITY {
@@ -76,6 +76,26 @@ public data class MCTarget @PublishedApi internal constructor(
 
         internal open fun getMinixDependencies(): Collection<String> {
             throw UnsupportedOperationException("Minix is not supported for platform: ${this.name}")
+        }
+
+        protected fun getFullVersion(version: String?): String? {
+            if (version == null) return null
+
+            val split = version.split('.', limit = 3)
+            val major = split[0].toInt()
+            val minor = split[1].toInt()
+            val patch = split.getOrNull(3)?.toInt()
+
+            return buildString {
+                append(major)
+                append('.')
+                append(minor)
+                if (patch != null) {
+                    append('.')
+                    append(patch)
+                }
+                append("-R0.1-SNAPSHOT")
+            }
         }
     }
 }
