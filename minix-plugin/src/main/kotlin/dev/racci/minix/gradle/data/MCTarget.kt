@@ -26,13 +26,17 @@ public data class MCTarget @PublishedApi internal constructor(
             val dependencies = platform.getDefaultDependencies(version)
             if (dependencies.isEmpty()) return
 
+            fun RepositoryHandler.addDefaultRepo() = maven(platform.defaultRepository) {
+                name = platform.name
+            }
+
             when (obj) {
                 is Project -> {
-                    obj.repositories.maven(platform.defaultRepository)
+                    obj.repositories.addDefaultRepo()
                     dependencies.forEach { dep -> obj.dependencies.add(COMPILE_ONLY, dep) }
                 }
                 is KotlinSourceSet -> {
-                    obj.project().repositories.maven(platform.defaultRepository)
+                    obj.project().repositories.addDefaultRepo()
                     obj.dependencies { dependencies.forEach(::compileOnly) }
                 }
                 else -> throw IllegalArgumentException("Unknown target type: ${obj::class.simpleName}")
@@ -64,7 +68,7 @@ public data class MCTarget @PublishedApi internal constructor(
     }
 
     public enum class Platform(public val defaultRepository: String) {
-        PAPER("https://papermc.io/repository/maven-snapshots/") {
+        PAPER("https://repo.papermc.io/repository/maven-public/") {
             override fun getDefaultDependencies(version: String?) = listOf("io.papermc.paper:paper-api:${getFullVersion(version) ?: Constants.LATEST_MC_VERSION}")
             override fun getMinixDependencies() = listOf("dev.racci.minix:minix-paper:${Constants.Dependencies.MINIX_VERSION}")
         },
