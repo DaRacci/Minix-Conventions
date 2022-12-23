@@ -24,20 +24,14 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Build
-        run: ./gradlew clean build
+      - name: Run validate-dependencies task
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: clean :catalog:validate-dependencies
 
-      - name: Extract Current Branch name
-        shell: bash
-        # bash pattern expansion to grab branch name without slashes
-        run: ref="${GITHUB_REF#refs/heads/}" && echo "::set-output name=branch::${ref////-}"
-        id: ref
-
-      - name: Upload build
+      - name: Upload final catalog
         uses: actions/upload-artifact@v3
         with:
-          name: build-artifacts-${{ steps.ref.outputs.branch }}
-          path: build/libs
-
-      - name: Publish to repo
-        run: ./gradlew publish -PRacciRepoUsername=${{ secrets.REPO_PUBLISH_USERNAME }} -PRacciRepoPassword=${{ secrets.REPO_PUBLISH_PASSWORD }}
+          name: catalog.toml
+          path: build/catalog/version-catalog/libs.versions.toml
+          if-no-files-found: error
