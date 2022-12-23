@@ -42,18 +42,6 @@ import kotlin.reflect.KProperty0
 public abstract class MinixBaseExtension(
     private val project: Project
 ) {
-    /** Explicitly sets what type of support to apply, otherwise support will be added if the plugin is found. */
-    @Input
-    public val kotlinSupport: Property<KotlinType> = project.objects.property<KotlinType>().value(
-        project.provider {
-            when {
-                project.plugins.hasPlugin(KotlinMultiplatformPluginWrapper::class) -> KotlinType.MPP
-                project.plugins.hasPlugin(KotlinPluginWrapper::class) -> KotlinType.JVM
-                else -> KotlinType.NONE
-            }
-        }
-    )
-
     /**
      * A list of the subprojects and kotlin mpp targets that aren't touched by the plugin.
      */
@@ -66,17 +54,21 @@ public abstract class MinixBaseExtension(
     public fun configure(): Unit = with(project) {
         val kotlinType = kotlinSupport.get()
 
-        logger.info("Applying support for kotlin-type: $kotlinType")
-
-        kotlinType.configureProject(project)
-        addPluginSupport(project)
+    internal fun configure(): Unit = with(project) {
+        with(getSupportType(project)) {
+            logger.info("Applying support for kotlin-type: $this")
+            configureProject(project)
+        }
 
         project.recursiveSubprojects()
             .forEach { subproject ->
                 subproject.beforeEvaluate {
                     if (subproject.name in ignoredTargets) return@beforeEvaluate logger.info("Ignoring subproject: ${subproject.name}")
-                    logger.info("Applying support to subproject of ${project.name} with kotlin-type: $kotlinType")
-                    kotlinType.configureProject(subproject)
+
+                    with(getSupportType(subproject)) {
+                        logger.info("Applying support to subproject of ${subproject.name} with kotlin-type: $this")
+                        configureProject(subproject)
+                    }
                     addPluginSupport(subproject)
                 }
             }
@@ -94,6 +86,12 @@ public abstract class MinixBaseExtension(
 
             maybeLazyConfigure(::minecraft)
         }
+    }
+
+    internal fun getSupportType(project: Project): KotlinType = when {
+        project.plugins.hasPlugin(KotlinMultiplatformPluginWrapper::class) -> KotlinType.MPP
+        project.plugins.hasPlugin(KotlinPluginWrapper::class) -> KotlinType.JVM
+        else -> KotlinType.NONE
     }
 
     private fun addPluginSupport(target: Project) = with(target) {
