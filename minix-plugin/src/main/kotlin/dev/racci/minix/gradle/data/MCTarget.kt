@@ -27,8 +27,14 @@ public data class MCTarget @PublishedApi internal constructor(
             if (dependencies.isEmpty()) return
 
             when (obj) {
-                is Project -> dependencies.forEach { dep -> obj.dependencies.add(COMPILE_ONLY, dep) }
-                is KotlinSourceSet -> obj.dependencies { dependencies.forEach(::compileOnly) }
+                is Project -> {
+                    obj.repositories.maven(platform.defaultRepository)
+                    dependencies.forEach { dep -> obj.dependencies.add(COMPILE_ONLY, dep) }
+                }
+                is KotlinSourceSet -> {
+                    obj.project().repositories.maven(platform.defaultRepository)
+                    obj.dependencies { dependencies.forEach(::compileOnly) }
+                }
                 else -> throw IllegalArgumentException("Unknown target type: ${obj::class.simpleName}")
             }
         }
@@ -57,16 +63,16 @@ public data class MCTarget @PublishedApi internal constructor(
         }
     }
 
-    public enum class Platform {
-        PAPER {
+    public enum class Platform(public val defaultRepository: String) {
+        PAPER("https://papermc.io/repository/maven-snapshots/") {
             override fun getDefaultDependencies(version: String?) = listOf("io.papermc.paper:paper-api:${getFullVersion(version) ?: Constants.LATEST_MC_VERSION}")
             override fun getMinixDependencies() = listOf("dev.racci.minix:minix-paper:${Constants.Dependencies.MINIX_VERSION}")
         },
-        TENTACLES {
+        TENTACLES("https://repo.racci.dev/snapshots/") {
             override fun getDefaultDependencies(version: String?) = listOf("dev.racci.tentacles:tentacles-api:${getFullVersion(version) ?: Constants.LATEST_MC_VERSION}")
             override fun getMinixDependencies() = PAPER.getMinixDependencies()
         },
-        VELOCITY {
+        VELOCITY("https://repo.velocitypowered.com/snapshots/") {
             override fun getDefaultDependencies(version: String?): Collection<String> {
                 TODO("Not yet implemented")
             }
