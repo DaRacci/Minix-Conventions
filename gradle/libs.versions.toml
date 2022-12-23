@@ -197,7 +197,7 @@ ktor-client-plugins-logging = { module = "io.ktor:ktor-client-logging-jvm", vers
 ktor-client-plugins-websockets = { module = "io.ktor:ktor-client-websockets-jvm", version.ref = "ktor" }
 
 gradle-shadow = { module = "gradle.plugin.com.github.jengelman.gradle.plugins:shadow", version = "7.0.0" } # For some reason can only resolve up to 7.0.0
-gradle-slimjar = { module = "gradle.plugin.com.github.slimjar:slimjar-gradle-plugin", version.ref = "slimjar" }
+gradle-slimjar = { module = "dev.racci.slimjar:dev.racci.slimjar.gradle.plugin", version.ref = "slimjar" }
 
 gradle-kotlin-dsl = { module = "org.gradle.kotlin.kotlin-dsl:org.gradle.kotlin.kotlin-dsl.gradle.plugin", version.ref = "kotlin-dsl" }
 gradle-kotlin-jvm = { module = "org.jetbrains.kotlin.jvm:org.jetbrains.kotlin.jvm.gradle.plugin", version.ref = "kotlin" }
