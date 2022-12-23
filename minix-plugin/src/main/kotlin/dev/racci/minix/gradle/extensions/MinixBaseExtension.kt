@@ -1,14 +1,9 @@
 package dev.racci.minix.gradle.extensions
 
-import arrow.core.None
-import arrow.core.Option
-import arrow.core.Some
-import arrow.core.getOrElse
 import dev.racci.minix.gradle.Constants
 import dev.racci.minix.gradle.MinixGradlePlugin
 import dev.racci.minix.gradle.ex.recursiveSubprojects
 import dev.racci.minix.gradle.exceptions.MissingPluginException
-import dev.racci.minix.gradle.isTestEnvironment
 import dev.racci.minix.gradle.support.DokkaPluginSupport
 import dev.racci.minix.gradle.support.KtlintPluginSupport
 import dev.racci.minix.gradle.tasks.QuickBuildTask
@@ -17,6 +12,7 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaLibraryPlugin
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.plugins.PluginContainer
+import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.apply
@@ -25,14 +21,16 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.hasPlugin
 import org.gradle.kotlin.dsl.kotlin
+import org.gradle.kotlin.dsl.property
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.ide.idea.IdeaPlugin
 import org.gradle.plugins.ide.idea.model.IdeaModel
 import org.jetbrains.dokka.gradle.DokkaPlugin
-import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
+import org.jetbrains.kotlin.gradle.plugin.KotlinMultiplatformPluginWrapper
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
+import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMultiplatformPlugin
 import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.targets
@@ -45,7 +43,15 @@ public abstract class MinixBaseExtension(
 ) {
     /** Explicitly sets what type of support to apply, otherwise support will be added if the plugin is found. */
     @Input
-    public var kotlinSupport: Option<KotlinType> = Option.fromNullable(project.findProject("minix.kotlinType")?.toString()?.let(KotlinType::valueOf)); private set
+    public val kotlinSupport: Property<KotlinType> = project.objects.property<KotlinType>().value(
+        project.provider {
+            when {
+                project.plugins.hasPlugin(KotlinMultiplatformPluginWrapper::class) -> KotlinType.MPP
+                project.plugins.hasPlugin(KotlinPluginWrapper::class) -> KotlinType.JVM
+                else -> KotlinType.NONE
+            }
+        }
+    )
 
     /**
      * A list of the subprojects and kotlin mpp targets that aren't touched by the plugin.
@@ -57,16 +63,7 @@ public abstract class MinixBaseExtension(
     public val minecraft: MinixMinecraftExtension by lazy { MinixMinecraftExtension() }
 
     public fun configure(): Unit = with(project) {
-        if (kotlinSupport is None) {
-            logger.info("No kotlin support type was specified, attempting to detect kotlin support.")
-
-            when {
-                project.plugins.hasPlugin(KotlinMultiplatformPlugin::class) -> kotlinSupport = Some(KotlinType.MPP)
-                project.plugins.hasPlugin(KotlinPlatformJvmPlugin::class) -> kotlinSupport = Some(KotlinType.JVM)
-            }
-        }
-
-        val kotlinType = kotlinSupport.getOrElse { KotlinType.NONE }
+        val kotlinType = kotlinSupport.get()
 
         logger.info("Applying support for kotlin-type: $kotlinType")
 
@@ -181,12 +178,37 @@ public abstract class MinixBaseExtension(
             configureTasks(project)
         }
 
-        protected fun PluginContainer.maybeApply(id: String) {
-            /*if (!hasPlugin(id))*/ apply(id)
+        protected fun PluginContainer.maybeApply(id: String): Unit = maybeApplyWrapper(
+            { hasPlugin(id) },
+            { apply(id) },
+            id
+        )
+
+        protected inline fun <reified T : Plugin<*>> PluginContainer.maybeApply(): Unit = maybeApplyWrapper(
+            { hasPlugin(T::class) },
+            { apply(T::class) },
+            "${T::class.simpleName}"
+        )
+
+        protected fun Project.commonKotlinConfiguration() {
+            kotlinExtension.explicitApi() // TODO: Check for known error causers and change to warning
+            kotlinExtension.jvmToolchain(Constants.JDK_VERSION)
+            kotlinExtension.coreLibrariesVersion = KotlinVersion.CURRENT.toString()
+            kotlinExtension.sourceSets.map(KotlinSourceSet::languageSettings).forEach { settings ->
+                settings.apiVersion = KotlinVersion.CURRENT.let { ver -> "${ver.major}.${ver.minor}" }
+                settings.languageVersion = settings.apiVersion
+            }
         }
 
-        protected inline fun <reified T : Plugin<*>> PluginContainer.maybeApply() {
-            /*if (!hasPlugin(T::class))*/ apply(T::class)
+        protected fun maybeApplyWrapper(
+            hasPlugin: () -> Boolean,
+            apply: () -> Unit,
+            id: String
+        ) {
+            if (!hasPlugin()) {
+                logger.info("Applying missing plugin: $id")
+                apply()
+            } else logger.info("Plugin already applied: $id")
         }
 
         @Throws(MissingPluginException::class)

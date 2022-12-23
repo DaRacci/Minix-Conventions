@@ -1,7 +1,9 @@
 package dev.racci.minix.gradle
 
+import dev.racci.minix.gradle.extensions.MinixBaseExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.getByName
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
@@ -14,20 +16,18 @@ import kotlin.test.Test
 class PluginBaseTest {
     private lateinit var project: Project
 
+    @BeforeAll fun setupEnv() { setupEnvImpl() }
+
+    @AfterAll fun teardownEnv() { teardownEnvImpl() }
+
     @BeforeAll
     fun setupProject() {
         project = ProjectBuilder.builder().build()
         project.plugins.apply(MinixGradlePlugin::class)
-        System.setProperty("MINIX_TESTING_ENV", "true")
-    }
-
-    @AfterAll
-    fun teardownProject() {
-        System.clearProperty("MINIX_TESTING_ENV")
     }
 
     @Test
     fun `Plugin has extension registered`() {
-        expectCatching { project.extensions.getByName("minix") }.isSuccess()
+        expectCatching { project.extensions.getByName<MinixBaseExtension>("mini") }.isSuccess()
     }
 }

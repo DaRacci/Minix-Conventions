@@ -44,8 +44,8 @@ dependencies {
     testImplementation(libs.kotlin.test)
     testImplementation(libs.testing.junit5)
     testImplementation(libs.testing.strikt)
+    testImplementation(libs.testing.strikt.arrow)
     testImplementation(gradleTestKit())
-    testImplementation(gradleKotlinDsl())
 
     configurations.configureEach {
         exclude(group = "org.apache.logging.log4j", module = "log4j-core")
