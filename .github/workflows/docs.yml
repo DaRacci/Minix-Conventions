@@ -3,7 +3,7 @@ name: Docs
 on:
   push:
     branches: [ main ]
-    paths: [ "Minix-Gradle/**", "Minix-NMS/**", "minix-plugin/**", "gradle.properties", ".github/workflows/docs.yml" ]
+    paths: [ "Minix-NMS/**", "gradle.properties", ".github/workflows/docs.yml" ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
