@@ -22,12 +22,10 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - uses: gradle/gradle-build-action@v2
+      - name: Build docs
+        uses: gradle/gradle-build-action@v2
         with:
-          arguments: clean :Minix-Gradle:docs :Minix-NMS:docs :minix-plugin:docs
-
-      - name: Build Docs
-        run: ./gradlew dokkaHtmlMultiModule --info
+          arguments: clean dokkaHtmlMultiModule
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
