@@ -27,7 +27,7 @@ import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.ide.idea.IdeaPlugin
-import org.gradle.plugins.ide.idea.model.IdeaModule
+import org.gradle.plugins.ide.idea.model.IdeaModel
 import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
@@ -162,9 +162,11 @@ public abstract class MinixBaseExtension(
 
         internal open fun configureProject(project: Project) = with(project) {
             plugins.apply(IdeaPlugin::class)
-            extensions.configure<IdeaModule> {
-                isDownloadJavadoc = true
-                isDownloadSources = true
+            extensions.configure<IdeaModel> {
+                module {
+                    isDownloadJavadoc = true
+                    isDownloadSources = true
+                }
             }
 
             if (project == rootProject) {
