@@ -177,7 +177,7 @@ public abstract class MinixBaseExtension(
                 configureRootProject(project)
             } else {
                 configureSubproject(project)
-                buildDir = rootDir.resolve(project.name.lowercase())
+                buildDir = rootProject.buildDir.resolve(project.name.lowercase())
             }
 
             configureExtension(project)
