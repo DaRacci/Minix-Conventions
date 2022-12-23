@@ -57,6 +57,62 @@ tasks.create("validate-dependencies") {
             return value
         }
 
+        repositories {
+            fun forVerify(
+                url: String,
+                extraConfig: MavenArtifactRepository.() -> Unit = {}
+            ) = maven(url) {
+                mavenContent { onlyForConfigurations("resolvingConfiguration") }
+                extraConfig()
+            }
+
+            mavenCentral {
+                mavenContent { onlyForConfigurations("resolvingConfiguration") }
+            }
+            gradlePluginPortal {
+                content { onlyForConfigurations("resolvingConfiguration") }
+            }
+            forVerify("https://repo.racci.dev/releases") {
+                mavenContent {
+                    releasesOnly()
+                    includeGroupByRegex("dev\\.racci.*")
+                }
+            }
+            forVerify("https://papermc.io/repo/repository/maven-public/") {
+                mavenContent {
+                    releasesOnly()
+                    includeGroupByRegex("io\\.papermc.*")
+                    includeModule("com.mojang", "authlib")
+                }
+            }
+            forVerify("https://oss.sonatype.org/content/repositories/snapshots/") {
+                mavenContent { snapshotsOnly(); includeGroup("org.incendo.interfaces") }
+            }
+            forVerify("https://repo.opencollab.dev/maven-snapshots/") {
+                mavenContent { includeGroup("org.geysermc.floodgate") }
+            }
+            forVerify("https://repo.md-5.net/content/groups/public/") {
+                mavenContent { includeGroup("LibsDisguises") }
+            }
+            forVerify("https://repo.extendedclip.com/content/repositories/placeholderapi/") {
+                mavenContent { includeGroup("me.clip") }
+            }
+            forVerify("https://repo.dmulloy2.net/repository/public/") {
+                mavenContent { includeGroup("com.comphenix.protocol") }
+            }
+            forVerify("https://repo.fvdh.dev/releases") {
+                mavenContent { includeGroup("net.frankheijden.serverutils") }
+            }
+            forVerify("https://jitpack.io") {
+                mavenContent {
+                    includeGroup("com.willfp")
+                    includeModule("com.github.angeschossen", "LandsAPI")
+                    includeModule("com.github.LoneDev6", "api-itemsadder")
+                    includeModule("com.github.BeYkeRYkt.LightAPI", "lightapi-bukkit-common")
+                }
+            }
+        }
+
         val libraryDependencies = mutableSetOf<Provider<MinimalExternalModuleDependency>>()
         val factoryQueue = LibrariesForLibs::class.declaredMemberProperties
             .map { it.access { getter.call(libs) } }
@@ -78,61 +134,5 @@ tasks.create("validate-dependencies") {
         }
         resolvingConfiguration.dependencies.addAll(libraryDependencies.map { project.dependencies.create(it.get()) })
         resolvingConfiguration.resolve()
-    }
-}
-
-repositories {
-    fun forVerify(
-        url: String,
-        extraConfig: MavenArtifactRepository.() -> Unit = {}
-    ) = maven(url) {
-        mavenContent { onlyForConfigurations("resolvingConfiguration") }
-        extraConfig()
-    }
-
-    mavenCentral {
-        mavenContent { onlyForConfigurations("resolvingConfiguration") }
-    }
-    gradlePluginPortal {
-        content { onlyForConfigurations("resolvingConfiguration") }
-    }
-    forVerify("https://repo.racci.dev/releases") {
-        mavenContent {
-            releasesOnly()
-            includeGroupByRegex("dev\\.racci.*")
-        }
-    }
-    forVerify("https://papermc.io/repo/repository/maven-public/") {
-        mavenContent {
-            releasesOnly()
-            includeGroupByRegex("io\\.papermc.*")
-            includeModule("com.mojang", "authlib")
-        }
-    }
-    forVerify("https://oss.sonatype.org/content/repositories/snapshots/") {
-        mavenContent { snapshotsOnly(); includeGroup("org.incendo.interfaces") }
-    }
-    forVerify("https://repo.opencollab.dev/maven-snapshots/") {
-        mavenContent { includeGroup("org.geysermc.floodgate") }
-    }
-    forVerify("https://repo.md-5.net/content/groups/public/") {
-        mavenContent { includeGroup("LibsDisguises") }
-    }
-    forVerify("https://repo.extendedclip.com/content/repositories/placeholderapi/") {
-        mavenContent { includeGroup("me.clip") }
-    }
-    forVerify("https://repo.dmulloy2.net/repository/public/") {
-        mavenContent { includeGroup("com.comphenix.protocol") }
-    }
-    forVerify("https://repo.fvdh.dev/releases") {
-        mavenContent { includeGroup("net.frankheijden.serverutils") }
-    }
-    forVerify("https://jitpack.io") {
-        mavenContent {
-            includeGroup("com.willfp")
-            includeModule("com.github.angeschossen", "LandsAPI")
-            includeModule("com.github.LoneDev6", "api-itemsadder")
-            includeModule("com.github.BeYkeRYkt.LightAPI", "lightapi-bukkit-common")
-        }
     }
 }
