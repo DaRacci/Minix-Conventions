@@ -51,8 +51,9 @@ public abstract class MinixBaseExtension(
     @get:Input
     public val minecraft: MinixMinecraftExtension by lazy { MinixMinecraftExtension() }
 
-    public fun configure(): Unit = with(project) {
-        val kotlinType = kotlinSupport.get()
+    public inline fun minecraft(block: MinixMinecraftExtension.() -> Unit) {
+        block(minecraft)
+    }
 
     internal fun configure(): Unit = with(project) {
         with(getSupportType(project)) {
