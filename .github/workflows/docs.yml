@@ -1,15 +1,13 @@
 name: Docs
 
 on:
-  workflow_dispatch:
   push:
     branches: [ main ]
-    paths-ignore: [ "**.md" ]
+    paths: [ "Minix-Gradle", "Minix-NMS", "minix-plugin", "gradle.properties", ".github/workflows/docs.yml" ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
-
 
 jobs:
   docs:
@@ -25,6 +23,8 @@ jobs:
           java-version: 17
 
       - uses: gradle/gradle-build-action@v2
+        with:
+          arguments: clean :Minix-Gradle:docs :Minix-NMS:docs :minix-plugin:docs
 
       - name: Build Docs
         run: ./gradlew dokkaHtmlMultiModule --info

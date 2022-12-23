@@ -3,15 +3,14 @@ name: Dependency update check
 on:
   pull_request:
     branches: [ main ]
-    paths: [ "**.toml", "**.gradle.kts", "catalog.yml" ]
+    paths: [ "./**.gradle.kts", "gradle", "catalog", ".github/workflows/catalog.yml", "gradle.properties" ]
   push:
     branches: [ main ]
-    paths: [ "**.toml", "**.gradle.kts", "catalog.yml" ]
+    paths: [ "./**.gradle.kts", "gradle", "catalog", ".github/workflows/catalog.yml", "gradle.properties" ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
-
 
 jobs:
   build:
