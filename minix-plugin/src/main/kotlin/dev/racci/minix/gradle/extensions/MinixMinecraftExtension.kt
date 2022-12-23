@@ -9,6 +9,7 @@ public class MinixMinecraftExtension : ExtensionBase() {
     @[Input PublishedApi]
     internal val mcTargets: MutableSet<MCTarget> = mutableSetOf()
 
+    @JvmName("withMCTargetReceiver")
     public fun Project.withMCTarget(
         platform: MCTarget.Platform,
         version: String? = null,
@@ -18,6 +19,15 @@ public class MinixMinecraftExtension : ExtensionBase() {
     ) {
         highestOrderExtension().minecraft.mcTargets.add(MCTarget(this, platform, applyDefaultDependencies, applyMinix, applyNMS, version))
     }
+
+    public fun withMCTarget(
+        project: Project,
+        platform: MCTarget.Platform,
+        version: String? = null,
+        applyDefaultDependencies: Boolean = true,
+        applyMinix: Boolean = true,
+        applyNMS: Boolean = false
+    ) { project.withMCTarget(platform, version, applyDefaultDependencies, applyMinix, applyNMS) }
 
     override fun configure(project: Project) = with(project) {
         mcTargets.forEach(MCTarget::configure)
