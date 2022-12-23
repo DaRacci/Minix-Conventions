@@ -12,6 +12,8 @@ plugins {
     alias(libs.plugins.kotlin.plugin.ktlint)
 }
 
+buildDir = file("../build/$name")
+
 val compileAndTest: Configuration by configurations.creating
 configurations {
     compileOnly.get().extendsFrom(compileAndTest)

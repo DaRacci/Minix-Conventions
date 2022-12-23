@@ -12,6 +12,8 @@ plugins {
     alias(libs.plugins.kotlin.plugin.ktlint)
 }
 
+buildDir = file("../build/${name.toLowerCase()}")
+
 val kotlinVersion: String by project
 val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "SNAPSHOT"
 val minixVersion: String = "${project.ext["version"]}.$runNumber"

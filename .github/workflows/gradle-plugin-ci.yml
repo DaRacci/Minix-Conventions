@@ -29,3 +29,4 @@ jobs:
         with:
           name: build-artifacts-${{ steps.ref.outputs.branch }}
           path: build/libs/minix-plugin/
+          if-no-files-found: error
