@@ -2,7 +2,9 @@ package dev.racci.minix.gradle.extensions
 
 import dev.racci.minix.gradle.Constants
 import dev.racci.minix.gradle.MinixGradlePlugin
+import dev.racci.minix.gradle.access
 import dev.racci.minix.gradle.ex.recursiveSubprojects
+import dev.racci.minix.gradle.ex.whenEvaluated
 import dev.racci.minix.gradle.exceptions.MissingPluginException
 import dev.racci.minix.gradle.support.DokkaPluginSupport
 import dev.racci.minix.gradle.support.KtlintPluginSupport
@@ -12,7 +14,6 @@ import org.gradle.api.Project
 import org.gradle.api.plugins.JavaLibraryPlugin
 import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.plugins.PluginContainer
-import org.gradle.api.provider.Property
 import org.gradle.api.tasks.Input
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.apply
@@ -21,7 +22,6 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.hasPlugin
 import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.property
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.ide.idea.IdeaPlugin
@@ -37,6 +37,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.targets
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import kotlin.reflect.KProperty0
 
 public abstract class MinixBaseExtension(
     private val project: Project
@@ -79,6 +80,20 @@ public abstract class MinixBaseExtension(
                     addPluginSupport(subproject)
                 }
             }
+
+        whenEvaluated {
+            fun maybeLazyConfigure(prop: KProperty0<ExtensionBase>) {
+                val lazy = prop.access { getDelegate() as Lazy<ExtensionBase> }
+                if (!lazy.isInitialized()) {
+                    return logger.info("Not configuring ${prop.name}.")
+                }
+
+                logger.info("Configuring ${prop.name}...")
+                lazy.value.configure(project)
+            }
+
+            maybeLazyConfigure(::minecraft)
+        }
     }
 
     private fun addPluginSupport(target: Project) = with(target) {
