@@ -90,7 +90,7 @@ public data class MCTarget @PublishedApi internal constructor(
             val split = version.split('.', limit = 3)
             val major = split[0].toInt()
             val minor = split[1].toInt()
-            val patch = split.getOrNull(3)?.toInt()
+            val patch = split.getOrNull(2)?.toInt()
 
             return buildString {
                 append(major)
