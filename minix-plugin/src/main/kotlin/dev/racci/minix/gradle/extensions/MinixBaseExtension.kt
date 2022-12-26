@@ -25,13 +25,12 @@ import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.ide.idea.IdeaPlugin
 import org.jetbrains.dokka.gradle.DokkaPlugin
+import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinMultiplatformPluginWrapper
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMultiplatformPlugin
-import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.targets
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -59,18 +58,17 @@ public abstract class MinixBaseExtension(
             configureProject(project)
         }
 
-        project.recursiveSubprojects()
-            .forEach { subproject ->
-                subproject.whenEvaluated {
-                    if (subproject.name in ignoredTargets) return@whenEvaluated logger.info("Ignoring subproject: ${subproject.name}")
+        project.recursiveSubprojects().forEach { subproject ->
+            subproject.whenEvaluated {
+                if (subproject.name in ignoredTargets) return@whenEvaluated logger.info("Ignoring subproject: ${subproject.name}")
 
-                    with(getSupportType(subproject)) {
-                        logger.info("Applying support to subproject of ${subproject.name} with kotlin-type: $this")
-                        configureProject(subproject)
-                    }
-                    addPluginSupport(subproject)
+                with(getSupportType(subproject)) {
+                    logger.info("Applying support to subproject of ${subproject.name} with kotlin-type: $this")
+                    configureProject(subproject)
                 }
+                addPluginSupport(subproject)
             }
+        }
 
         whenEvaluated {
             fun maybeLazyConfigure(prop: KProperty0<ExtensionBase>) {
@@ -146,8 +144,8 @@ public abstract class MinixBaseExtension(
             }
 
             override fun configureTasks(project: Project): Unit = with(project) {
-                kotlinExtension.targets.forEach { target ->
-                    tasks.register<QuickBuildTask>("${target.name}QuickBuild", target)
+                (kotlinExtension as KotlinMultiplatformExtension).targets.all {
+                    tasks.register<QuickBuildTask>("${name}QuickBuild", this)
                 }
             }
         };
@@ -195,9 +193,9 @@ public abstract class MinixBaseExtension(
             kotlinExtension.explicitApi() // TODO: Check for known error causers and change to warning
             kotlinExtension.jvmToolchain(Constants.JDK_VERSION)
             kotlinExtension.coreLibrariesVersion = KotlinVersion.CURRENT.toString()
-            kotlinExtension.sourceSets.map(KotlinSourceSet::languageSettings).forEach { settings ->
-                settings.apiVersion = KotlinVersion.CURRENT.let { ver -> "${ver.major}.${ver.minor}" }
-                settings.languageVersion = settings.apiVersion
+            kotlinExtension.sourceSets.all {
+                languageSettings.apiVersion = KotlinVersion.CURRENT.let { ver -> "${ver.major}.${ver.minor}" }
+                languageSettings.languageVersion = languageSettings.apiVersion
             }
         }
 
