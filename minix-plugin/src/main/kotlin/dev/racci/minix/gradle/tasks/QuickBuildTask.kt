@@ -11,7 +11,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @DisableCachingByDefault(because = "Not worth caching")
-public class QuickBuildTask(target: KotlinTarget) : DefaultTask() {
+public open class QuickBuildTask(target: KotlinTarget) : DefaultTask() {
     init {
         group = "minix"
         description = "Builds the target [${target.name}] with minimal tasks (No testing or documentation, etc.)"
