@@ -9,9 +9,12 @@ import org.gradle.language.jvm.tasks.ProcessResources
 import org.gradle.work.DisableCachingByDefault
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import javax.inject.Inject
 
 @DisableCachingByDefault(because = "Not worth caching")
-public open class QuickBuildTask(target: KotlinTarget) : DefaultTask() {
+public open class QuickBuildTask @Inject constructor(
+    target: KotlinTarget
+) : DefaultTask() {
     init {
         group = "minix"
         description = "Builds the target [${target.name}] with minimal tasks (No testing or documentation, etc.)"
