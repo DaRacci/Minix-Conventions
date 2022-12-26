@@ -43,7 +43,7 @@ public abstract class MinixBaseExtension(
      * A list of the subprojects and kotlin mpp targets that aren't touched by the plugin.
      */
     @Input
-    public val ignoredTargets: MutableList<String> = mutableListOf()
+    public val ignoredTargets: MutableList<String> = mutableListOf("metadata")
 
     @get:Input
     public val minecraft: MinixMinecraftExtension by lazy { MinixMinecraftExtension() }
@@ -145,6 +145,7 @@ public abstract class MinixBaseExtension(
 
             override fun configureTasks(project: Project): Unit = with(project) {
                 (kotlinExtension as KotlinMultiplatformExtension).targets.all {
+                    if (name == "metadata") return@all
                     tasks.register<QuickBuildTask>("${name}QuickBuild", this)
                 }
             }
