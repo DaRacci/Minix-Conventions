@@ -17,7 +17,6 @@ import org.gradle.api.plugins.PluginContainer
 import org.gradle.api.tasks.Input
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.hasPlugin
@@ -25,7 +24,6 @@ import org.gradle.kotlin.dsl.kotlin
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.ide.idea.IdeaPlugin
-import org.gradle.plugins.ide.idea.model.IdeaModel
 import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinMultiplatformPluginWrapper
@@ -63,8 +61,8 @@ public abstract class MinixBaseExtension(
 
         project.recursiveSubprojects()
             .forEach { subproject ->
-                subproject.beforeEvaluate {
-                    if (subproject.name in ignoredTargets) return@beforeEvaluate logger.info("Ignoring subproject: ${subproject.name}")
+                subproject.whenEvaluated {
+                    if (subproject.name in ignoredTargets) return@whenEvaluated logger.info("Ignoring subproject: ${subproject.name}")
 
                     with(getSupportType(subproject)) {
                         logger.info("Applying support to subproject of ${subproject.name} with kotlin-type: $this")
@@ -165,12 +163,9 @@ public abstract class MinixBaseExtension(
         protected open fun configureTasks(project: Project): Unit = Unit
 
         internal open fun configureProject(project: Project) = with(project) {
-            plugins.apply(IdeaPlugin::class)
-            extensions.configure<IdeaModel> {
-                module {
-                    isDownloadJavadoc = true
-                    isDownloadSources = true
-                }
+            plugins.apply(IdeaPlugin::class).model.module {
+                isDownloadJavadoc = true
+                isDownloadSources = true
             }
 
             if (project == rootProject) {
