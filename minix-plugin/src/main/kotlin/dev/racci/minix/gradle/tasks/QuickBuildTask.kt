@@ -19,14 +19,14 @@ public open class QuickBuildTask @Inject constructor(
         group = "minix"
         description = "Builds the target [${target.name}] with minimal tasks (No testing or documentation, etc.)"
 
-        dependsOn(
+        listOfNotNull(
             target.nullableTargetTask<KotlinCompile>("compileKotlin"),
             target.nullableTargetTask<ProcessResources>("processResources"),
             target.nullableTargetTask<Jar>("jar"),
             target.nullableTargetTask<ShadowJar>("shadowJar"),
             target.nullableTargetTask<RemapJar>("reobfJar")
-        )
+        ).takeIf(List<*>::isEmpty)?.let(List<*>::toTypedArray)?.let(::dependsOn)
 
-        finalizedBy(target.nullableTargetTask<CopyJarTask>("copyJar"))
+        target.nullableTargetTask<CopyJarTask>("copyJar")?.let { finalizedBy(it) }
     }
 }
