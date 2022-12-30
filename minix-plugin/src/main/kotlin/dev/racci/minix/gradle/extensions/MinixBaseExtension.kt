@@ -1,14 +1,18 @@
 package dev.racci.minix.gradle.extensions
 
+import com.github.jengelman.gradle.plugins.shadow.ShadowJavaPlugin
+import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import dev.racci.minix.gradle.Constants
 import dev.racci.minix.gradle.MinixGradlePlugin
 import dev.racci.minix.gradle.access
+import dev.racci.minix.gradle.ex.disambiguateName
 import dev.racci.minix.gradle.ex.recursiveSubprojects
 import dev.racci.minix.gradle.ex.whenEvaluated
 import dev.racci.minix.gradle.exceptions.MissingPluginException
 import dev.racci.minix.gradle.support.DokkaPluginSupport
 import dev.racci.minix.gradle.support.KtlintPluginSupport
 import dev.racci.minix.gradle.tasks.QuickBuildTask
+import dev.racci.minix.gradle.tasks.ShadowJarMPPTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaLibraryPlugin
@@ -31,6 +35,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinMultiplatformPluginWrapper
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMultiplatformPlugin
+import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -145,8 +150,9 @@ public abstract class MinixBaseExtension(
 
             override fun configureTasks(project: Project): Unit = with(project) {
                 (kotlinExtension as KotlinMultiplatformExtension).targets.all {
-                    if (name == "metadata") return@all
-                    tasks.register<QuickBuildTask>("${name}QuickBuild", this)
+                    if (this !is KotlinJvmTarget) return@all
+                    tasks.register<QuickBuildTask>(disambiguateName("quickBuild"), this)
+                    plugins.withType<ShadowPlugin> { tasks.register<ShadowJarMPPTask>(disambiguateName(ShadowJavaPlugin.getSHADOW_JAR_TASK_NAME()), this) }
                 }
             }
         };

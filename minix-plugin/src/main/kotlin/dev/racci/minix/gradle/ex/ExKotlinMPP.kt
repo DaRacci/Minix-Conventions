@@ -8,6 +8,7 @@ import org.gradle.configurationcache.extensions.capitalized
 import org.gradle.kotlin.dsl.named
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
+import java.util.Locale
 
 /**
  * Gets a provider for the task prefixed with the targets name.
@@ -37,6 +38,16 @@ public inline fun <reified T : Task> KotlinTarget.targetTask(commonTask: T): Tas
 public inline fun <reified T : Task> KotlinTarget.targetTask(commonTask: TaskProvider<T>): TaskProvider<T> = targetTask(commonTask.get())
 
 public inline fun <reified T : Task> KotlinTarget.nullableTargetTask(taskName: String): TaskProvider<T>? = runCatching { targetTask<T>(taskName) }.getOrNull()
+
+// Copied from internal kotlin gradle plugin
+public fun KotlinTarget.disambiguateName(simpleName: String): String {
+    val nonEmptyParts = listOf(targetName, simpleName).mapNotNull { it.takeIf(String::isNotEmpty) }
+    return nonEmptyParts.drop(1).joinToString(
+        separator = "",
+        prefix = nonEmptyParts.firstOrNull().orEmpty(),
+        transform = String::replaceFirstChar
+    )
+}
 
 public fun KotlinSourceSet.withMCTarget(
     platform: MCTarget.Platform,
