@@ -1,6 +1,5 @@
 package dev.racci.minix.gradle.tasks
 
-import com.github.jengelman.gradle.plugins.shadow.ShadowJavaPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.kotlin.dsl.get
@@ -15,7 +14,7 @@ public abstract class ShadowJarMPPTask @Inject constructor(
     init {
         val mainCompilation = target.compilations["main"]
 
-        this.group = ShadowJavaPlugin.getSHADOW_GROUP()
+        this.group = "Shadow"
         this.from(mainCompilation.output)
         this.configurations = listOf(project.configurations[mainCompilation.runtimeDependencyConfigurationName])
         this.archiveAppendix.set(target.targetName)

@@ -152,7 +152,7 @@ public abstract class MinixBaseExtension(
                 (kotlinExtension as KotlinMultiplatformExtension).targets.all {
                     if (this !is KotlinJvmTarget) return@all
                     tasks.register<QuickBuildTask>(disambiguateName("quickBuild"), this)
-                    plugins.withType<ShadowPlugin> { tasks.register<ShadowJarMPPTask>(disambiguateName(ShadowJavaPlugin.getSHADOW_JAR_TASK_NAME()), this) }
+                    plugins.withType<ShadowPlugin> { tasks.register<ShadowJarMPPTask>(disambiguateName("shadowJar"), this) }
                 }
             }
         };
