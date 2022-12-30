@@ -8,7 +8,6 @@ import org.gradle.configurationcache.extensions.capitalized
 import org.gradle.kotlin.dsl.named
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
-import java.util.Locale
 
 /**
  * Gets a provider for the task prefixed with the targets name.
@@ -45,7 +44,7 @@ public fun KotlinTarget.disambiguateName(simpleName: String): String {
     return nonEmptyParts.drop(1).joinToString(
         separator = "",
         prefix = nonEmptyParts.firstOrNull().orEmpty(),
-        transform = String::replaceFirstChar
+        transform = String::capitalize
     )
 }
 
