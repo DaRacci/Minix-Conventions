@@ -1,6 +1,5 @@
 package dev.racci.minix.gradle.extensions
 
-import com.github.jengelman.gradle.plugins.shadow.ShadowJavaPlugin
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import dev.racci.minix.gradle.Constants
 import dev.racci.minix.gradle.MinixGradlePlugin

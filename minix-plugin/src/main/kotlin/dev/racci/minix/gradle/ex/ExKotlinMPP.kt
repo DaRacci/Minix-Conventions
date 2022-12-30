@@ -1,5 +1,6 @@
 package dev.racci.minix.gradle.ex // ktlint-disable filename
 
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import dev.racci.minix.gradle.data.MCTarget
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -8,6 +9,7 @@ import org.gradle.configurationcache.extensions.capitalized
 import org.gradle.kotlin.dsl.named
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
+import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 
 /**
  * Gets a provider for the task prefixed with the targets name.
@@ -37,6 +39,8 @@ public inline fun <reified T : Task> KotlinTarget.targetTask(commonTask: T): Tas
 public inline fun <reified T : Task> KotlinTarget.targetTask(commonTask: TaskProvider<T>): TaskProvider<T> = targetTask(commonTask.get())
 
 public inline fun <reified T : Task> KotlinTarget.nullableTargetTask(taskName: String): TaskProvider<T>? = runCatching { targetTask<T>(taskName) }.getOrNull()
+
+public fun KotlinJvmTarget.shadowJar(block: ShadowJar): TaskProvider<ShadowJar> = targetTask(block)
 
 // Copied from internal kotlin gradle plugin
 public fun KotlinTarget.disambiguateName(simpleName: String): String {
