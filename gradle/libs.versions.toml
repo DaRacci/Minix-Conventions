@@ -20,7 +20,7 @@ strikt = "0.34.1"
 
 eco = "6.48.2"
 eco-bosses = "8.112.3"
-eco-enchants = "9.14.2"
+eco-enchants = "9.14.4"
 eco-libreforge = "3.126.3"
 
 adventure = "4.12.0"
