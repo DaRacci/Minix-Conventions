@@ -149,7 +149,7 @@ slimjar = { module = "dev.racci.slimjar:slimjar", version.ref = "slimjar" }
 mariadb = "org.mariadb.jdbc:mariadb-java-client:3.1.0"
 toolfactory = "io.github.toolfactory:jvm-driver:9.4.2"
 apiguardian = "org.apiguardian:apiguardian-api:1.1.2"
-aedile = "com.sksamuel.aedile:aedile-core:1.1.2"
+aedile = "com.sksamuel.aedile:aedile-core:1.2.0"
 
 koin-core = { module = "io.insert-koin:koin-core-jvm", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
