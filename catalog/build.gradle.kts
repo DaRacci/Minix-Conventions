@@ -106,9 +106,9 @@ tasks.create("validate-dependencies") {
             forVerify("https://jitpack.io") {
                 mavenContent {
                     includeGroup("com.willfp")
+                    includeGroup("com.github.BeYkeRYkt.LightAPI")
                     includeModule("com.github.angeschossen", "LandsAPI")
                     includeModule("com.github.LoneDev6", "api-itemsadder")
-                    includeModule("com.github.BeYkeRYkt.LightAPI", "lightapi-bukkit-common")
                 }
             }
         }
