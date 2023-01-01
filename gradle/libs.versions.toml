@@ -18,7 +18,7 @@ slimjar = "1.4.1"
 minotaur = "2.5.0"
 strikt = "0.34.1"
 
-eco = "6.48.1"
+eco = "6.48.2"
 eco-bosses = "8.112.3"
 eco-enchants = "9.14.2"
 eco-libreforge = "3.126.3"
