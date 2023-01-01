@@ -144,7 +144,7 @@ valiktor = "org.valiktor:valiktor-core:0.12.0"
 mordant = "com.github.ajalt.mordant:mordant-jvm:2.0.0-beta10"
 caffeine = "com.github.ben-manes.caffeine:caffeine:3.1.2"
 reflections = "org.reflections:reflections:0.10.2"
-classgraph = "io.github.classgraph:classgraph:4.8.152"
+classgraph = "io.github.classgraph:classgraph:4.8.153"
 slimjar = { module = "dev.racci.slimjar:slimjar", version.ref = "slimjar" }
 mariadb = "org.mariadb.jdbc:mariadb-java-client:3.1.0"
 toolfactory = "io.github.toolfactory:jvm-driver:9.4.2"
