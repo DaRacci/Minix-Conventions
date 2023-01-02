@@ -1,4 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
 import java.util.Properties
 
 Properties()
@@ -25,7 +24,6 @@ configurations {
 @Suppress("UnstableApiUsage")
 dependencies {
     shadowImpl(libs.arrow.core)
-    shadowImpl(libs.kotlin.stdlib)
     shadowImpl(libs.kotlinx.immutableCollections)
 
     // All the plugins that are used to configure.
@@ -61,17 +59,20 @@ tasks {
     jar { enabled = false }
     test { useJUnitPlatform() }
 
-    val relocateShadowJar by registering(ConfigureShadowRelocation::class) {
-        target = shadowJar.get()
-        prefix = "dev.racci.minix.gradle.libs"
-    }
-
     shadowJar {
         archiveClassifier.set("")
         configurations = listOf(shadowImpl)
-        mergeServiceFiles()
-        dependsOn(relocateShadowJar)
+
         exclude("kotlin/**")
+        listOf(
+            "arrow",
+            "kotlinx.collections",
+            "org.codehaus.mojo.animal_sniffer",
+            "org.intellij.lang.annotations",
+            "org.jetbrains.annotations"
+        ).map { it to it.split('.').last() }.forEach { (original, last) ->
+            relocate(original, "dev.racci.minix.gradle.libs.$last")
+        }
     }
 
     processResources {
