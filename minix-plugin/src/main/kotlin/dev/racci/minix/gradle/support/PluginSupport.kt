@@ -33,7 +33,7 @@ public sealed class PluginSupport(
     }
 
     internal companion object {
-        private val supportedPlugins = PluginSupport::class.sealedSubclasses.map { it.cast<PluginSupport>() }
+        private val supportedPlugins = PluginSupport::class.sealedSubclasses.map { it.objectInstance!!.cast<PluginSupport>() }
 
         fun addPluginSupport(target: Any) {
             val (project, func) = when (target) {

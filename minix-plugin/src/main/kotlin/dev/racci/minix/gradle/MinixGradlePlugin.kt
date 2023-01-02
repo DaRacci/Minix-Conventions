@@ -11,8 +11,9 @@ public class MinixGradlePlugin : Plugin<Project> {
             "MinixGradlePlugin must be applied to the root project! (Currently)"
         }
 
+        // TODO: Broken check
         if (KotlinVersion.CURRENT.toString() != Constants.KOTLIN_VERSION) {
-            logger.warn("MinixGradlePlugin is not built against Kotlin ${Constants.KOTLIN_VERSION} and may not work properly!")
+            logger.warn("MinixGradlePlugin is not built against Kotlin ${Constants.KOTLIN_VERSION} and may not work properly! (${Constants.KOTLIN_VERSION})")
         }
 
         val baseExtension = project.extensions.create<MinixBaseExtension>("minix", project)

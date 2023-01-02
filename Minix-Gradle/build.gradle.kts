@@ -25,13 +25,8 @@ javaComponent.withVariantsFromConfiguration(configurations["runtimeElements"]) {
 
 dependencies {
     implementation(libs.gradle.kotlin.jvm)
-    implementation(libs.gradle.kotlin.plugin.serialization)
-    implementation(libs.gradle.kotlin.plugin.ktlint)
     implementation(libs.gradle.kotlin.plugin.dokka)
     implementation(libs.gradle.minecraft.paperweight)
-
-    implementation(libs.kotlin.stdlib)
-    implementation(libs.kotlin.reflect)
 }
 
 kotlin {

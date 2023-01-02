@@ -25,6 +25,7 @@ gradle.settingsEvaluated {
 }
 
 plugins {
+    java
     id("io.papermc.paperweight.userdev")
 }
 

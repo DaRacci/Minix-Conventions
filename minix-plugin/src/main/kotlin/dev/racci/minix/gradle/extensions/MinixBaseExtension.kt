@@ -39,7 +39,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KProperty0
 
-public class MinixBaseExtension(private val project: Project) {
+public abstract class MinixBaseExtension(private val project: Project) {
 
     /**
      * A list of the subprojects and kotlin mpp targets that aren't touched by the plugin.
@@ -155,7 +155,12 @@ public class MinixBaseExtension(private val project: Project) {
                 (kotlinExtension as KotlinMultiplatformExtension).targets.all {
                     if (this !is KotlinJvmTarget) return@all
                     tasks.register<QuickBuildTask>(disambiguateName("quickBuild"), this)
-                    plugins.withType<ShadowPlugin> { tasks.register<ShadowJarMPPTask>(disambiguateName("shadowJar"), this@all) }
+                    plugins.withType<ShadowPlugin> {
+                        tasks.register<ShadowJarMPPTask>(
+                            disambiguateName("shadowJar"),
+                            this@all
+                        )
+                    }
                 }
             }
         };
@@ -224,7 +229,12 @@ public class MinixBaseExtension(private val project: Project) {
         protected inline fun <reified T : Plugin<*>> PluginContainer.ensurePlugin(libString: String) {
             if (!hasPlugin(T::class)) return
             val message = """
-                Make sure to apply the ${libString.replace('.', '-')} plugin before by adding the following to your build.gradle.kts:
+                Make sure to apply the ${
+            libString.replace(
+                '.',
+                '-'
+            )
+            } plugin before by adding the following to your build.gradle.kts:
                     plugins {
                         alias(libs.plugins.$libString)
                     }

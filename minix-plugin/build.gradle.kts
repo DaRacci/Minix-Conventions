@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ConfigureShadowRelocation
 import java.util.Properties
 
 Properties()
@@ -61,9 +62,16 @@ tasks {
     jar { enabled = false }
     test { useJUnitPlatform() }
 
+    val relocateShadowJar by registering(ConfigureShadowRelocation::class) {
+        target = shadowJar.get()
+        prefix = "dev.racci.minix.gradle.libs"
+    }
+
     shadowJar {
         archiveClassifier.set("")
         configurations = listOf(shadowImpl)
+        mergeServiceFiles()
+        dependsOn(relocateShadowJar)
         exclude("kotlin/**")
     }
 

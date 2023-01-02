@@ -10,11 +10,11 @@ val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "SNAPSHOT"
 version = "$kotlinVersion-$runNumber"
 
 minixPublishing {
-    this.noPublishing = true
+    noPublishing = true
 }
 
 subprojects {
-    this.version = rootProject.version
+    version = rootProject.version
 
     if (buildscript.sourceFile?.extension?.toLowerCase() == "kts" &&
         parent != rootProject
