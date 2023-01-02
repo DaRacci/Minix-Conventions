@@ -35,10 +35,12 @@ public data class MCTarget @PublishedApi internal constructor(
                     obj.repositories.addDefaultRepo()
                     dependencies.forEach { dep -> obj.dependencies.add(COMPILE_ONLY, dep) }
                 }
+
                 is KotlinSourceSet -> {
                     obj.project().repositories.addDefaultRepo()
                     obj.dependencies { dependencies.forEach(::compileOnly) }
                 }
+
                 else -> throw IllegalArgumentException("Unknown target type: ${obj::class.simpleName}")
             }
         }
@@ -69,11 +71,27 @@ public data class MCTarget @PublishedApi internal constructor(
 
     public enum class Platform(public val defaultRepository: String) {
         PAPER("https://repo.papermc.io/repository/maven-public/") {
-            override fun getDefaultDependencies(version: String?) = listOf("io.papermc.paper:paper-api:${getFullVersion(version) ?: Constants.LATEST_MC_VERSION}")
-            override fun getMinixDependencies() = listOf("dev.racci.minix:minix-paper:${Constants.Dependencies.MINIX_VERSION}")
+            override fun getDefaultDependencies(version: String?) =
+                listOf("io.papermc.paper:paper-api:${getFullVersion(version) ?: Constants.MC_VERSION}")
+
+            override fun getMinixDependencies() =
+                listOf("dev.racci.minix:minix-paper:${Constants.Dependencies.MINIX_VERSION}")
+        },
+        PURPUR("https://repo.purpurmc.org/snapshots") {
+            override fun getDefaultDependencies(version: String?): Collection<String> {
+                val split = version?.split('.', limit = 2)?.map { it.takeWhile(Char::isDigit).toInt() }
+                return when {
+                    split == null || split.size < 2 || split[0] != 1 || split[1] < 18 -> "org.purpurmc.purpur"
+                    else -> "net.pl3x.purpur"
+                }.let { group -> listOf("$group:purpur-api:${getFullVersion(version) ?: Constants.MC_VERSION}") }
+            }
+
+            override fun getMinixDependencies() = PAPER.getMinixDependencies()
         },
         TENTACLES("https://repo.racci.dev/snapshots/") {
-            override fun getDefaultDependencies(version: String?) = listOf("dev.racci.tentacles:tentacles-api:${getFullVersion(version) ?: Constants.LATEST_MC_VERSION}")
+            override fun getDefaultDependencies(version: String?) =
+                listOf("dev.racci.tentacles:tentacles-api:${getFullVersion(version) ?: Constants.MC_VERSION}")
+
             override fun getMinixDependencies() = PAPER.getMinixDependencies()
         },
         VELOCITY("https://repo.velocitypowered.com/snapshots/") {
