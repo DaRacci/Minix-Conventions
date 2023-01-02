@@ -50,10 +50,19 @@ public abstract class MinixBaseExtension(
     public val ignoredTargets: MutableList<String> = mutableListOf("metadata")
 
     @get:Input
-    public val minecraft: MinixMinecraftExtension by lazy { MinixMinecraftExtension() }
+    public val minecraft: MinixMinecraftExtension by lazy { MinixMinecraftExtension(project) }
 
+    @get:Input
+    public val publishing: MinixPublishingExtension by lazy { MinixPublishingExtension(project) }
+
+    @TopLevelDSLMarker
     public inline fun minecraft(block: MinixMinecraftExtension.() -> Unit) {
         block(minecraft)
+    }
+
+    @TopLevelDSLMarker
+    public inline fun publishing(block: MinixPublishingExtension.() -> Unit) {
+        block(publishing)
     }
 
     internal fun configure(): Unit = with(project) {
@@ -87,6 +96,7 @@ public abstract class MinixBaseExtension(
             }
 
             maybeLazyConfigure(::minecraft)
+            maybeLazyConfigure(::publishing)
         }
     }
 
