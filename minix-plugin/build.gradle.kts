@@ -58,6 +58,7 @@ kotlin {
 tasks {
     jar { enabled = false }
     test { useJUnitPlatform() }
+    withType<GenerateModuleMetadata> { enabled = false }
 
     shadowJar {
         archiveClassifier.set("")
@@ -94,6 +95,13 @@ publishing.repositories.maven("https://repo.racci.dev/") {
 
     name = "RacciRepo"
     credentials(PasswordCredentials::class)
+}
+
+afterEvaluate {
+    publishing.publications
+        .withType<MavenPublication>()
+        .filter { it.name == "pluginMaven" }
+        .forEach { publication -> publication.setArtifacts(listOf(tasks.shadowJar)) }
 }
 
 gradlePlugin {
