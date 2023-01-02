@@ -5,9 +5,8 @@ Properties()
     .forEach { key, value -> project.ext["$key"] = value }
 
 plugins {
-    `kotlin-dsl`
     `maven-publish`
-    `kotlin-dsl-precompiled-script-plugins`
+    alias(libs.plugins.kotlin.dsl)
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.plugin.ktlint)
 }
