@@ -10,29 +10,27 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.gradle.publish)
     alias(libs.plugins.kotlin.plugin.ktlint)
+    alias(libs.plugins.shadow)
 }
 
 buildDir = file("../build/$name")
 
 val compileAndTest: Configuration by configurations.creating
+val shadowImpl: Configuration by configurations.creating
 configurations {
-    compileOnly.get().extendsFrom(compileAndTest)
-    testImplementation.get().extendsFrom(compileAndTest, implementation.get())
+    compileOnly.get().extendsFrom(shadowImpl, compileAndTest)
+    testImplementation.get().extendsFrom(shadowImpl, compileAndTest)
 }
 
 @Suppress("UnstableApiUsage")
 dependencies {
-    // Align the version of all kotlin components
-    implementation(platform(kotlin("bom", libs.versions.kotlin.asProvider().get())))
-    implementation(libs.kotlin.stdlib)
-    implementation(libs.kotlinx.immutableCollections)
-    implementation(libs.arrow.core)
+    shadowImpl(libs.arrow.core)
+    shadowImpl(libs.kotlin.stdlib)
+    shadowImpl(libs.kotlinx.immutableCollections)
 
     // All the plugins that are used to configure.
-    // TODO: Figure out how to apply these without implementing specific versions
     compileAndTest(gradleApi())
     compileAndTest(gradleKotlinDsl())
-    compileAndTest(libs.gradle.kotlin.plugin.serialization)
     compileAndTest(libs.gradle.minecraft.pluginYML)
     compileAndTest(libs.gradle.kotlin.jvm)
     compileAndTest(libs.gradle.kotlin.plugin.ktlint)
@@ -56,17 +54,29 @@ dependencies {
 
 kotlin {
     jvmToolchain(17)
-    sourceSets.configureEach {
-        explicitApi()
-        languageSettings {
-            languageVersion = "1.7"
-            apiVersion = "1.7"
-        }
-    }
+    explicitApi()
 }
 
-tasks.test {
-    useJUnitPlatform()
+tasks {
+    jar { enabled = false }
+    test { useJUnitPlatform() }
+
+    shadowJar {
+        archiveClassifier.set("")
+        configurations = listOf(shadowImpl)
+        exclude("kotlin/**")
+    }
+
+    processResources {
+        filesMatching("minix.properties") {
+            expand(
+                "jdk" to java.sourceCompatibility.toString(),
+                "kotlin" to libs.versions.kotlin.asProvider().get(),
+                "mc" to "1.19.3-R0.1-SNAPSHOT", // TODO: Get this from the paperweight plugin.
+                "minix" to libs.versions.minix.get()
+            )
+        }
+    }
 }
 
 publishing.repositories.maven("https://repo.racci.dev/") {

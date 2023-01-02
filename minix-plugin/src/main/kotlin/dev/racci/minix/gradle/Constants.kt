@@ -1,13 +1,22 @@
 package dev.racci.minix.gradle
 
-public object Constants {
-    public const val JDK_VERSION: Int = 17
+import org.gradle.kotlin.dsl.provideDelegate
+import java.util.Properties
 
-    public const val LATEST_MC_VERSION: String = "1.19.3-R0.1-SNAPSHOT"
+public object Constants {
+    private val properties = this::class.java.classLoader.getResourceAsStream("minix.properties")!!.use { stream ->
+        Properties().also { it.load(stream) }
+    }
+
+    public val JDK_VERSION: Int by properties
+
+    public val MC_VERSION: String by properties
+
+    public val KOTLIN_VERSION: String by properties
 
     public const val RACCI_REPO: String = "https://repo.racci.dev/"
 
     public object Dependencies {
-        public const val MINIX_VERSION: String = "5.0.0"
+        public val MINIX_VERSION: String by properties
     }
 }

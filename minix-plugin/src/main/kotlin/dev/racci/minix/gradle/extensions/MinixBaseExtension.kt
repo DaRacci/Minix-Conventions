@@ -4,12 +4,12 @@ import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import dev.racci.minix.gradle.Constants
 import dev.racci.minix.gradle.MinixGradlePlugin
 import dev.racci.minix.gradle.access
+import dev.racci.minix.gradle.annotations.TopLevelDSLMarker
 import dev.racci.minix.gradle.ex.disambiguateName
 import dev.racci.minix.gradle.ex.recursiveSubprojects
 import dev.racci.minix.gradle.ex.whenEvaluated
 import dev.racci.minix.gradle.exceptions.MissingPluginException
-import dev.racci.minix.gradle.support.DokkaPluginSupport
-import dev.racci.minix.gradle.support.KtlintPluginSupport
+import dev.racci.minix.gradle.support.PluginSupport
 import dev.racci.minix.gradle.tasks.QuickBuildTask
 import dev.racci.minix.gradle.tasks.ShadowJarMPPTask
 import org.gradle.api.Plugin
@@ -24,10 +24,10 @@ import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.hasPlugin
 import org.gradle.kotlin.dsl.kotlin
+import org.gradle.kotlin.dsl.provideDelegate
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.ide.idea.IdeaPlugin
-import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinMultiplatformPluginWrapper
@@ -35,14 +35,12 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMultiplatformPlugin
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
-import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KProperty0
 
-public abstract class MinixBaseExtension(
-    private val project: Project
-) {
+public class MinixBaseExtension(private val project: Project) {
+
     /**
      * A list of the subprojects and kotlin mpp targets that aren't touched by the plugin.
      */
@@ -106,26 +104,21 @@ public abstract class MinixBaseExtension(
         else -> KotlinType.NONE
     }
 
-    private fun addPluginSupport(target: Project) = with(target) {
-        plugins.withType<KtlintPlugin> { KtlintPluginSupport.configure(target) }
-        plugins.withType<DokkaPlugin> { DokkaPluginSupport.configure(target) }
-    }
-
     public enum class KotlinType {
         NONE {
             override fun configureRootProject(project: Project): Unit = with(project) {
                 plugins.maybeApply<JavaLibraryPlugin>()
-//                if (!isTestEnvironment()) plugins.maybeApply<KotlinDslBasePlugin>()
             }
 
             override fun configureSubproject(project: Project): Unit = with(project) {
                 super.configureSubproject(project)
                 plugins.maybeApply<JavaLibraryPlugin>()
-//                if (!isTestEnvironment()) plugins.maybeApply<KotlinDslBasePlugin>()
             }
 
             override fun configureExtension(project: Project): Unit = with(project) {
-                extensions.getByType<JavaPluginExtension>().toolchain.languageVersion.set(JavaLanguageVersion.of(Constants.JDK_VERSION))
+                extensions.getByType<JavaPluginExtension>().toolchain.languageVersion.set(
+                    JavaLanguageVersion.of(Constants.JDK_VERSION)
+                )
             }
         },
         JVM {
