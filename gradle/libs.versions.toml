@@ -30,7 +30,7 @@ koin = "3.3.2"
 koin-ktor = "3.2.2"
 koin-annotations = "1.1.0"
 
-kotlin = "1.7.22"
+kotlin = "1.8.0"
 kotlin-dsl = "3.2.6"
 kotlin-plugin-dokka = "1.7.20"
 kotlin-plugin-ktlint = "11.0.0"
