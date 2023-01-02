@@ -26,7 +26,5 @@ public open class QuickBuildTask @Inject constructor(
             target.nullableTargetTask<ShadowJar>("shadowJar"),
             target.nullableTargetTask<RemapJar>("reobfJar")
         ).takeIf(List<*>::isEmpty)?.let(List<*>::toTypedArray)?.let(::dependsOn)
-
-        target.nullableTargetTask<CopyJarTask>("copyJar")?.let { finalizedBy(it) }
     }
 }

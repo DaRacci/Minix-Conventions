@@ -5,9 +5,12 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.findByType
 
 /** Gets a deep recursive scan of subprojects. */
-public fun Project.recursiveSubprojects(depth: Int = 0): Sequence<Project> = sequence {
-    if (depth != 0) yield(this@recursiveSubprojects) // Don't yield the root project
-    subprojects.forEach { innerSub -> yieldAll(innerSub.recursiveSubprojects(depth.inc())) }
+public fun Project.recursiveSubprojects(
+    includeRoot: Boolean = false,
+    depth: Int = 0
+): Sequence<Project> = sequence {
+    if (!includeRoot && depth != 0) yield(this@recursiveSubprojects)
+    subprojects.forEach { innerSub -> yieldAll(innerSub.recursiveSubprojects(includeRoot, depth.inc())) }
 }
 
 /**

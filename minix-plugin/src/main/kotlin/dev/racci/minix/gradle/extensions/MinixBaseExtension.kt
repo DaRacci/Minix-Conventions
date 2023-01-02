@@ -70,7 +70,8 @@ public abstract class MinixBaseExtension(
                     logger.info("Applying support to subproject of ${subproject.name} with kotlin-type: $this")
                     configureProject(subproject)
                 }
-                addPluginSupport(subproject)
+
+                PluginSupport.addPluginSupport(subproject)
             }
         }
 

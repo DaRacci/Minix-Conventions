@@ -5,7 +5,7 @@ import dev.racci.minix.gradle.ex.highestOrderExtension
 import org.gradle.api.Project
 import org.gradle.api.tasks.Input
 
-public class MinixMinecraftExtension : ExtensionBase() {
+public class MinixMinecraftExtension(override val rootProject: Project) : ExtensionBase() {
     @[Input PublishedApi]
     internal val mcTargets: MutableSet<MCTarget> = mutableSetOf()
 

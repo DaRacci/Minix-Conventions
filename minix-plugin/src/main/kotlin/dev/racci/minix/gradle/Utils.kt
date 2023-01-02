@@ -8,7 +8,8 @@ import kotlin.reflect.jvm.isAccessible
 
 // public fun Project.emptySources() = project.allprojects.sourceSets.none { set -> set.allSource.any { file -> file.extension == "kt" } }
 
-internal fun isTestEnvironment(): Boolean = System.getProperty("MINIX_TESTING_ENV") == "true"
+public val isCI: Boolean
+    get() = System.getenv("CI") == "true"
 
 public fun <T : KCallable<*>, R> T.access(fn: T.() -> R): R {
     val originalState = this.isAccessible
@@ -30,3 +31,9 @@ public fun SourceDirectorySet.maybeExtend(
         }
     }.filter { it.exists() }.also { srcDirs(it) }
 }
+
+public inline fun <reified T> Any.cast(): T {
+    return this as T
+}
+
+internal fun isTestEnvironment(): Boolean = System.getProperty("MINIX_TESTING_ENV") == "true"
