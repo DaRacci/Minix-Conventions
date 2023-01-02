@@ -8,7 +8,6 @@ Properties()
 plugins {
     `maven-publish`
     alias(libs.plugins.kotlin.dsl)
-    alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.gradle.publish)
     alias(libs.plugins.kotlin.plugin.ktlint)
     alias(libs.plugins.shadow)

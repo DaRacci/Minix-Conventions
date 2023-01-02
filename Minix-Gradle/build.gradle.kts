@@ -7,7 +7,6 @@ Properties()
 plugins {
     `maven-publish`
     alias(libs.plugins.kotlin.dsl)
-    alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.plugin.ktlint)
 }
 
@@ -29,15 +28,8 @@ dependencies {
     implementation(libs.gradle.minecraft.paperweight)
 }
 
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
-    }
-}
-
-java {
-    withSourcesJar()
-}
+kotlin.jvmToolchain(17)
+java.withSourcesJar()
 
 publishing {
     repositories {
@@ -57,20 +49,11 @@ tasks {
     processResources {
         filesMatching(listOf("Minix-Conventions.properties", "dev.racci.minix.*.gradle.kts")) {
             expand(
-                mutableMapOf(
-                    "minixConventionsVersion" to version,
-                    "minixConventionsKotlinVersion" to kotlinVersion,
-                    "minixVersion" to minixVersion
-                )
+                "minixConventionsVersion" to version,
+                "minixConventionsKotlinVersion" to kotlinVersion
             )
         }
     }
 
-    withType<org.jlleitschuh.gradle.ktlint.tasks.BaseKtLintCheckTask> {
-        workerMaxHeapSize.set("1024m")
-    }
-
     publish { dependsOn("check") }
-
-    build { dependsOn(processResources) }
 }

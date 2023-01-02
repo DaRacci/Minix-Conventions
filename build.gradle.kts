@@ -1,5 +1,4 @@
 plugins {
-    alias(libs.plugins.kotlin.dsl)
     id("dev.racci.minix")
     id("dev.racci.minix.publication")
     alias(libs.plugins.kotlin.plugin.ktlint)
