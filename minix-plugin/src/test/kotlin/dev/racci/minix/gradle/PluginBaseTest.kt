@@ -28,6 +28,6 @@ class PluginBaseTest {
 
     @Test
     fun `Plugin has extension registered`() {
-        expectCatching { project.extensions.getByName<MinixBaseExtension>("mini") }.isSuccess()
+        expectCatching { project.extensions.getByName<MinixBaseExtension>("minix") }.isSuccess()
     }
 }
