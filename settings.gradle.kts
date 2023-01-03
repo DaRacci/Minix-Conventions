@@ -5,7 +5,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "Minix-Conventions"
 
-listOf("Gradle", "plugin").forEach { projectName ->
+listOf("plugin", "Gradle").forEach { projectName ->
     val prefix = if (projectName.first().isUpperCase()) {
         "Minix"
     } else "minix" // Temp way to support both conventions

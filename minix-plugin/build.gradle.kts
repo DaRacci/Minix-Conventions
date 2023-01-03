@@ -55,13 +55,12 @@ kotlin {
     explicitApi()
 }
 
-// Fixes being able to apply this as a plugin to the root since the jar task is disabled.
 artifacts {
-    default(tasks.shadowJar.get().archiveFile)
+    default(tasks.shadowJar)
 }
 
 tasks {
-    jar { enabled = false }
+    jar { enabled = true }
     test { useJUnitPlatform() }
 
     shadowJar {
