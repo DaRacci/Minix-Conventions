@@ -101,7 +101,7 @@ minecraft-interfaces-kotlin = { module = "org.incendo.interfaces:interfaces-kotl
 minecraft-api-floodgate = "org.geysermc.floodgate:api:2.1.1-SNAPSHOT"
 minecraft-api-protoclLib = "com.comphenix.protocol:ProtocolLib:4.8.0"
 minecraft-api-placeholderAPI = "me.clip:placeholderapi:2.11.2"
-minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:6.26.17"
+minecraft-api-LandsAPI = "com.github.angeschossen:LandsAPI:6.26.18"
 
 minecraft-api-eco = { module = "com.willfp:eco", version.ref = "eco" }
 minecraft-api-eco-bosses = { module = "com.willfp:EcoBosses", version.ref = "eco-bosses" }
