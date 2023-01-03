@@ -81,8 +81,8 @@ public data class MCTarget @PublishedApi internal constructor(
             override fun getDefaultDependencies(version: String?): Collection<String> {
                 val split = version?.split('.', limit = 2)?.map { it.takeWhile(Char::isDigit).toInt() }
                 return when {
-                    split == null || split.size < 2 || split[0] != 1 || split[1] < 18 -> "org.purpurmc.purpur"
-                    else -> "net.pl3x.purpur"
+                    split == null || split.size < 2 || split[0] != 1 || split[1] < 18 -> "net.pl3x.purpur"
+                    else -> "org.purpurmc.purpur"
                 }.let { group -> listOf("$group:purpur-api:${getFullVersion(version) ?: Constants.MC_VERSION}") }
             }
 
