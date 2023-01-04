@@ -47,7 +47,6 @@ tasks.create("validate-dependencies") {
     description = "Validates that declared dependencies are valid."
 
     dependsOn(tasks.generateCatalogAsToml) // Verify valid toml
-
     doLast {
         fun <T : KCallable<*>, R> T.access(fn: T.() -> R): R {
             val originalState = this.isAccessible
