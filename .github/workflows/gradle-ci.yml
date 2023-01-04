@@ -28,4 +28,4 @@ jobs:
 
   publish:
     needs: build
-    uses: ./.github.workflows/publish.yml@main
+    uses: ./.github/workflows/publish.yml@main
