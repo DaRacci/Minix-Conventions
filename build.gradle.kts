@@ -1,12 +1,25 @@
+import dev.racci.minix.gradle.data.MCTarget
+
 plugins {
     id("dev.racci.minix.publication")
     id("dev.racci.minix")
     alias(libs.plugins.kotlin.plugin.ktlint)
+    alias(libs.plugins.minecraft.paperweight) apply false
 }
 
 val kotlinVersion: String by project
-val runNumber: String = System.getenv("GITHUB_RUN_NUMBER") ?: "SNAPSHOT"
+val runNumber: String = System.getenv("BUILD_NUMBER") ?: "SNAPSHOT"
 version = "$kotlinVersion-$runNumber"
+
+minix.minecraft {
+    withMCTarget(
+        project(":Minix-NMS"),
+        MCTarget.Platform.PAPER,
+        "1.19.3",
+        applyNMS = true,
+        applyMinix = false
+    )
+}
 
 minixPublishing {
     noPublishing = true

@@ -18,7 +18,7 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven("https://repo.racci.dev/releases")
-        maven("https://papermc.io/repo/repository/maven-public/")
+        maven("https://papermc.io/repo/repository/maven-public/") { name = "Paper Repository" }
     }
 }
 

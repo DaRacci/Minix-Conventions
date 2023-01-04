@@ -25,7 +25,6 @@ javaComponent.withVariantsFromConfiguration(configurations["runtimeElements"]) {
 dependencies {
     implementation(libs.gradle.kotlin.jvm)
     implementation(libs.gradle.kotlin.plugin.dokka)
-    implementation(libs.gradle.minecraft.paperweight)
 }
 
 kotlin.jvmToolchain(17)

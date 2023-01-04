@@ -23,9 +23,6 @@ configurations {
 
 @Suppress("UnstableApiUsage")
 dependencies {
-    shadowImpl(libs.arrow.core)
-    shadowImpl(libs.kotlinx.immutableCollections)
-
     // All the plugins that are used to configure.
     compileAndTest(gradleApi())
     compileAndTest(gradleKotlinDsl())
@@ -56,7 +53,7 @@ kotlin {
 }
 
 artifacts {
-    default(tasks.shadowJar)
+    add("runtimeOnly", tasks.shadowJar)
 }
 
 tasks {

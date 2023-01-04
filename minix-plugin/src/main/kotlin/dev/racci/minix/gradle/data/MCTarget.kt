@@ -2,8 +2,11 @@ package dev.racci.minix.gradle.data
 
 import dev.racci.minix.gradle.Constants
 import dev.racci.minix.gradle.ex.project
+import dev.racci.minix.gradle.exceptions.MissingPluginException
+import io.papermc.paperweight.util.constants.DEV_BUNDLE_CONFIG
 import org.gradle.api.Project
 import org.gradle.api.artifacts.dsl.RepositoryHandler
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.maven
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.utils.COMPILE_ONLY
@@ -17,46 +20,52 @@ public data class MCTarget @PublishedApi internal constructor(
     val applyNMS: Boolean = false,
     val version: String? = null
 ) {
+    private val logger = (obj as? Project)?.logger ?: (obj as KotlinSourceSet).project().logger
+
     internal fun configure() {
-        if (applyNMS) {
-            throw UnsupportedOperationException("NMS is not supported yet.")
-        }
+        // TODO: Move paperweight MPP to separate project so we can get the sourceSets config name.
+        if (applyNMS && platform.supportsPaperweight) {
+            logger.info("Configuring MCTarget $obj Paperweight for ${platform.name}")
+            if (obj !is Project) throw UnsupportedOperationException("NMS is only supported for projects at this time.")
+            runCatching { (obj as Project).apply(plugin = "io.papermc.paperweight.userdev") } // Tries to apply the plugin if present in the classpath already.
+            if (!obj.plugins.hasPlugin("io.papermc.paperweight.userdev")) throw MissingPluginException("io.papermc.paperweight.userdev")
 
-        if (applyDefaults) {
-            val dependencies = platform.getDefaultDependencies(version)
-            if (dependencies.isEmpty()) return
+            obj.repositories.maven(platform.paperweightRepository)
+            obj.dependencies.add(DEV_BUNDLE_CONFIG, "${platform.apiGroup}:dev-bundle:${platform.version}")
+        } else if (applyDefaults) {
+            logger.info("Configuring MCTarget defaults for ${platform.name}")
 
-            fun RepositoryHandler.addDefaultRepo() = maven(platform.defaultRepository) {
+            fun RepositoryHandler.addDefaultRepo() = maven(platform.apiRepository) {
                 name = platform.name
             }
 
             when (obj) {
                 is Project -> {
                     obj.repositories.addDefaultRepo()
-                    dependencies.forEach { dep -> obj.dependencies.add(COMPILE_ONLY, dep) }
+                    obj.dependencies.add(COMPILE_ONLY, platform.dependencyString)
                 }
 
                 is KotlinSourceSet -> {
                     obj.project().repositories.addDefaultRepo()
-                    obj.dependencies { dependencies.forEach(::compileOnly) }
+                    obj.dependencies { compileOnly(platform.dependencyString) }
                 }
 
                 else -> throw IllegalArgumentException("Unknown target type: ${obj::class.simpleName}")
             }
         }
 
-        if (applyMinix) {
-            val minix = platform.getMinixDependencies()
-            when (obj) {
-                is Project -> {
-                    obj.repositories.minixRepo()
-                    obj.dependencies.add(COMPILE_ONLY, minix)
-                }
+        if (!applyMinix || platform.minixDependency == null) return logger.info("Skipping Minix configuration for ${platform.name}")
+        logger.info("Configuring MCTarget Minix for ${platform.name}")
 
-                is KotlinSourceSet -> {
-                    obj.project().repositories.minixRepo()
-                    obj.dependencies { compileOnly(minix) }
-                }
+        when (obj) {
+            is Project -> {
+                obj.repositories.minixRepo()
+                obj.dependencies.add(COMPILE_ONLY, platform.minixDependency!!)
+            }
+
+            is KotlinSourceSet -> {
+                obj.project().repositories.minixRepo()
+                obj.dependencies { compileOnly(platform.minixDependency!!) }
             }
         }
     }
@@ -69,45 +78,63 @@ public data class MCTarget @PublishedApi internal constructor(
         }
     }
 
-    public enum class Platform(public val defaultRepository: String) {
-        PAPER("https://repo.papermc.io/repository/maven-public/") {
-            override fun getDefaultDependencies(version: String?) =
-                listOf("io.papermc.paper:paper-api:${getFullVersion(version) ?: Constants.MC_VERSION}")
-
-            override fun getMinixDependencies() =
-                listOf("dev.racci.minix:minix-paper:${Constants.Dependencies.MINIX_VERSION}")
+    public enum class Platform(
+        internal val apiGroup: String,
+        internal val apiArtifact: String,
+        internal val apiVersion: String,
+        internal val apiRepository: String,
+        internal val supportsPaperweight: Boolean = true,
+        internal val minixModule: String? = null
+    ) {
+        PAPER(
+            "io.papermc.paper",
+            "paper-api",
+            Constants.MC_VERSION,
+            minixModule = "paper",
+            apiRepository = "https://repo.papermc.io/repository/maven-public/"
+        ) {
+            override val version: String get() = getFullVersion(apiVersion)
         },
-        PURPUR("https://repo.purpurmc.org/snapshots") {
-            override fun getDefaultDependencies(version: String?): Collection<String> {
-                val split = version?.split('.', limit = 2)?.map { it.takeWhile(Char::isDigit).toInt() }
-                return when {
-                    split == null || split.size < 2 || split[0] != 1 || split[1] < 18 -> "net.pl3x.purpur"
-                    else -> "org.purpurmc.purpur"
-                }.let { group -> listOf("$group:purpur-api:${getFullVersion(version) ?: Constants.MC_VERSION}") }
-            }
-
-            override fun getMinixDependencies() = PAPER.getMinixDependencies()
+        PURPUR(
+            "org.purpurmc.purpur", // Only valid for versions at or above 1.18; 1.17 and below use `net.pl3x.purpur`.
+            "purpur-api",
+            PAPER.apiVersion,
+            minixModule = PAPER.minixModule,
+            apiRepository = "https://repo.purpurmc.org/snapshots"
+        ) {
+            override val version: String get() = PAPER.version
         },
-        TENTACLES("https://repo.racci.dev/snapshots/") {
-            override fun getDefaultDependencies(version: String?) =
-                listOf("dev.racci.tentacles:tentacles-api:${getFullVersion(version) ?: Constants.MC_VERSION}")
-
-            override fun getMinixDependencies() = PAPER.getMinixDependencies()
+        TENTACLES(
+            "dev.racci.tentacles",
+            "tentacles-api",
+            PURPUR.apiVersion,
+            minixModule = PURPUR.minixModule,
+            apiRepository = "https://repo.racci.dev/snapshots/"
+        ) {
+            override val version: String get() = PURPUR.version
         },
-        VELOCITY("https://repo.velocitypowered.com/snapshots/") {
-            override fun getDefaultDependencies(version: String?): Collection<String> {
-                TODO("Not yet implemented")
-            }
-        };
+        VELOCITY(
+            "com.velocitypowered",
+            "velocity-api",
+            "3.1.1", // TODO: Handle in catalog
+            PAPER.apiRepository,
+            false
+        );
 
-        internal abstract fun getDefaultDependencies(version: String?): Collection<String>
+        public val minixDependency: String?
+            get() = minixModule?.let { "dev.racci.minix:$it:$version" }
 
-        internal open fun getMinixDependencies(): Collection<String> {
-            throw UnsupportedOperationException("Minix is not supported for platform: ${this.name}")
-        }
+        public open val version: String
+            get() = apiVersion
 
-        protected fun getFullVersion(version: String?): String? {
-            if (version == null) return null
+        internal open val paperweightRepository: String
+            get() = apiRepository
+
+        internal open val dependencyString: String
+            get() = "$apiGroup:$apiArtifact:$version"
+
+        protected fun getFullVersion(version: String): String {
+            if (version.endsWith("R0.1-SNAPSHOT")) return version
 
             val split = version.split('.', limit = 3)
             val major = split[0].toInt()
