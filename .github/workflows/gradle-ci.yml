@@ -18,7 +18,7 @@ jobs:
       - name: Clean, build, and test
         uses: gradle/gradle-build-action@v2
         with:
-          args: clean build test
+          arguments: clean build test
 
       - name: Upload build
         uses: actions/upload-artifact@v3
