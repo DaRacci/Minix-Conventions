@@ -1,7 +1,7 @@
 name: Dependency update check
 
 on:
-  workflow_call:
+  workflow_dispatch:
   pull_request:
     branches: [ main ]
     paths: [ "./**.gradle.kts", "gradle/**", "catalog/**", ".github/workflows/catalog.yml", "gradle.properties" ]

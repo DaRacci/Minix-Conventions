@@ -1,7 +1,7 @@
 name: Gradle plugin CI
 
 on:
-  workflow_call:
+  workflow_dispatch:
   push:
     branches: [ main ]
     paths: [ "./**.gradle.kts", "gradle/**", "minix-plugin/**", "gradle.properties", ".github/workflows/gradle-plugin-ci.yml" ]

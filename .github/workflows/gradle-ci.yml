@@ -1,7 +1,7 @@
 name: Java CI with Gradle
 
 on:
-  workflow_call:
+  workflow_dispatch:
   push:
     branches: [ main ]
     paths: [ "./**.gradle.kts", "Minix-Gradle/**", "gradle.properties", ".github/workflows/gradle-ci.yml", "gradle/wrapper/**" ]
