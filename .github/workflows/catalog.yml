@@ -2,10 +2,12 @@ name: Dependency update check
 
 on:
   workflow_call:
-  pull_request: &filter
+  pull_request:
     branches: [ main ]
     paths: [ "./**.gradle.kts", "gradle/**", "catalog/**", ".github/workflows/catalog.yml", "gradle.properties" ]
-  push: *filter
+  push:
+    branches: [ main ]
+    paths: [ "./**.gradle.kts", "gradle/**", "catalog/**", ".github/workflows/catalog.yml", "gradle.properties" ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}

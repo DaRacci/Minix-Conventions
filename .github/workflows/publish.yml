@@ -7,9 +7,9 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: &checkout actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - uses: &setup actions/setup-java@v3
+      - uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
@@ -23,8 +23,12 @@ jobs:
     needs: publish
     runs-on: ubuntu-latest
     steps:
-      - uses: *checkout
-      - uses: *setup
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
 
       - name: Build docs
         uses: gradle/gradle-build-action@v2
