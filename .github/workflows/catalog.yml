@@ -33,4 +33,4 @@ jobs:
   publish-if-push:
     needs: build
     if: github.event_name == 'push'
-    uses: ./.github/workflows/publish.yml@main
+    uses: ./.github/workflows/publish.yml
