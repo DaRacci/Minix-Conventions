@@ -56,4 +56,4 @@ jobs:
     needs: [ build, test ]
     if: github.event_name == 'push'
     uses: ./.github/workflows/publish.yml
-
+    secrets: inherit
