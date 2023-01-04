@@ -1,10 +1,10 @@
-name: Java CI with Gradle
+name: NMS-CI
 
 on:
   workflow_call:
   push:
     branches: [ main ]
-    paths: [ "./**.gradle.kts", "Minix-Gradle/**", "gradle.properties", ".github/workflows/gradle-ci.yml", "gradle/wrapper/**" ]
+    paths: [ "Minix-NMS/**", "gradle.properties", ".github/workflows/nms-ci.yml" ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -18,17 +18,17 @@ jobs:
     needs: validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: &checkout actions/checkout@v3
 
-      - uses: actions/setup-java@v3
+      - uses: &setup actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2
+      - uses: &gradle gradle/gradle-build-action@v2
+        name: Execute Gradle action
         with:
-          arguments: :Minix-Gradle:build
+          arguments: :Minix-NMS:build
 
       - name: Upload build
         uses: actions/upload-artifact@v3
@@ -36,7 +36,19 @@ jobs:
           name: build-artifacts
           path: build/libs
 
-  publish:
+  test:
     needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: *checkout
+      - uses: *setup
+
+      - uses: *gradle
+        with:
+          arguments: :Minix-NMS:check
+
+  publish:
+    needs: [ build, test ]
     if: github.event_name == 'push'
     uses: ./.github/workflows/publish.yml
+

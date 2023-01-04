@@ -1,19 +1,22 @@
 name: Dependency update check
 
 on:
-  pull_request:
+  workflow_call:
+  pull_request: &filter
     branches: [ main ]
     paths: [ "./**.gradle.kts", "gradle/**", "catalog/**", ".github/workflows/catalog.yml", "gradle.properties" ]
-  push:
-    branches: [ main ]
-    paths: [ "./**.gradle.kts", "gradle/**", "catalog/**", ".github/workflows/catalog.yml", "gradle.properties" ]
+  push: *filter
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
+  validate:
+    uses: ./.github/workflows/wrapper-validation.yml
+
   build:
+    needs: validate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

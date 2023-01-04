@@ -1,6 +1,7 @@
 name: Gradle plugin CI
 
 on:
+  workflow_call:
   push:
     branches: [ main ]
     paths: [ "./**.gradle.kts", "gradle/**", "minix-plugin/**", "gradle.properties", ".github/workflows/gradle-plugin-ci.yml" ]
@@ -10,20 +11,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  validate:
+    uses: ./.github/workflows/wrapper-validation.yml
+
   build:
+    needs: validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: &checkout actions/checkout@v3
 
-      - uses: actions/setup-java@v3
+      - uses: &setupJava actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 17
 
-      - name: Clean, build, and test
-        uses: gradle/gradle-build-action@v2
+      - uses: gradle/gradle-build-action@v2
         with:
-          arguments: clean :minix-plugin:build :minix-plugin:test
+          arguments: :minix-plugin:build
 
       - name: Upload build
         uses: actions/upload-artifact@v3
@@ -31,3 +35,19 @@ jobs:
           name: build-artifacts
           path: build/libs/minix-plugin/
           if-no-files-found: error
+
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: *checkout
+      - uses: *setupJava
+
+      - uses: gradle/gradle-build-action@v2
+        with:
+          arguments: :minix-plugin:check
+
+  publish:
+    needs: [ build, test ]
+    if: github.event_name == 'push'
+    uses: ./.github/workflows/publish.yml
