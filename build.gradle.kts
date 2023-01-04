@@ -36,7 +36,9 @@ tasks {
         description = "Publishes all publications produced by this project."
 
         dependsOn(
-            gradle.includedBuilds.mapNotNull { runCatching { it.task(":publish") }.getOrNull() }
+            gradle.includedBuilds
+                .filterNot { it.name == "minix-plugin" }
+                .mapNotNull { runCatching { it.task(":publish") }.getOrNull() }
         )
     }
 
@@ -45,7 +47,9 @@ tasks {
         description = "Publishes all publications produced by this project to the local Maven repository."
 
         dependsOn(
-            gradle.includedBuilds.mapNotNull { runCatching { it.task(":publishToMavenLocal") }.getOrNull() }
+            gradle.includedBuilds
+                .filterNot { it.name == "minix-plugin" }
+                .mapNotNull { runCatching { it.task(":publishToMavenLocal") }.getOrNull() }
         )
     }
 

@@ -18,12 +18,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          distribution: temurin
-          java-version: 17
-
       - name: Run validate-dependencies task
         uses: gradle/gradle-build-action@v2
         with:
@@ -35,3 +29,8 @@ jobs:
           name: catalog.toml
           path: build/catalog/version-catalog/libs.versions.toml
           if-no-files-found: error
+
+  publish-if-push:
+    needs: build
+    if: github.event_name == 'push'
+    uses: ./.github.workflows/publish.yml
