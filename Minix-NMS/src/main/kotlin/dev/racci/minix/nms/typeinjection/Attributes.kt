@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED")
-
 package dev.racci.minix.nms.typeinjection
 
 import dev.racci.minix.nms.aliases.NMSLivingEntity
@@ -8,35 +6,38 @@ import net.minecraft.world.entity.ai.attributes.Attribute
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier
 import net.minecraft.world.entity.ai.attributes.Attributes
 
-typealias NMSAttributeProvider = AttributeSupplier
-typealias NMSAttributeBuilder = AttributeSupplier.Builder
-typealias NMSGenericAttributes = Attributes
+public typealias NMSAttributeProvider = AttributeSupplier
+public typealias NMSAttributeBuilder = AttributeSupplier.Builder
+public typealias NMSGenericAttributes = Attributes
 
 /**
  * Represents Attributes in NMS Form.
  */
-object NMSAttributes {
+public object NMSAttributes {
 
     /**
      * Returns an Empty Builder.
      */
-    fun emptyBuilder(): NMSAttributeBuilder = NMSAttributeProvider.builder()
+    public fun emptyBuilder(): NMSAttributeBuilder = NMSAttributeProvider.builder()
 
     /**
      * Returns a builder for a Living Entity.
      */
-    fun forLivingEntity(): NMSAttributeBuilder = NMSLivingEntity.createLivingAttributes()
+    public fun forLivingEntity(): NMSAttributeBuilder = NMSLivingEntity.createLivingAttributes()
 
     /**
      * Returns a builder for a Mob.
      */
-    fun forMob(): NMSAttributeBuilder = NMSMob.createMobAttributes()
+    public fun forMob(): NMSAttributeBuilder = NMSMob.createMobAttributes()
 }
 
 /**
  * Sets an attribute value for this builder.
  */
-fun NMSAttributeBuilder.set(attribute: Attribute, value: Double? = null): NMSAttributeBuilder {
+public fun NMSAttributeBuilder.set(
+    attribute: Attribute,
+    value: Double? = null
+): NMSAttributeBuilder {
     if (value != null) {
         add(attribute, value)
     }

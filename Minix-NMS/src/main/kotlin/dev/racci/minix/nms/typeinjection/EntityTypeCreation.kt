@@ -6,23 +6,23 @@ import net.minecraft.util.datafix.DataFixers
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
 
-typealias NMSEntityTypeFactory<T> = EntityType.EntityFactory<T>
+public typealias NMSEntityTypeFactory<T> = EntityType.EntityFactory<T>
 
-typealias NMSEntityTypeBuilder = EntityType.Builder<NMSEntity>
+public typealias NMSEntityTypeBuilder = EntityType.Builder<NMSEntity>
 
 /**
  * Returns an [NMSEntityTypeBuilder] for this specified [MobCategory].
  */
-fun NMSEntityTypeFactory<NMSEntity>.builderForCreatureType(creatureType: MobCategory): EntityType.Builder<NMSEntity> =
+public fun NMSEntityTypeFactory<NMSEntity>.builderForCreatureType(creatureType: MobCategory): EntityType.Builder<NMSEntity> =
     EntityType.Builder.of(this, creatureType)
 
 /**
  * NMS Data converter Registry Util.
  */
-object NMSDataConverterRegistry {
+public object NMSDataConverterRegistry {
 
     /**
      * Returns the Data Fixer.
      */
-    fun getDataFixer(): DataFixer = DataFixers.getDataFixer()
+    public fun getDataFixer(): DataFixer = DataFixers.getDataFixer()
 }

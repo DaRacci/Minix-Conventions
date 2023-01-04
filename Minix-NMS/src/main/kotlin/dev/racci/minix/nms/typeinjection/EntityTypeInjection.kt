@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED", "UNCHECKED_CAST")
-
 package dev.racci.minix.nms.typeinjection
 
 import com.mojang.datafixers.DSL
@@ -14,24 +12,24 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.datafix.fixes.References
 import net.minecraft.world.entity.EntityType
 
-typealias NMSRegistry<T> = MappedRegistry<T>
-typealias NMSNamespacedKey = ResourceLocation
+public typealias NMSRegistry<T> = MappedRegistry<T>
+public typealias NMSNamespacedKey = ResourceLocation
 
 /**
  * NMS Registry Wrapper.
  */
-object NMSRegistryWrapper {
+public object NMSRegistryWrapper {
 
     /**
      * Returns the default ENTITY_TYPE registry.
      */
-    val ENTITY_TYPE: DefaultedRegistry<EntityType<*>> = NMSRegistry.ENTITY_TYPE
+    public val ENTITY_TYPE: DefaultedRegistry<EntityType<*>> = NMSRegistry.ENTITY_TYPE
 }
 
 /**
  * Registers an [NMSEntityType] with the server.
  */
-fun <T : NMSEntity> NMSEntityType<T>.registerEntityType(
+public fun <T : NMSEntity> NMSEntityType<T>.registerEntityType(
     namespace: String,
     key: String
 ): NMSEntityType<T> = NMSRegistry.register(NMSRegistryWrapper.ENTITY_TYPE, NMSNamespacedKey(namespace, key), this)
@@ -41,7 +39,7 @@ fun <T : NMSEntity> NMSEntityType<T>.registerEntityType(
  *
  * Originally from [paper forums](https://papermc.io/forums/t/register-and-spawn-a-custom-entity-on-1-13-x/293)
  */
-fun NMSEntityTypeBuilder.injectType(
+public fun NMSEntityTypeBuilder.injectType(
     namespace: String,
     key: String,
     extendFrom: String
@@ -59,10 +57,10 @@ fun NMSEntityTypeBuilder.injectType(
 /**
  * NMS Data converter types wrapper.
  */
-object NMSDataConverterTypesWrapper {
+public object NMSDataConverterTypesWrapper {
 
     /**
      * Type reference for ENTITY.
      */
-    val ENTITY: DSL.TypeReference = References.ENTITY
+    public val ENTITY: DSL.TypeReference = References.ENTITY
 }

@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED")
-
 package dev.racci.minix.nms.pathfindergoals
 
 import net.minecraft.world.entity.ai.goal.Goal
@@ -7,7 +5,7 @@ import net.minecraft.world.entity.ai.goal.Goal
 /**
  * Class for creating a custom Entity [Goal].
  */
-abstract class PathfinderGoal : Goal() {
+public abstract class PathfinderGoal : Goal() {
 
     /**
      * Whether the pathfinder goal should commence execution or not
@@ -20,7 +18,7 @@ abstract class PathfinderGoal : Goal() {
      *
      * @return true if should execute
      */
-    abstract fun shouldExecute(): Boolean
+    public abstract fun shouldExecute(): Boolean
 
     override fun canUse(): Boolean = shouldExecute()
 
@@ -35,7 +33,7 @@ abstract class PathfinderGoal : Goal() {
      *
      * @return true if should keep executing.
      */
-    abstract fun shouldKeepExecuting(): Boolean
+    public abstract fun shouldKeepExecuting(): Boolean
 
     override fun isInterruptable(): Boolean = shouldKeepExecuting()
 
@@ -44,7 +42,7 @@ abstract class PathfinderGoal : Goal() {
      *
      * Is called when [shouldExecute] returns true.
      */
-    abstract fun init()
+    public abstract fun init()
 
     override fun start(): Unit = init()
 
@@ -53,14 +51,14 @@ abstract class PathfinderGoal : Goal() {
      *
      * Is called when [shouldKeepExecuting] returns false.
      */
-    abstract fun reset()
+    public abstract fun reset()
 
     override fun stop(): Unit = reset()
 
     /**
      * Is called when [shouldExecute] or [shouldKeepExecuting] return true.
      */
-    abstract fun execute()
+    public abstract fun execute()
 
     override fun tick(): Unit = execute()
 }

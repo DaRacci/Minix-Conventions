@@ -1,6 +1,4 @@
-@file:Suppress("UNUSED")
-
-package dev.racci.minix.nms
+package dev.racci.minix.nms // ktlint-disable filename
 
 import dev.racci.minix.nms.aliases.BukkitEntity
 import dev.racci.minix.nms.aliases.NMSEntityType
@@ -28,7 +26,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason
  * @param spawnReason The spawn reason of the entity
  * @return Reference to the spawned bukkit Entity
  */
-fun Location.spawnEntity(
+public fun Location.spawnEntity(
     type: NMSEntityType<*>,
     nbtTagCompound: CompoundTag? = null,
     customName: Component? = null,

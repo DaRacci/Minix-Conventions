@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED")
-
 package dev.racci.minix.nms.pathfindergoals
 
 import net.minecraft.world.entity.ai.control.MoveControl
@@ -7,31 +5,31 @@ import net.minecraft.world.entity.ai.control.MoveControl
 /**
  * Alias for [MoveControl.wantedX].
  */
-val MoveControl.targetX: Double
+public val MoveControl.targetX: Double
     get() = wantedX
 
 /**
  * Alias for [MoveControl.wantedY].
  */
-val MoveControl.targetY: Double
+public val MoveControl.targetY: Double
     get() = wantedY
 
 /**
  * Alias for [MoveControl.wantedZ].
  */
-val MoveControl.targetZ: Double
+public val MoveControl.targetZ: Double
     get() = wantedZ
 
 /**
  * Alias for [MoveControl.speedModifier].
  */
-val MoveControl.speed: Double
+public val MoveControl.speed: Double
     get() = speedModifier
 
 /**
  * Sets this entities wanted position.
  */
-fun MoveControl.moveTo(
+public fun MoveControl.moveTo(
     x: Double,
     y: Double,
     z: Double,

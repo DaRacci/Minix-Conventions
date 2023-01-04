@@ -13,7 +13,8 @@ public class MinixGradlePlugin : Plugin<Project> {
 
         // TODO: Broken check
         if (KotlinVersion.CURRENT.toString() != Constants.KOTLIN_VERSION) {
-            logger.warn("MinixGradlePlugin is not built against Kotlin ${Constants.KOTLIN_VERSION} and may not work properly! (${Constants.KOTLIN_VERSION})")
+            logger.warn("WARNING: Unsupported kotlin version.")
+            logger.warn("the `minix-plugin` rely on features of Kotlin ${Constants.KOTLIN_VERSION} that might work differently than in the requested version `${KotlinVersion.CURRENT}`.")
         }
 
         val baseExtension = project.extensions.create<MinixBaseExtension>("minix", project)

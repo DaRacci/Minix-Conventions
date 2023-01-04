@@ -9,12 +9,12 @@ import net.minecraft.world.entity.PathfinderMob
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.Snowball
 
-typealias NMSMob = Mob
-typealias NMSPlayer = Player
-typealias NMSSnowball = Snowball
-typealias NMSLivingEntity = LivingEntity
-typealias NMSServerPlayer = ServerPlayer
-typealias NMSPathfindingMob = PathfinderMob
+public typealias NMSMob = Mob
+public typealias NMSPlayer = Player
+public typealias NMSSnowball = Snowball
+public typealias NMSLivingEntity = LivingEntity
+public typealias NMSServerPlayer = ServerPlayer
+public typealias NMSPathfindingMob = PathfinderMob
 
-typealias NMSEntityType<T> = EntityType<T>
-typealias NMSCreatureType = MobCategory
+public typealias NMSEntityType<T> = EntityType<T>
+public typealias NMSCreatureType = MobCategory

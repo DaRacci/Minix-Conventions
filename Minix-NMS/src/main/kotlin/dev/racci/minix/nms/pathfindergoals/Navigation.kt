@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED")
-
 package dev.racci.minix.nms.pathfindergoals
 
 import dev.racci.minix.nms.aliases.toNMS
@@ -9,12 +7,12 @@ import org.bukkit.entity.Entity
 /**
  * Whether the entity has finished navigating to its destination.
  */
-val PathNavigation.doneNavigating: Boolean get() = isDone
+public val PathNavigation.doneNavigating: Boolean get() = isDone
 
 /**
  * Moves an entity to the position defined at [x], [y], [z], with a specified [speed].
  */
-fun PathNavigation.moveToPosition(
+public fun PathNavigation.moveToPosition(
     x: Double,
     y: Double,
     z: Double,
@@ -24,7 +22,7 @@ fun PathNavigation.moveToPosition(
 /**
  * Moves to [entity], with a specified [speed].
  */
-fun PathNavigation.moveToEntity(
+public fun PathNavigation.moveToEntity(
     entity: Entity,
     speed: Double
 ): Boolean = moveTo(entity.toNMS(), speed)
@@ -32,9 +30,9 @@ fun PathNavigation.moveToEntity(
 /**
  * Sets a speed multiplier with which to navigate.
  */
-fun PathNavigation.setSpeed(speed: Double): Unit = setSpeedModifier(speed)
+public fun PathNavigation.setSpeed(speed: Double): Unit = setSpeedModifier(speed)
 
 /**
  * Stops the current navigation.
  */
-fun PathNavigation.stopNavigation(): Unit = stop()
+public fun PathNavigation.stopNavigation(): Unit = stop()
