@@ -23,7 +23,7 @@ jobs:
       - name: Clean, build, and test
         uses: gradle/gradle-build-action@v2
         with:
-          args: clean :minix-plugin:build :minix-plugin:test
+          arguments: clean :minix-plugin:build :minix-plugin:test
 
       - name: Upload build
         uses: actions/upload-artifact@v3
