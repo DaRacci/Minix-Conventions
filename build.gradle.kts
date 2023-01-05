@@ -7,14 +7,20 @@ plugins {
     alias(libs.plugins.kotlin.plugin.dokka)
     alias(libs.plugins.minecraft.paperweight) apply false
 }
-
-val kotlinVersion: String by project
-version = kotlinVersion
+val kotlinVersion: String by properties
+allprojects {
+    version = kotlinVersion
+}
 
 minix {
     publishing {
-        val nms by creating
-        val catalog by creating { componentName = "versionCatalog" }
+        val nms by creating {
+            appendRunNumberOrSnapshot = true
+        }
+        val catalog by creating {
+            appendRunNumberOrSnapshot = true
+            componentName = "versionCatalog"
+        }
     }
 
     minecraft.withMCTarget(
