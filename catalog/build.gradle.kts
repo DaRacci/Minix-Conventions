@@ -1,8 +1,7 @@
-
+import dev.racci.minix.gradle.cast
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.internal.catalog.AbstractExternalDependencyFactory.SubDependencyFactory
-import org.jetbrains.kotlin.konan.properties.loadProperties
-import org.jetbrains.kotlin.utils.addToStdlib.cast
+import java.util.Properties
 import kotlin.reflect.KCallable
 import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.full.declaredMemberProperties
@@ -31,7 +30,9 @@ catalog {
         }?.forEach { file -> minixPlugin(file) }
 
         gradle.includedBuilds.find { it.name == "minix-plugin" }!!.also { gradlePlugin ->
-            val properties = loadProperties(gradlePlugin.projectDir.resolve("gradle.properties").absolutePath)
+            val properties = Properties().apply {
+                gradlePlugin.projectDir.resolve("gradle.properties").inputStream().use(::load)
+            }
             val version = properties["version"] as String
 
             version("minix-plugin", version)
