@@ -14,6 +14,7 @@ allprojects {
 
 minix {
     publishing {
+        runNumber = System.getenv("BUILD_NUMBER")
         val nms by creating {
             appendRunNumberOrSnapshot = true
         }

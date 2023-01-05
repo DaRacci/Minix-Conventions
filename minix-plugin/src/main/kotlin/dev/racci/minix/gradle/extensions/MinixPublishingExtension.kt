@@ -73,7 +73,7 @@ public class MinixPublishingExtension(override val rootProject: Project) :
                     publications {
                         maybeCreate<MavenPublication>(spec.publicationName)
                         named<MavenPublication>(spec.publicationName) {
-                            version = spec.version.get().toString()
+                            version = project.version.toString()
                             from(components[spec.componentName])
                         }
                     }

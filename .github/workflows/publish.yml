@@ -2,6 +2,7 @@ name: Publish to Repository
 
 on: [ workflow_call, workflow_dispatch ]
 
+# TODO: Find out how to verify if last push was same commit as current due to muliple workflows being able to call after a commit.
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -21,7 +22,7 @@ jobs:
       - name: Publish to Repository
         uses: gradle/gradle-build-action@v2
         env:
-          GITHUB_RUN_NUMBER: ${{ steps.build.outputs.build_number }}
+          BUILD_NUMBER: ${{ steps.build.outputs.build_number }}
         with:
           arguments: publish -PRacciRepoUsername=${{ secrets.REPO_PUBLISH_USERNAME }} -PRacciRepoPassword=${{ secrets.REPO_PUBLISH_PASSWORD }}
 
