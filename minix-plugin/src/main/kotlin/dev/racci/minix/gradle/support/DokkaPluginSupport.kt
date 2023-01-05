@@ -25,9 +25,5 @@ public object DokkaPluginSupport : PluginSupport(
             sourceSet.skipDeprecated.set(true)
             sourceSet.platform.set(Platform.jvm)
             sourceSet.jdkVersion.set(Constants.JDK_VERSION)
-
-            sourceSet.sourceLink {
-                remoteLineSuffix.set("#L") // GitHub
-            }
         }
 }
