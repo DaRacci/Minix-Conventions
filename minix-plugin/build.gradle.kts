@@ -9,16 +9,14 @@ plugins {
     alias(libs.plugins.kotlin.dsl)
     alias(libs.plugins.gradle.publish)
     alias(libs.plugins.kotlin.plugin.ktlint)
-    alias(libs.plugins.shadow)
 }
 
 buildDir = file("../build/$name")
 
 val compileAndTest: Configuration by configurations.creating
-val shadowImpl: Configuration by configurations.creating
 configurations {
-    compileOnly.get().extendsFrom(shadowImpl, compileAndTest)
-    testImplementation.get().extendsFrom(shadowImpl, compileAndTest)
+    compileOnly.get().extendsFrom(compileAndTest)
+    testImplementation.get().extendsFrom(compileAndTest)
 }
 
 @Suppress("UnstableApiUsage")
@@ -52,29 +50,8 @@ kotlin {
     explicitApi()
 }
 
-artifacts {
-    add("runtimeOnly", tasks.shadowJar)
-}
-
 tasks {
-    jar { enabled = true }
     test { useJUnitPlatform() }
-
-    shadowJar {
-        archiveClassifier.set("")
-        configurations = listOf(shadowImpl)
-
-        exclude("kotlin/**")
-        listOf(
-            "arrow",
-            "kotlinx.collections",
-            "org.codehaus.mojo.animal_sniffer",
-            "org.intellij.lang.annotations",
-            "org.jetbrains.annotations"
-        ).map { it to it.split('.').last() }.forEach { (original, last) ->
-            relocate(original, "dev.racci.minix.gradle.libs.$last")
-        }
-    }
 
     processResources {
         filesMatching("minix.properties") {
