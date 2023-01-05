@@ -31,7 +31,10 @@ public data class MCTarget @PublishedApi internal constructor(
             if (!obj.plugins.hasPlugin("io.papermc.paperweight.userdev")) throw MissingPluginException("io.papermc.paperweight.userdev")
 
             obj.repositories.maven(platform.paperweightRepository)
-            obj.dependencies.add(DEV_BUNDLE_CONFIG, "${platform.apiGroup}:dev-bundle:${Platform.getFullVersion(version) ?: platform.version}")
+            obj.dependencies.add(
+                DEV_BUNDLE_CONFIG,
+                "${platform.apiGroup}:dev-bundle:${Platform.getFullVersion(version) ?: platform.version}"
+            )
         } else if (applyDefaults) {
             logger.info("Configuring MCTarget defaults for ${platform.name}")
 
@@ -93,7 +96,7 @@ public data class MCTarget @PublishedApi internal constructor(
             minixModule = "paper",
             apiRepository = "https://repo.papermc.io/repository/maven-public/"
         ) {
-            override val version: String get() = getFullVersion(apiVersion)
+            override val version: String get() = getFullVersion(apiVersion)!!
         },
         PURPUR(
             "org.purpurmc.purpur", // Only valid for versions at or above 1.18; 1.17 and below use `net.pl3x.purpur`.
@@ -134,8 +137,8 @@ public data class MCTarget @PublishedApi internal constructor(
             "$apiGroup:$apiArtifact:${getFullVersion(providedVersion) ?: version}"
 
         internal companion object {
-            fun <T : String?> getFullVersion(version: T): T {
-                if (version == null) return null as T
+            fun getFullVersion(version: String?): String? {
+                if (version == null) return null
                 if (version.endsWith("R0.1-SNAPSHOT")) return version
 
                 val split = version.split('.', limit = 3)
@@ -152,7 +155,7 @@ public data class MCTarget @PublishedApi internal constructor(
                         append(patch)
                     }
                     append("-R0.1-SNAPSHOT")
-                } as T
+                }
             }
         }
     }
