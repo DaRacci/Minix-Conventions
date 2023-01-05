@@ -1,6 +1,7 @@
 package dev.racci.minix.gradle.support
 
 import dev.racci.minix.gradle.cast
+import dev.racci.minix.gradle.warnForMissingUsedPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.hasPlugin
@@ -47,14 +48,14 @@ public sealed class PluginSupport(
             supportedPlugins.forEach { support ->
                 if (support.canConfigure(project)) {
                     logger.info("Configuring immediate ${support::class.simpleName} for ${project.name}")
-                    func(support, target.cast())
+                    warnForMissingUsedPlugin(support.id) { func(support, target.cast()) }
                     return@forEach
                 }
 
                 logger.info("Adding possible configuration for ${support::class.simpleName} for ${project.name}")
                 project.plugins.withId(support.id) {
                     logger.info("Configuring late ${support::class.simpleName} for ${project.name}")
-                    func(support, target.cast())
+                    warnForMissingUsedPlugin(support.id) { func(support, target.cast()) }
                 }
             }
         }

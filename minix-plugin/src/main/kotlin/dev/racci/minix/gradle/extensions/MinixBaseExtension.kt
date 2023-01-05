@@ -12,6 +12,7 @@ import dev.racci.minix.gradle.exceptions.MissingPluginException
 import dev.racci.minix.gradle.support.PluginSupport
 import dev.racci.minix.gradle.tasks.QuickBuildTask
 import dev.racci.minix.gradle.tasks.ShadowJarMPPTask
+import dev.racci.minix.gradle.warnForMissingUsedPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaLibraryPlugin
@@ -30,8 +31,6 @@ import org.gradle.kotlin.dsl.withType
 import org.gradle.plugins.ide.idea.IdeaPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
-import org.jetbrains.kotlin.gradle.plugin.KotlinMultiplatformPluginWrapper
-import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMultiplatformPlugin
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
@@ -99,8 +98,8 @@ public abstract class MinixBaseExtension(private val project: Project) {
     }
 
     internal fun getSupportType(project: Project): KotlinType = when {
-        project.plugins.hasPlugin(KotlinMultiplatformPluginWrapper::class) -> KotlinType.MPP
-        project.plugins.hasPlugin(KotlinPluginWrapper::class) -> KotlinType.JVM
+        project.plugins.hasPlugin("org.jetbrains.kotlin.multiplatform") -> KotlinType.MPP
+        project.plugins.hasPlugin("org.jetbrains.kotlin.jvm") -> KotlinType.JVM
         else -> KotlinType.NONE
     }
 
@@ -124,12 +123,12 @@ public abstract class MinixBaseExtension(private val project: Project) {
         JVM {
             override fun configureRootProject(project: Project): Unit = with(project) {
                 NONE.configureRootProject(project)
-                plugins.ensurePlugin<KotlinPlatformJvmPlugin>("kotlin.jvm")
+                plugins.ensurePlugin<KotlinPluginWrapper>("kotlin.jvm")
             }
 
             override fun configureSubproject(project: Project): Unit = with(project) {
                 NONE.configureSubproject(project)
-                plugins.maybeApply<KotlinPlatformJvmPlugin>()
+                warnForMissingUsedPlugin("org.jetbrains.kotlin.jvm") { plugins.maybeApply<KotlinPluginWrapper>() }
             }
 
             override fun configureExtension(project: Project): Unit = with(project) {

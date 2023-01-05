@@ -3,7 +3,9 @@ import dev.racci.minix.gradle.data.MCTarget
 plugins {
     id("dev.racci.minix.publication")
     id("dev.racci.minix")
-    alias(libs.plugins.kotlin.plugin.ktlint)
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.plugin.ktlint) apply false
+    alias(libs.plugins.kotlin.plugin.dokka) apply false
     alias(libs.plugins.minecraft.paperweight) apply false
 }
 

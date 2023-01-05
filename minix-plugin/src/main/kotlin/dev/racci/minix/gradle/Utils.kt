@@ -1,5 +1,6 @@
 package dev.racci.minix.gradle // ktlint-disable filename
 
+import dev.racci.minix.gradle.exceptions.MissingPluginException
 import org.gradle.api.Project
 import org.gradle.api.file.SourceDirectorySet
 import java.io.File
@@ -34,6 +35,21 @@ public fun SourceDirectorySet.maybeExtend(
 
 public inline fun <reified T> Any.cast(): T {
     return this as T
+}
+
+internal fun warnForMissingUsedPlugin(
+    pluginId: String,
+    classUsage: () -> Unit
+) = runCatching { classUsage() }.getOrElse {
+    throw MissingPluginException(
+        """
+        Plugin `$pluginId` is used to configure subprojects but is not present in root classpath,
+        Please add it to the root build.gradle.kts like so:
+        plugins {
+            id("$pluginId") version "x.x.x" apply false
+        }
+        """.trimIndent()
+    )
 }
 
 internal fun isTestEnvironment(): Boolean = System.getProperty("MINIX_TESTING_ENV") == "true"
