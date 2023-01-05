@@ -1,16 +1,18 @@
+@file:Suppress("nothing_to_inline")
+
 package dev.racci.minix.nms.aliases
 
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.Level
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftCreature
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftEntity
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftHumanEntity
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftLivingEntity
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftMob
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftSnowball
+import org.bukkit.craftbukkit.v1_19_R2.CraftWorld
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftCreature
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftEntity
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftHumanEntity
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftLivingEntity
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftMob
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftSnowball
 import org.bukkit.entity.Creature
 import org.bukkit.entity.HumanEntity
 import org.bukkit.entity.LivingEntity
@@ -73,5 +75,5 @@ public inline fun NMSServerPlayer.toBukkit(): Player = bukkitEntity
 public inline fun NMSSnowball.toBukkit(): Snowball = bukkitEntity as Snowball
 
 /** Casts the Entity to an NMS Representation. */
-@JvmName("toNMSWithCast")
-public inline fun <T : NMSEntity> org.bukkit.entity.Entity.toNMS(): T = (this as CraftEntity).handle as T
+@Suppress("UNCHECKED_CAST")
+public inline fun <T : NMSEntity> BukkitEntity.toNMS(): T = (this as CraftEntity).handle as T
