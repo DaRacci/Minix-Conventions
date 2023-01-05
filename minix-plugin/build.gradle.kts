@@ -58,7 +58,7 @@ tasks {
             expand(
                 "jdk" to java.sourceCompatibility.toString(),
                 "kotlin" to libs.versions.kotlin.asProvider().get(),
-                "mc" to "1.19.3-R0.1-SNAPSHOT", // TODO: Get this from the paperweight plugin.
+                "mc" to libs.versions.minecraft.get(),
                 "minix" to libs.versions.minix.get()
             )
         }
