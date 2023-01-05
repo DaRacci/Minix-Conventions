@@ -1,7 +1,6 @@
 import dev.racci.minix.gradle.data.MCTarget
 
 plugins {
-    id("dev.racci.minix.publication")
     id("dev.racci.minix")
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.plugin.ktlint) apply false
@@ -10,21 +9,23 @@ plugins {
 }
 
 val kotlinVersion: String by project
-val runNumber: String = System.getenv("BUILD_NUMBER") ?: "SNAPSHOT"
-version = "$kotlinVersion-$runNumber"
+version = kotlinVersion
 
-minix.minecraft {
-    withMCTarget(
-        project(":Minix-NMS"),
+minix {
+    publishing {
+        val nms by creating
+        val catalog by creating {
+            componentName = "versionCatalog"
+        }
+    }
+
+    minecraft.withMCTarget(
+        project(":nms"),
         MCTarget.Platform.PAPER,
         "1.19.3",
         applyNMS = true,
         applyMinix = false
     )
-}
-
-minixPublishing {
-    noPublishing = true
 }
 
 subprojects {
@@ -68,11 +69,6 @@ tasks {
         )
     }
 
-    ktlintFormat.recDep()
     build.recDep()
     clean.recDep()
-
-    dokkaHtmlMultiModule {
-        outputDirectory.set(File("$rootDir/docs"))
-    }
 }

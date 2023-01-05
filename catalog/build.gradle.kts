@@ -9,26 +9,10 @@ import kotlin.reflect.jvm.isAccessible
 
 plugins {
     `version-catalog`
-    id("dev.racci.minix.publication")
 }
-
-minixPublishing.publishComponentName = "versionCatalog"
 
 catalog {
     versionCatalog {
-        version("minix-scripts", version.toString())
-
-        fun minixPlugin(file: File) {
-            val removedExtension = file.name.removeSuffix(".gradle.kts")
-            val scriptName = removedExtension.substringAfter("dev.racci.minix.")
-
-            plugin("minix-$scriptName", removedExtension).versionRef("minix-scripts")
-        }
-
-        gradle.includedBuilds.find { it.name == "Minix-Gradle" }!!.projectDir.resolve("src/main/kotlin").listFiles { file ->
-            file.isFile
-        }?.forEach { file -> minixPlugin(file) }
-
         gradle.includedBuilds.find { it.name == "minix-plugin" }!!.also { gradlePlugin ->
             val properties = Properties().apply {
                 gradlePlugin.projectDir.resolve("gradle.properties").inputStream().use(::load)

@@ -19,9 +19,6 @@
 ###### Note; This module is planned to be moved to a separate repository.
 [![Minix-NMS](https://img.shields.io/static/v1?&label=Minix&message=NMS&color=purple&style=for-the-badge)](https://github.com/DaRacci/Minix-Conventions/tree/main/Minix-NMS)
 
-###### Note; The buildScripts under minix-gradle are being phased out and replaced by the minix-plugin module.
-[![Minix-Gradle](https://img.shields.io/static/v1?&label=Minix&message=Gradle&color=purple&style=for-the-badge)](https://github.com/DaRacci/Minix-Conventions/tree/main/Minix-Gradle)
-
 ## Used By
 
 Minix Conventions is used in these projects:
