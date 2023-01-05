@@ -8,8 +8,6 @@ import dev.racci.minix.gradle.annotations.TopLevelDSLMarker
 import dev.racci.minix.gradle.ex.disambiguateName
 import dev.racci.minix.gradle.ex.recursiveSubprojects
 import dev.racci.minix.gradle.ex.whenEvaluated
-import dev.racci.minix.gradle.exceptions.MissingPluginException
-import dev.racci.minix.gradle.isTestEnvironment
 import dev.racci.minix.gradle.support.PluginSupport
 import dev.racci.minix.gradle.tasks.QuickBuildTask
 import dev.racci.minix.gradle.tasks.ShadowJarMPPTask
@@ -33,7 +31,6 @@ import org.gradle.plugins.ide.idea.IdeaPlugin
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
-import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMultiplatformPlugin
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -127,7 +124,6 @@ public abstract class MinixBaseExtension(private val project: Project) {
         JVM {
             override fun configureRootProject(project: Project): Unit = with(project) {
                 NONE.configureRootProject(project)
-                plugins.ensurePlugin<KotlinPluginWrapper>("kotlin.jvm")
             }
 
             override fun configureSubproject(project: Project): Unit = with(project) {
@@ -147,7 +143,6 @@ public abstract class MinixBaseExtension(private val project: Project) {
         MPP {
             override fun configureRootProject(project: Project): Unit = with(project) {
                 super.configureSubproject(project)
-                plugins.ensurePlugin<KotlinMultiplatformPlugin>("kotlin.mpp")
             }
 
             override fun configureExtension(project: Project): Unit = with(project) {
@@ -226,24 +221,6 @@ public abstract class MinixBaseExtension(private val project: Project) {
                 logger.prInfo("Applying missing plugin: $id")
                 apply()
             } else logger.prInfo("Plugin already applied: $id")
-        }
-
-        @Throws(MissingPluginException::class)
-        protected inline fun <reified T : Plugin<*>> PluginContainer.ensurePlugin(libString: String) {
-            if (isTestEnvironment() || hasPlugin(T::class)) return
-            val message = """
-                Make sure to apply the ${
-            libString.replace(
-                '.',
-                '-'
-            )
-            } plugin before by adding the following to your build.gradle.kts:
-                    plugins {
-                        alias(libs.plugins.$libString)
-                    }
-            """.trimIndent()
-
-            throw MissingPluginException(message)
         }
     }
 
