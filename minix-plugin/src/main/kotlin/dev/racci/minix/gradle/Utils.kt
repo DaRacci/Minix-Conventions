@@ -52,4 +52,5 @@ internal fun warnForMissingUsedPlugin(
     )
 }
 
+@PublishedApi
 internal fun isTestEnvironment(): Boolean = System.getProperty("MINIX_TESTING_ENV") == "true"

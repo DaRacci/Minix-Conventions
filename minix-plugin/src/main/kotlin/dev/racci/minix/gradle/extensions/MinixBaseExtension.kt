@@ -9,6 +9,7 @@ import dev.racci.minix.gradle.ex.disambiguateName
 import dev.racci.minix.gradle.ex.recursiveSubprojects
 import dev.racci.minix.gradle.ex.whenEvaluated
 import dev.racci.minix.gradle.exceptions.MissingPluginException
+import dev.racci.minix.gradle.isTestEnvironment
 import dev.racci.minix.gradle.support.PluginSupport
 import dev.racci.minix.gradle.tasks.QuickBuildTask
 import dev.racci.minix.gradle.tasks.ShadowJarMPPTask
@@ -229,7 +230,7 @@ public abstract class MinixBaseExtension(private val project: Project) {
 
         @Throws(MissingPluginException::class)
         protected inline fun <reified T : Plugin<*>> PluginContainer.ensurePlugin(libString: String) {
-            if (!hasPlugin(T::class)) return
+            if (isTestEnvironment() || hasPlugin(T::class)) return
             val message = """
                 Make sure to apply the ${
             libString.replace(
