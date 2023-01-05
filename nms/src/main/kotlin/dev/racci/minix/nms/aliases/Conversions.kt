@@ -75,5 +75,6 @@ public inline fun NMSServerPlayer.toBukkit(): Player = bukkitEntity
 public inline fun NMSSnowball.toBukkit(): Snowball = bukkitEntity as Snowball
 
 /** Casts the Entity to an NMS Representation. */
+@JvmName("castToNMS")
 @Suppress("UNCHECKED_CAST")
 public inline fun <T : NMSEntity> BukkitEntity.toNMS(): T = (this as CraftEntity).handle as T
