@@ -68,7 +68,9 @@ public abstract class MinixBaseExtension(private val project: Project) {
             configureProject(project)
         }
 
-        project.recursiveSubprojects().forEach { subproject ->
+        PluginSupport.addPluginSupport(project)
+
+        recursiveSubprojects().forEach { subproject ->
             subproject.whenEvaluated {
                 if (subproject.name in ignoredTargets) return@whenEvaluated logger.prInfo("Ignoring subproject: ${subproject.name}")
 
