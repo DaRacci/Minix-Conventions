@@ -4,6 +4,8 @@ import dev.racci.minix.gradle.Constants
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.dokka.Platform
+import org.jetbrains.dokka.gradle.AbstractDokkaTask
+import org.jetbrains.dokka.gradle.DokkaCollectorTask
 import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
 import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
@@ -13,7 +15,9 @@ public object DokkaPluginSupport : PluginSupport(
     target = { DokkaPlugin::class }
 ) {
     override fun configure(project: Project): Unit = with(project) {
-        tasks.withType<DokkaMultiModuleTask> { outputDirectory.set(rootDir.resolve("docs")) }
+        fun AbstractDokkaTask.setOutput() = outputDirectory.set(rootDir.resolve("docs"))
+        tasks.withType<DokkaCollectorTask>().configureEach(AbstractDokkaTask::setOutput)
+        tasks.withType<DokkaMultiModuleTask>().configureEach(AbstractDokkaTask::setOutput)
         configureSub(project) // TODO: Check if has sources
     }
 

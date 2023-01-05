@@ -4,7 +4,7 @@ plugins {
     id("dev.racci.minix")
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.plugin.ktlint) apply false
-    alias(libs.plugins.kotlin.plugin.dokka) apply false
+    alias(libs.plugins.kotlin.plugin.dokka)
     alias(libs.plugins.minecraft.paperweight) apply false
 }
 
