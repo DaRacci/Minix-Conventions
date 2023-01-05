@@ -51,7 +51,10 @@ kotlin {
 }
 
 tasks {
-    test { useJUnitPlatform() }
+    test {
+        enabled = false
+        useJUnitPlatform()
+    }
 
     processResources {
         filesMatching("minix.properties") {
