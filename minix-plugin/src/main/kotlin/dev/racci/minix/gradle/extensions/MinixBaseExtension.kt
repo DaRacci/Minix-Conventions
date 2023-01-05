@@ -64,16 +64,16 @@ public abstract class MinixBaseExtension(private val project: Project) {
 
     internal fun configure(): Unit = with(project) {
         with(getSupportType(project)) {
-            logger.info("Applying support for kotlin-type: $this")
+            logger.prInfo("Applying support for kotlin-type: $this")
             configureProject(project)
         }
 
         project.recursiveSubprojects().forEach { subproject ->
             subproject.whenEvaluated {
-                if (subproject.name in ignoredTargets) return@whenEvaluated logger.info("Ignoring subproject: ${subproject.name}")
+                if (subproject.name in ignoredTargets) return@whenEvaluated logger.prInfo("Ignoring subproject: ${subproject.name}")
 
                 with(getSupportType(subproject)) {
-                    logger.info("Applying support to subproject of ${subproject.name} with kotlin-type: $this")
+                    logger.prInfo("Applying support to subproject of ${subproject.name} with kotlin-type: $this")
                     configureProject(subproject)
                 }
 
@@ -85,10 +85,10 @@ public abstract class MinixBaseExtension(private val project: Project) {
             fun maybeLazyConfigure(prop: KProperty0<ExtensionBase>) {
                 val lazy = prop.access { getDelegate() as Lazy<ExtensionBase> }
                 if (!lazy.isInitialized()) {
-                    return logger.info("Not configuring ${prop.name}.")
+                    return logger.prInfo("Not configuring ${prop.name}.")
                 }
 
-                logger.info("Configuring ${prop.name}...")
+                logger.prInfo("Configuring ${prop.name}...")
                 lazy.value.configure(project)
             }
 
@@ -219,9 +219,9 @@ public abstract class MinixBaseExtension(private val project: Project) {
             id: String
         ) {
             if (!hasPlugin()) {
-                logger.info("Applying missing plugin: $id")
+                logger.prInfo("Applying missing plugin: $id")
                 apply()
-            } else logger.info("Plugin already applied: $id")
+            } else logger.prInfo("Plugin already applied: $id")
         }
 
         @Throws(MissingPluginException::class)
@@ -241,5 +241,9 @@ public abstract class MinixBaseExtension(private val project: Project) {
 
             throw MissingPluginException(message)
         }
+    }
+
+    private companion object {
+        fun Logger.prInfo(message: String) = info(":baseExtension $message")
     }
 }
