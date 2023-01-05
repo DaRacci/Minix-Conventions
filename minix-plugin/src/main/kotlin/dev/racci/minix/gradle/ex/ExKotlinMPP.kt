@@ -58,7 +58,7 @@ public fun KotlinTarget.disambiguateName(simpleName: String): String {
     return nonEmptyParts.drop(1).joinToString(
         separator = "",
         prefix = nonEmptyParts.firstOrNull().orEmpty(),
-        transform = String::capitalize
+        transform = String::capitalized
     )
 }
 

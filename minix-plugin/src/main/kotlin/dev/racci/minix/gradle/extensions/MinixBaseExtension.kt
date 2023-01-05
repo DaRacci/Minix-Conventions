@@ -82,6 +82,7 @@ public abstract class MinixBaseExtension(private val project: Project) {
         }
 
         whenEvaluated {
+            @Suppress("UNCHECKED_CAST")
             fun maybeLazyConfigure(prop: KProperty0<ExtensionBase>) {
                 val lazy = prop.access { getDelegate() as Lazy<ExtensionBase> }
                 if (!lazy.isInitialized()) {
