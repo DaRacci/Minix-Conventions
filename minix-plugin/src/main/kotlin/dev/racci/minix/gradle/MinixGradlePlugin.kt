@@ -11,7 +11,6 @@ public class MinixGradlePlugin : Plugin<Project> {
             "MinixGradlePlugin must be applied to the root project! (Currently)"
         }
 
-        // TODO: Broken check
         if (KotlinVersion.CURRENT.toString() != Constants.KOTLIN_VERSION) {
             logger.warn("WARNING: Unsupported kotlin version.")
             logger.warn("the `minix-plugin` rely on features of Kotlin ${Constants.KOTLIN_VERSION} that might work differently than in the requested version `${KotlinVersion.CURRENT}`.")

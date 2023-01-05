@@ -1,11 +1,12 @@
 package dev.racci.minix.gradle.support
 
 import dev.racci.minix.gradle.cast
-import io.papermc.paperweight.tasks.ScanJarForBadCalls
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.hasPlugin
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 
 /**
@@ -18,7 +19,6 @@ public sealed class PluginSupport(
     public val id: String,
     public val target: () -> KClass<out Plugin<*>>
 ) {
-
     /** Configure the root project for this plugin. */
     public open fun configure(project: Project): Unit = Unit
 
@@ -33,7 +33,9 @@ public sealed class PluginSupport(
     }
 
     internal companion object {
-        private val supportedPlugins = PluginSupport::class.sealedSubclasses.map { it.objectInstance!!.cast<PluginSupport>() }
+        protected val logger: Logger = LoggerFactory.getLogger(PluginSupport::class.java)
+        private val supportedPlugins =
+            PluginSupport::class.sealedSubclasses.map { it.objectInstance!!.cast<PluginSupport>() }
 
         fun addPluginSupport(target: Any) {
             val (project, func) = when (target) {
@@ -44,14 +46,14 @@ public sealed class PluginSupport(
 
             supportedPlugins.forEach { support ->
                 if (support.canConfigure(project)) {
-                    ScanJarForBadCalls.logger.info("Configuring immediate ${support::class.simpleName} for ${project.name}")
+                    logger.info("Configuring immediate ${support::class.simpleName} for ${project.name}")
                     func(support, target.cast())
                     return@forEach
                 }
 
-                ScanJarForBadCalls.logger.info("Adding possible configuration for ${support::class.simpleName} for ${project.name}")
+                logger.info("Adding possible configuration for ${support::class.simpleName} for ${project.name}")
                 project.plugins.withId(support.id) {
-                    ScanJarForBadCalls.logger.info("Configuring late ${support::class.simpleName} for ${project.name}")
+                    logger.info("Configuring late ${support::class.simpleName} for ${project.name}")
                     func(support, target.cast())
                 }
             }
