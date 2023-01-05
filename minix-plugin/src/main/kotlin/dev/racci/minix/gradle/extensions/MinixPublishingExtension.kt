@@ -1,7 +1,6 @@
 package dev.racci.minix.gradle.extensions
 
 import dev.racci.minix.gradle.ex.recursiveSubprojects
-import dev.racci.minix.gradle.ex.whenEvaluated
 import org.gradle.api.GradleException
 import org.gradle.api.Named
 import org.gradle.api.NamedDomainObjectContainer
@@ -40,22 +39,20 @@ public class MinixPublishingExtension(override val rootProject: Project) :
     public var configureMavenPublish: Boolean = true
 
     override fun configure(project: Project) = forEach { spec ->
-        project.logger.prInfo("Configuring publication for ${spec.name}.")
+        project.logger.prInfo("Configuring publication for `${spec.name}`.")
 
         with(spec.relatedProject.get()) {
-            extensions.add("minixPublishing", spec)
+            afterEvaluate {
+                project.logger.prInfo("Configuring publication after evaluation for `$name`.")
 
-            whenEvaluated {
-                project.logger.prInfo("Configuring publication after evaluation for $name.")
-
-                if (spec.useRunNumberAsPatch) {
-                    project.logger.prInfo("Using run number as patch version for $name.")
+                if (spec.appendRunNumberOrSnapshot) {
+                    project.logger.prInfo("Adding run number or marking as snapshot for `$name`.")
 
                     project.version = spec.version.map { version ->
-                        val runNumber = runNumber?.toIntOrNull()
+                        val runNumber = runNumber
                         if (runNumber == null) {
-                            version.copy(patch = null, snapshotType = "SNAPSHOT")
-                        } else version.copy(patch = runNumber)
+                            version.copy(snapshotType = "SNAPSHOT")
+                        } else version.copy(snapshotType = runNumber)
                     }.get().toString()
                 }
 
@@ -65,16 +62,18 @@ public class MinixPublishingExtension(override val rootProject: Project) :
                 }
 
                 if (!configureMavenPublish) {
-                    return@whenEvaluated project.logger.prInfo("Skipping maven publish for $name.")
+                    return@afterEvaluate project.logger.prInfo("Skipping maven publish for $name.")
                 } else project.logger.prInfo("Configuring maven publish for $name.")
 
                 apply<MavenPublishPlugin>()
+
                 extensions.configure<PublishingExtension> {
                     spec.repository(repositories)
 
                     publications {
                         maybeCreate<MavenPublication>(spec.publicationName)
                         named<MavenPublication>(spec.publicationName) {
+                            version = spec.version.get().toString()
                             from(components[spec.componentName])
                         }
                     }
@@ -99,7 +98,7 @@ public class MinixPublishingExtension(override val rootProject: Project) :
 
         @Input
         @Optional
-        public var useRunNumberAsPatch: Boolean = project.properties["minix.addRunNumber"].toString().toBoolean()
+        public var appendRunNumberOrSnapshot: Boolean = project.properties["minix.appendRunNumberOrSnapshot"].toString().toBoolean()
 
         @Input
         @Optional
@@ -141,7 +140,9 @@ public class MinixPublishingExtension(override val rootProject: Project) :
             override fun toString(): String = buildString {
                 append("$major.$minor")
                 if (patch != null) append(".$patch")
-                if (isPreRelease) append("-$snapshotType.$snapshotRevision")
+                if (!isPreRelease) return@buildString
+                append("-$snapshotType")
+                if (snapshotRevision != null) append(".$snapshotRevision")
             }
 
             public companion object {
