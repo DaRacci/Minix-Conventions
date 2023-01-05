@@ -28,13 +28,13 @@ jobs:
       - name: Execute Gradle action
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :Minix-NMS:build
+          arguments: :nms:build
 
       - name: Upload build
         uses: actions/upload-artifact@v3
         with:
           name: build-artifacts
-          path: build/minix-nms/libs/
+          path: build/nms/libs/
 
   test:
     needs: build
@@ -50,7 +50,7 @@ jobs:
       - name: Execute Gradle action
         uses: gradle/gradle-build-action@v2
         with:
-          arguments: :Minix-NMS:check
+          arguments: :nms:check
 
   publish:
     needs: [ build, test ]
