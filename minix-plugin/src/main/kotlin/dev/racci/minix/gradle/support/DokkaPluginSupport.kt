@@ -12,9 +12,8 @@ public object DokkaPluginSupport : PluginSupport(
     id = "org.jetbrains.dokka",
     target = { DokkaPlugin::class }
 ) {
-
     override fun configure(project: Project): Unit = with(project) {
-        tasks.withType<DokkaMultiModuleTask> { outputDirectory.set(buildDir.resolve("docs")) }
+        tasks.withType<DokkaMultiModuleTask> { outputDirectory.set(rootDir.resolve("docs")) }
         configureSub(project) // TODO: Check if has sources
     }
 
