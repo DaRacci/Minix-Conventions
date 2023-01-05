@@ -1,1 +1,1 @@
-sourceset_dependencies = '{":Minix-NMS:dokkaHtmlPartial/main":[]}'
+sourceset_dependencies='{":nms:dokkaHtml/main":[]}'
