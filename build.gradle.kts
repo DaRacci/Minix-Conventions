@@ -14,9 +14,7 @@ version = kotlinVersion
 minix {
     publishing {
         val nms by creating
-        val catalog by creating {
-            componentName = "versionCatalog"
-        }
+        val catalog by creating { componentName = "versionCatalog" }
     }
 
     minecraft.withMCTarget(
@@ -26,24 +24,6 @@ minix {
         applyNMS = true,
         applyMinix = false
     )
-}
-
-subprojects {
-    version = rootProject.version
-
-    if (buildscript.sourceFile?.extension?.toLowerCase() == "kts" &&
-        parent != rootProject
-    ) {
-        generateSequence(parent) { project ->
-            project.parent.takeIf { it != rootProject }
-        }.forEach { evaluationDependsOn(it.path) }
-    }
-}
-
-fun TaskProvider<*>.recDep() {
-    this {
-        dependsOn(gradle.includedBuilds.mapNotNull { runCatching { it.task(":$name") }.getOrNull() })
-    }
 }
 
 tasks {
@@ -68,7 +48,4 @@ tasks {
                 .mapNotNull { runCatching { it.task(":publishToMavenLocal") }.getOrNull() }
         )
     }
-
-    build.recDep()
-    clean.recDep()
 }
