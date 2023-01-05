@@ -21,10 +21,10 @@ public class MinixMinecraftExtension(override val rootProject: Project) : Extens
             MCTarget(
                 this,
                 platform,
-                applyDefaultDependencies,
-                applyMinix,
-                applyNMS,
-                version
+                applyDefaults = applyDefaultDependencies,
+                applyMinix = applyMinix,
+                applyNMS = applyNMS,
+                version = version
             )
         )
     }

@@ -31,7 +31,7 @@ public data class MCTarget @PublishedApi internal constructor(
             if (!obj.plugins.hasPlugin("io.papermc.paperweight.userdev")) throw MissingPluginException("io.papermc.paperweight.userdev")
 
             obj.repositories.maven(platform.paperweightRepository)
-            obj.dependencies.add(DEV_BUNDLE_CONFIG, "${platform.apiGroup}:dev-bundle:${platform.version}")
+            obj.dependencies.add(DEV_BUNDLE_CONFIG, "${platform.apiGroup}:dev-bundle:${Platform.getFullVersion(version) ?: platform.version}")
         } else if (applyDefaults) {
             logger.info("Configuring MCTarget defaults for ${platform.name}")
 
@@ -42,12 +42,12 @@ public data class MCTarget @PublishedApi internal constructor(
             when (obj) {
                 is Project -> {
                     obj.repositories.addDefaultRepo()
-                    obj.dependencies.add(COMPILE_ONLY, platform.dependencyString)
+                    obj.dependencies.add(COMPILE_ONLY, platform.dependencyString(version))
                 }
 
                 is KotlinSourceSet -> {
                     obj.project().repositories.addDefaultRepo()
-                    obj.dependencies { compileOnly(platform.dependencyString) }
+                    obj.dependencies { compileOnly(platform.dependencyString(version)) }
                 }
 
                 else -> throw IllegalArgumentException("Unknown target type: ${obj::class.simpleName}")
@@ -130,26 +130,29 @@ public data class MCTarget @PublishedApi internal constructor(
         internal open val paperweightRepository: String
             get() = apiRepository
 
-        internal open val dependencyString: String
-            get() = "$apiGroup:$apiArtifact:$version"
+        internal open fun dependencyString(providedVersion: String?): String =
+            "$apiGroup:$apiArtifact:${getFullVersion(providedVersion) ?: version}"
 
-        protected fun getFullVersion(version: String): String {
-            if (version.endsWith("R0.1-SNAPSHOT")) return version
+        internal companion object {
+            fun <T : String?> getFullVersion(version: T): T {
+                if (version == null) return null as T
+                if (version.endsWith("R0.1-SNAPSHOT")) return version
 
-            val split = version.split('.', limit = 3)
-            val major = split[0].toInt()
-            val minor = split[1].toInt()
-            val patch = split.getOrNull(2)?.toInt()
+                val split = version.split('.', limit = 3)
+                val major = split[0].toInt()
+                val minor = split[1].toInt()
+                val patch = split.getOrNull(2)?.toInt()
 
-            return buildString {
-                append(major)
-                append('.')
-                append(minor)
-                if (patch != null) {
+                return buildString {
+                    append(major)
                     append('.')
-                    append(patch)
-                }
-                append("-R0.1-SNAPSHOT")
+                    append(minor)
+                    if (patch != null) {
+                        append('.')
+                        append(patch)
+                    }
+                    append("-R0.1-SNAPSHOT")
+                } as T
             }
         }
     }
