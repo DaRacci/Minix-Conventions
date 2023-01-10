@@ -74,7 +74,15 @@ public class MinixPublishingExtension(override val rootProject: Project) :
                         maybeCreate<MavenPublication>(spec.publicationName)
                         named<MavenPublication>(spec.publicationName) {
                             version = project.version.toString()
-                            from(components[spec.componentName])
+
+                            val component = spec.componentName?.let(components::get)
+                                ?: project.components.findByName("kotlin")
+                                ?: project.components.findByName("java")
+                                ?: error(
+                                    "Unable to find a component for project `${project.name}`, please specify one."
+                                )
+
+                            from(component)
                         }
                     }
                 }
@@ -89,8 +97,7 @@ public class MinixPublishingExtension(override val rootProject: Project) :
 
         @Input
         @Optional
-        public var componentName: String =
-            runCatching { project.components["kotlin"] }.getOrElse { project.components["java"] }.name
+        public var componentName: String? = null
 
         @Input
         private val rawVersion: String = project.version.toString()
