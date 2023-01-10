@@ -133,7 +133,7 @@ public class MinixPublishingExtension(override val rootProject: Project) :
             public val minor: Int,
             public val patch: Int?,
             public val snapshotType: String? = null,
-            public val snapshotRevision: String? = null
+            public val snapshotRevision: Int? = null
         ) {
             public val isPreRelease: Boolean = snapshotType != null
 
@@ -147,23 +147,23 @@ public class MinixPublishingExtension(override val rootProject: Project) :
 
             public companion object {
                 private val SEMVER_REGEX =
-                    Regex("^(?<major>\\d+)\\.(?<minor>\\d+)(?:\\.(?<patch>\\d+))?(?:-(?<release>\\w\\d+)(\\.(?<revision>\\w+))?)?$")
+                    Regex("^[vV]?(?<M>\\d+)(?:\\.(?<m>\\d+))?(?:\\.(?<p>\\d+))?(?:-?(?<tag>SNAPSHOT))?(?:\\.(?<rev>\\d+))?$")
 
                 public fun parse(version: String): Version {
                     val match = SEMVER_REGEX.matchEntire(version) ?: throw GradleException(
                         """
                         |Invalid version string: $version
-                        |Expected format: <major>.<minor>.<patch>-<release>.<revision>
+                        |Expected format: <major>.<minor>.<patch>-<tag>.<revision>
                         |Example: 1.0.0-SNAPSHOT.1
                         """.trimIndent()
                     )
 
                     return Version(
-                        major = match.groups["major"]!!.value.toInt(),
-                        minor = match.groups["minor"]!!.value.toInt(),
-                        patch = match.groups["patch"]?.value?.toInt(),
-                        snapshotType = match.groups["release"]?.value,
-                        snapshotRevision = match.groups["revision"]?.value
+                        major = match.groups["M"]!!.value.toInt(),
+                        minor = match.groups["m"]!!.value.toInt(),
+                        patch = match.groups["p"]?.value?.toInt(),
+                        snapshotType = match.groups["tag"]?.value,
+                        snapshotRevision = match.groups["rev"]?.value?.toInt()
                     )
                 }
             }
