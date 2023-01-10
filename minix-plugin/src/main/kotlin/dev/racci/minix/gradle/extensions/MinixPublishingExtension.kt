@@ -154,7 +154,7 @@ public class MinixPublishingExtension(override val rootProject: Project) :
 
             public companion object {
                 private val SEMVER_REGEX =
-                    Regex("^[vV]?(?<M>\\d+)(?:\\.(?<m>\\d+))?(?:\\.(?<p>\\d+))?(?:-?(?<tag>SNAPSHOT))?(?:\\.(?<rev>\\d+))?$")
+                    Regex("^[vV]?(?<M>\\d+)(?:\\.(?<m>\\d+))?(?:\\.(?<p>\\d+))?(?:-?(?<t>\\w+))?(?:\\.(?<r>\\d+))?$")
 
                 public fun parse(version: String): Version {
                     val match = SEMVER_REGEX.matchEntire(version) ?: throw GradleException(
@@ -169,8 +169,8 @@ public class MinixPublishingExtension(override val rootProject: Project) :
                         major = match.groups["M"]!!.value.toInt(),
                         minor = match.groups["m"]!!.value.toInt(),
                         patch = match.groups["p"]?.value?.toInt(),
-                        snapshotType = match.groups["tag"]?.value,
-                        snapshotRevision = match.groups["rev"]?.value?.toInt()
+                        snapshotType = match.groups["t"]?.value,
+                        snapshotRevision = match.groups["r"]?.value?.toInt()
                     )
                 }
             }
