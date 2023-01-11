@@ -38,7 +38,10 @@ public abstract class MinixBaseExtension(private val plugin: MinixGradlePlugin) 
     }
 
     internal fun configure(): Unit = with(plugin.project) {
-        buildDir = rootProject.buildDir.resolve(project.name.lowercase())
+        if (rootProject != this) {
+            buildDir = rootProject.buildDir.resolve(project.name.lowercase())
+        }
+
         PluginSupport.addPluginSupport(project)
 
         recursiveSubprojects().forEach { subproject ->

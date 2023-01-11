@@ -3,6 +3,7 @@ package dev.racci.minix.gradle.support
 import dev.racci.minix.gradle.cast
 import dev.racci.minix.gradle.ex.project
 import dev.racci.minix.gradle.warnForMissingUsedPlugin
+import io.github.classgraph.ClassGraph
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.PluginAware
@@ -20,7 +21,7 @@ import kotlin.reflect.KClass
  * @property target The kClass of the required plugin. (Lambda is used to avoid class loading issues)
  */
 // TODO: Subsupport based on support type (e.g. KotlinJvmSupport, KotlinMultiplatformSupport)
-public sealed class PluginSupport(
+public open class PluginSupport(
     public val id: String,
     public val target: () -> KClass<out Plugin<out PluginAware>>
 ) {
@@ -44,19 +45,32 @@ public sealed class PluginSupport(
 
     internal companion object {
         protected val logger: Logger = LoggerFactory.getLogger(PluginSupport::class.java)
-        private val supportedPlugins =
-            PluginSupport::class.sealedSubclasses.map { it.objectInstance!!.cast<PluginSupport>() }
 
-        private val supportedPlugins = PluginSupport::class.sealedSubclasses
-            .flatMap {
-                if (!it.isFinal) {
-                    it.sealedSubclasses
-                } else {
-                    listOf(it)
-                }
-            }
-            .filter(KClass<out PluginSupport>::isFinal)
-            .map { it.objectInstance!!.cast<PluginSupport>() }
+        private val supportedPlugins: List<PluginSupport> = ClassGraph()
+            .removeTemporaryFilesAfterScan()
+            .enableClassInfo()
+            .ignoreParentClassLoaders()
+            .disableModuleScanning()
+            .disableNestedJarScanning()
+            .disableRuntimeInvisibleAnnotations()
+            // Reject paths and jars that we know aren't using PluginSupport.
+            .rejectPaths(
+                "org/apache/*",
+                "org/jetbrains/*",
+                "kotlin/*",
+                "org/gradle/*",
+                "paper/libs*"
+            )
+            .rejectJars(
+                "kotlin-*.jar",
+                "kotlinx-*.jar",
+                "jackson-*.jar",
+                "io.papermc.*.jar"
+            )
+            .scan()
+            .getSubclasses(PluginSupport::class.java)
+            .filter { it.isFinal }
+            .map { it.loadClass().kotlin.objectInstance as PluginSupport }
 
         fun addPluginSupport(target: Any) {
             val (project, func) = when (target) {

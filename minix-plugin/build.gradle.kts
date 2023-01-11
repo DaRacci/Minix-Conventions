@@ -6,6 +6,7 @@ Properties()
 
 plugins {
     `maven-publish`
+    alias(libs.plugins.shadow)
     alias(libs.plugins.kotlin.dsl)
     alias(libs.plugins.gradle.publish)
     alias(libs.plugins.kotlin.plugin.ktlint)
@@ -13,24 +14,27 @@ plugins {
 
 buildDir = file("../build/$name")
 
+val shadowImplementation: Configuration by configurations.creating
 val compileAndTest: Configuration by configurations.creating
 configurations {
+    compileAndTest.extendsFrom(shadowImplementation)
     compileOnly.get().extendsFrom(compileAndTest)
     testImplementation.get().extendsFrom(compileAndTest)
 }
 
 @Suppress("UnstableApiUsage")
 dependencies {
-    // All the plugins that are used to configure.
+    shadowImplementation(libs.classgraph)
+
     compileAndTest(gradleApi())
     compileAndTest(gradleKotlinDsl())
-    compileAndTest(libs.gradle.minecraft.pluginYML)
-    compileAndTest(libs.gradle.kotlin.jvm)
-    compileAndTest(libs.gradle.kotlin.plugin.ktlint)
-    compileAndTest(libs.gradle.kotlin.plugin.dokka)
     compileAndTest(libs.gradle.shadow)
-    compileAndTest(libs.gradle.minecraft.paperweight)
+    compileAndTest(libs.gradle.kotlin.jvm)
     compileAndTest(libs.gradle.kotlin.mpp)
+    compileAndTest(libs.gradle.kotlin.plugin.dokka)
+    compileAndTest(libs.gradle.kotlin.plugin.ktlint)
+    compileAndTest(libs.gradle.minecraft.pluginYML)
+    compileAndTest(libs.gradle.minecraft.paperweight)
 
     testImplementation(libs.kotlin.test)
     testImplementation(libs.testing.junit5)
@@ -66,6 +70,31 @@ tasks {
             )
         }
     }
+
+    shadowJar {
+        archiveClassifier.set("")
+        configurations = listOf(shadowImplementation)
+
+        listOf(
+            "io.github.classgraph",
+            "nonapi.io.github.classgraph",
+        ).map { it to it.split('.').last() }.forEach { (original, last) ->
+            relocate(original, "dev.racci.classgraph.libs.$last")
+        }
+    }
+}
+
+// Required for plugin substitution to work in sample projects.
+artifacts {
+    add("runtimeOnly", tasks.shadowJar)
+}
+
+// Work around publishing shadow jars
+afterEvaluate {
+    publishing.publications
+        .withType<MavenPublication>()
+        .filter { it.name == "pluginMaven" }
+        .forEach { publication -> publication.setArtifacts(listOf(tasks.shadowJar)) }
 }
 
 publishing.repositories.maven("https://repo.racci.dev/") {

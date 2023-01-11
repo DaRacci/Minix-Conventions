@@ -1,5 +1,13 @@
 import dev.racci.minix.gradle.data.MCTarget
 
+// Fixes not being able to use the plugin since,
+// for some reason it wants to use the unshaded one.
+buildscript {
+    dependencies {
+        classpath(libs.classgraph)
+    }
+}
+
 plugins {
     id("dev.racci.minix")
     alias(libs.plugins.kotlin.jvm) apply false
