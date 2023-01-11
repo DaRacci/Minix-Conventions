@@ -7,13 +7,14 @@ import org.gradle.kotlin.dsl.create
 
 public class MinixGradlePlugin : Plugin<Project> {
     override fun apply(project: Project): Unit = with(project) {
-        require(project.rootProject == project) {
-            "MinixGradlePlugin must be applied to the root project! (Currently)"
-        }
-
         if (KotlinVersion.CURRENT.toString() != Constants.KOTLIN_VERSION) {
             logger.warn("WARNING: Unsupported kotlin version.")
-            logger.warn("the `minix-plugin` rely on features of Kotlin ${Constants.KOTLIN_VERSION} that might work differently than in the requested version `${KotlinVersion.CURRENT}`.")
+            logger.warn(
+                """
+                The `minix-plugin` rely on features of Kotlin ${Constants.KOTLIN_VERSION},
+                These features may work differently than in the requested version `${KotlinVersion.CURRENT}`
+                """.trimIndent()
+            )
         }
 
         val baseExtension = project.extensions.create<MinixBaseExtension>("minix", project)

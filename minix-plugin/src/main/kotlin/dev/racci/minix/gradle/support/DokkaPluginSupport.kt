@@ -10,11 +10,12 @@ import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
 import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
 
+// TODO: Target support.
 public object DokkaPluginSupport : PluginSupport(
     id = "org.jetbrains.dokka",
     target = { DokkaPlugin::class }
 ) {
-    override fun configure(project: Project): Unit = with(project) {
+    override fun configureRelativeRoot(project: Project): Unit = with(project) {
         fun AbstractDokkaTask.setOutput() = outputDirectory.set(rootDir.resolve("docs"))
         tasks.withType<DokkaCollectorTask>().configureEach(AbstractDokkaTask::setOutput)
         tasks.withType<DokkaMultiModuleTask>().configureEach(AbstractDokkaTask::setOutput)

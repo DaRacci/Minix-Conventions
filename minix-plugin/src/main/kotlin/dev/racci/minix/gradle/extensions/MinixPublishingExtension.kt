@@ -52,7 +52,9 @@ public class MinixPublishingExtension(override val rootProject: Project) :
                         val runNumber = runNumber
                         if (runNumber == null) {
                             version.copy(snapshotType = "SNAPSHOT")
-                        } else version.copy(snapshotType = runNumber)
+                        } else {
+                            version.copy(snapshotType = runNumber)
+                        }
                     }.get().toString()
                 }
 
@@ -63,7 +65,9 @@ public class MinixPublishingExtension(override val rootProject: Project) :
 
                 if (!configureMavenPublish) {
                     return@afterEvaluate project.logger.prInfo("Skipping maven publish for $name.")
-                } else project.logger.prInfo("Configuring maven publish for $name.")
+                } else {
+                    project.logger.prInfo("Configuring maven publish for $name.")
+                }
 
                 apply<MavenPublishPlugin>()
 
@@ -130,7 +134,9 @@ public class MinixPublishingExtension(override val rootProject: Project) :
 
         internal val relatedProject: Provider<Project> = project.provider {
             project.recursiveSubprojects(true).firstOrNull { it.name.equals(name, true) }
-                ?: throw GradleException("Could not find subproject with name `$name` to configure publishing for.")
+                ?: throw GradleException(
+                    "Could not find subproject with name `$name` to configureTrueRoot publishing for."
+                )
         }
 
         override fun getName(): String = name

@@ -10,10 +10,12 @@ public object KtlintPluginSupport : PluginSupport(
     id = "org.jlleitschuh.gradle.ktlint",
     target = { KtlintPlugin::class }
 ) {
-    override fun configure(project: Project): Unit = configureSub(project)
-
     override fun configureSub(project: Project): Unit = project.extensions.configure<KtlintExtension> {
-        project.rootDir.resolve("config/ktlint/").resolve("baseline-${project.name}.xml").let(baseline::set)
+        project.rootProject.layout.projectDirectory
+            .dir("config/ktlint")
+            .file("baseline-${project.name}.xml")
+            .let(baseline::set)
+
         version.set("0.45.2")
         coloredOutput.set(true)
         outputToConsole.set(true)

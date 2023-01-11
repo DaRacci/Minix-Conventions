@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory
 import kotlin.reflect.KProperty0
 
 public abstract class MinixBaseExtension(private val project: Project) {
+    private val relativeRoot: Boolean = project != project.rootProject
 
     /**
      * A list of the subprojects and kotlin mpp targets that aren't touched by the plugin.
@@ -66,18 +67,20 @@ public abstract class MinixBaseExtension(private val project: Project) {
             configureProject(project)
         }
 
-        PluginSupport.addPluginSupport(project)
+        PluginSupport.addPluginSupport(project, relativeRoot)
 
         recursiveSubprojects().forEach { subproject ->
             subproject.whenEvaluated {
-                if (subproject.name in ignoredTargets) return@whenEvaluated logger.prInfo("Ignoring subproject: ${subproject.name}")
+                if (subproject.name in ignoredTargets) return@whenEvaluated logger.prInfo(
+                    "Ignoring subproject: ${subproject.name}"
+                )
 
                 with(getSupportType(subproject)) {
                     logger.prInfo("Applying support to subproject of ${subproject.name} with kotlin-type: $this")
                     configureProject(subproject)
                 }
 
-                PluginSupport.addPluginSupport(subproject)
+                PluginSupport.addPluginSupport(subproject, false)
             }
         }
 
@@ -220,7 +223,9 @@ public abstract class MinixBaseExtension(private val project: Project) {
             if (!hasPlugin()) {
                 logger.prInfo("Applying missing plugin: $id")
                 apply()
-            } else logger.prInfo("Plugin already applied: $id")
+            } else {
+                logger.prInfo("Plugin already applied: $id")
+            }
         }
     }
 

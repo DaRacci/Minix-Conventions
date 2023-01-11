@@ -21,7 +21,13 @@ public sealed class PluginSupport(
     public val target: () -> KClass<out Plugin<*>>
 ) {
     /** Configure the root project for this plugin. */
-    public open fun configure(project: Project): Unit = Unit
+    public open fun configureTrueRoot(project: Project): Unit = configureRelativeRoot(project)
+
+    /**
+     * Configures the root plugin of which applied this plugin.
+     * In this case the “Real Root” isn't this project.
+     */
+    public open fun configureRelativeRoot(project: Project): Unit = configureSub(project)
 
     /** Configure a subproject for this plugin. */
     public open fun configureSub(project: Project): Unit = Unit
@@ -38,9 +44,18 @@ public sealed class PluginSupport(
         private val supportedPlugins =
             PluginSupport::class.sealedSubclasses.map { it.objectInstance!!.cast<PluginSupport>() }
 
-        fun addPluginSupport(target: Any) {
+        fun addPluginSupport(
+            target: Any,
+            relativeRoot: Boolean
+        ) {
             val (project, func) = when (target) {
-                is Project -> target to if (target != target.rootProject) PluginSupport::configureSub else PluginSupport::configure
+                is Project -> {
+                    target to when {
+                        relativeRoot -> PluginSupport::configureRelativeRoot
+                        target != target.rootProject -> PluginSupport::configureSub
+                        else -> PluginSupport::configureTrueRoot
+                    }
+                }
                 is KotlinTarget -> target.project to PluginSupport::configureTarget
                 else -> throw IllegalArgumentException("Unsupported target type: ${target::class}")
             }

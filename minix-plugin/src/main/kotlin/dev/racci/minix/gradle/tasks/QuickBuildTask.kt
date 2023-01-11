@@ -8,11 +8,13 @@ import org.gradle.work.DisableCachingByDefault
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 import javax.inject.Inject
 
+// TODO: This shit just straight up doesn't work
 @DisableCachingByDefault(because = "Not worth caching")
 public open class QuickBuildTask @Inject constructor(
     target: KotlinTarget
 ) : DefaultTask() {
     init {
+        enabled = false
         group = "minix"
         description = "Builds the target [${target.name}] with minimal tasks (No testing or documentation, etc.)"
 
