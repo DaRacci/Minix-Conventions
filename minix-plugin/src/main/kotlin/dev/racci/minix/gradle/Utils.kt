@@ -1,6 +1,7 @@
 package dev.racci.minix.gradle // ktlint-disable filename
 
 import dev.racci.minix.gradle.exceptions.MissingPluginException
+import org.gradle.api.GradleException
 import org.gradle.api.Project
 import org.gradle.api.file.SourceDirectorySet
 import java.io.File
@@ -40,7 +41,9 @@ public inline fun <reified T> Any.cast(): T {
 internal fun warnForMissingUsedPlugin(
     pluginId: String,
     classUsage: () -> Unit
-) = runCatching { classUsage() }.getOrElse {
+) = try {
+    classUsage()
+} catch (err: ClassCastException) {
     throw MissingPluginException(
         """
         Plugin `$pluginId` is used to configure subprojects but is not present in root classpath,
@@ -48,8 +51,11 @@ internal fun warnForMissingUsedPlugin(
         plugins {
             id("$pluginId") version "x.x.x" apply false
         }
-        """.trimIndent()
+        """.trimIndent(),
+        err
     )
+} catch (@Suppress("TooGenericExceptionCaught") err: Throwable) {
+    throw GradleException("There was an error while configuring support for $pluginId", err)
 }
 
 @PublishedApi

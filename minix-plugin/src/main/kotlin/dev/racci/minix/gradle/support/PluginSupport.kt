@@ -4,6 +4,7 @@ import dev.racci.minix.gradle.cast
 import dev.racci.minix.gradle.ex.project
 import dev.racci.minix.gradle.warnForMissingUsedPlugin
 import io.github.classgraph.ClassGraph
+import org.gradle.api.Named
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.PluginAware
@@ -73,6 +74,12 @@ public open class PluginSupport(
             .map { it.loadClass().kotlin.objectInstance as PluginSupport }
 
         fun addPluginSupport(target: Any) {
+            val name = when (target) {
+                is Named -> target.name
+                is Project -> target.name
+                else -> error("Unknown type: $target")
+            }
+
             val (project, func) = when (target) {
                 is Project -> target to if (target != target.rootProject) {
                     PluginSupport::configureSub
@@ -87,14 +94,14 @@ public open class PluginSupport(
 
             supportedPlugins.forEach { support ->
                 if (support.canConfigure(project)) {
-                    logger.info("Configuring immediate ${support::class.simpleName} for ${project.name}")
+                    logger.info("Configuring immediate `${support::class.simpleName}` for `$name`.")
                     warnForMissingUsedPlugin(support.id) { func(support, target.cast()) }
                     return@forEach
                 }
 
-                logger.info("Adding possible configuration for ${support::class.simpleName} for ${project.name}")
+                logger.info("Adding possible `${support::class.simpleName}` for `$name`.")
                 project.plugins.withId(support.id) {
-                    logger.info("Configuring late ${support::class.simpleName} for ${project.name}")
+                    logger.info("Configuring late `${support::class.simpleName}` for `$name`.")
                     warnForMissingUsedPlugin(support.id) { func(support, target.cast()) }
                 }
             }
