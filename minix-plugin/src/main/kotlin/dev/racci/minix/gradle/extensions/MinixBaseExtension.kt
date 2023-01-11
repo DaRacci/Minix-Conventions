@@ -47,11 +47,9 @@ public abstract class MinixBaseExtension(private val plugin: MinixGradlePlugin) 
         recursiveSubprojects().forEach { subproject ->
             subproject.beforeEvaluate {
                 buildDir = rootProject.buildDir.resolve(project.name.lowercase())
-            }
 
-            subproject.whenEvaluated {
                 if (subproject.name in ignoredTargets) {
-                    return@whenEvaluated logger.prInfo(
+                    return@beforeEvaluate logger.prInfo(
                         "Ignoring subproject: ${subproject.name}"
                     )
                 }
