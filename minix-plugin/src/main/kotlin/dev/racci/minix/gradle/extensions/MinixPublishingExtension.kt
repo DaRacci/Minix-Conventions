@@ -40,54 +40,53 @@ public class MinixPublishingExtension(override val rootProject: Project) :
 
     override fun configure(project: Project) = forEach { spec ->
         project.logger.prInfo("Configuring publication for `${spec.name}`.")
+        val specProject = spec.relatedProject.get()
 
-        with(spec.relatedProject.get()) {
-            afterEvaluate {
-                project.logger.prInfo("Configuring publication after evaluation for `$name`.")
+        specProject.afterEvaluate {
+            logger.prInfo("Configuring publication after evaluation for `$name`.")
 
-                if (spec.appendRunNumberOrSnapshot) {
-                    project.logger.prInfo("Adding run number or marking as snapshot for `$name`.")
+            if (spec.appendRunNumberOrSnapshot) {
+                logger.prInfo("Adding run number or marking as snapshot for `$name`.")
 
-                    project.version = spec.version.map { version ->
-                        val runNumber = runNumber
-                        if (runNumber == null) {
-                            version.copy(snapshotType = "SNAPSHOT")
-                        } else {
-                            version.copy(snapshotType = runNumber)
-                        }
-                    }.get().toString()
-                }
+                specProject.version = spec.version.map { version ->
+                    val runNumber = runNumber
+                    if (runNumber == null) {
+                        version.copy(snapshotType = "SNAPSHOT")
+                    } else {
+                        version.copy(snapshotType = runNumber)
+                    }
+                }.get().toString()
+            }
 
-                plugins.withId("java") {
-                    project.logger.prInfo("Configuring java for $name.")
-                    extensions.getByName<JavaPluginExtension>("java").withSourcesJar()
-                }
+            plugins.withId("java") {
+                logger.prInfo("Configuring java for $name.")
+                extensions.getByName<JavaPluginExtension>("java").withSourcesJar()
+            }
 
-                if (!configureMavenPublish) {
-                    return@afterEvaluate project.logger.prInfo("Skipping maven publish for $name.")
-                } else {
-                    project.logger.prInfo("Configuring maven publish for $name.")
-                }
+            if (!configureMavenPublish) {
+                return@afterEvaluate logger.prInfo("Skipping maven publish for $name.")
+            } else {
+                logger.prInfo("Configuring maven publish for $name.")
+            }
 
-                apply<MavenPublishPlugin>()
+            apply<MavenPublishPlugin>()
 
-                extensions.configure<PublishingExtension> {
-                    spec.repository(repositories)
+            extensions.configure<PublishingExtension> {
+                spec.repository(repositories)
 
-                    publications {
-                        maybeCreate<MavenPublication>(spec.publicationName)
-                        named<MavenPublication>(spec.publicationName) {
-                            version = project.version.toString()
+                publications {
+                    maybeCreate<MavenPublication>(spec.publicationName)
+                    named<MavenPublication>(spec.publicationName) {
+                        version = specProject.version.toString()
 
-                            val component = spec.componentName?.let(components::get)
-                                ?: project.components.findByName("kotlin")
-                                ?: project.components.findByName("java")
-                                ?: error(
-                                    "Unable to find a component for project `${project.name}`, please specify one."
-                                )
+                        val component = spec.componentName?.let(components::get)
+                            ?: components.findByName("kotlin")
+                            ?: components.findByName("java")
+                            ?: error(
+                                "Unable to find a component for project `${specProject.name}`, please specify one."
+                            )
 
-                            from(component)
-                        }
+                        from(component)
                     }
                 }
             }
