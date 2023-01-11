@@ -1,9 +1,7 @@
 package dev.racci.minix.gradle.support
 
-import dev.racci.minix.gradle.tasks.QuickBuildTask
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.register
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 
@@ -19,8 +17,6 @@ public object KotlinJvmPluginSupport : KotlinPluginSupport<KotlinJvmProjectExten
                 because("Enforce all Kotlin dependencies to be the same version.")
             }
         }
-
-        tasks.register<QuickBuildTask>(QuickBuildTask.TASK_NAME, kotlin.target)
 
         addExtraSupport(project.kotlin)
     }
