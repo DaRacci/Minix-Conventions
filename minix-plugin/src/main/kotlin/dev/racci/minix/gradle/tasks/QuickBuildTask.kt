@@ -13,6 +13,10 @@ import javax.inject.Inject
 public open class QuickBuildTask @Inject constructor(
     target: KotlinTarget
 ) : DefaultTask() {
+    public companion object {
+        public const val TASK_NAME: String = "quickBuild"
+    }
+
     init {
         enabled = false
         group = "minix"

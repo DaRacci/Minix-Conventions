@@ -15,7 +15,7 @@ public object DokkaPluginSupport : PluginSupport(
     id = "org.jetbrains.dokka",
     target = { DokkaPlugin::class }
 ) {
-    override fun configureRelativeRoot(project: Project): Unit = with(project) {
+    override fun configureRoot(project: Project): Unit = with(project) {
         fun AbstractDokkaTask.setOutput() = outputDirectory.set(rootDir.resolve("docs"))
         tasks.withType<DokkaCollectorTask>().configureEach(AbstractDokkaTask::setOutput)
         tasks.withType<DokkaMultiModuleTask>().configureEach(AbstractDokkaTask::setOutput)
