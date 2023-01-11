@@ -84,23 +84,18 @@ tasks {
     }
 }
 
-// Required for plugin substitution to work in sample projects.
-artifacts {
-    add("runtimeOnly", tasks.shadowJar)
-}
-
 // Work around publishing shadow jars
-afterEvaluate {
-    publishing.publications
-        .withType<MavenPublication>()
-        .filter { it.name == "pluginMaven" }
-        .forEach { publication -> publication.setArtifacts(listOf(tasks.shadowJar)) }
-}
+publishing.publications
+    .withType<MavenPublication>()
+    .filter { it.name == "pluginMaven" }
+    .forEach { publication -> publication.setArtifacts(listOf(tasks.shadowJar)) }
 
 publishing.repositories.maven("https://repo.racci.dev/") {
     url = if (version.toString().endsWith("SNAPSHOT")) {
         url.resolve("snapshots")
-    } else url.resolve("releases")
+    } else {
+        url.resolve("releases")
+    }
 
     name = "RacciRepo"
     credentials(PasswordCredentials::class)

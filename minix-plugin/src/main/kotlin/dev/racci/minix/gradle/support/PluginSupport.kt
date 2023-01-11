@@ -11,6 +11,7 @@ import org.gradle.api.plugins.PluginAware
 import org.gradle.kotlin.dsl.hasPlugin
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
+import org.jetbrains.kotlin.gradle.utils.loadPropertyFromResources
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
@@ -25,7 +26,11 @@ import kotlin.reflect.KClass
 public open class PluginSupport(
     public val id: String,
     public val target: () -> KClass<out Plugin<out PluginAware>>
-) {
+) : Named {
+    override fun getName(): String {
+        return id
+    }
+
     /** Configure the root project for this plugin. */
     public open fun configureRoot(project: Project): Unit = configureSub(project)
 
@@ -40,14 +45,14 @@ public open class PluginSupport(
      */
     public open fun configureSource(source: KotlinSourceSet): Unit = Unit
 
-    internal fun canConfigure(project: Project): Boolean {
+    internal open fun canConfigure(project: Project): Boolean {
         return runCatching { project.plugins.hasPlugin(target()) }.getOrDefault(false)
     }
 
     internal companion object {
         protected val logger: Logger = LoggerFactory.getLogger(PluginSupport::class.java)
 
-        private val supportedPlugins: List<PluginSupport> = ClassGraph()
+        private val supportedPlugins: List<WrappedExternalSupport> = ClassGraph()
             .removeTemporaryFilesAfterScan()
             .enableClassInfo()
             .ignoreParentClassLoaders()
@@ -69,9 +74,26 @@ public open class PluginSupport(
                 "io.papermc.*.jar"
             )
             .scan()
-            .getSubclasses(PluginSupport::class.java)
-            .filter { it.isFinal }
-            .map { it.loadClass().kotlin.objectInstance as PluginSupport }
+            .use { scan ->
+                val externSupports = scan.getResourcesMatchingWildcard("META-INF/gradle-plugins/*.properties")
+                    .map { resource ->
+                        val pluginId = resource.path.substringAfterLast("/").substringBeforeLast(".")
+                        val pluginClass = loadPropertyFromResources(resource.path, "implementation-class")
+
+                        WrappedExternalSupport.WrappablePlugin(resource.classpathElementFile, pluginId) {
+                            Class.forName(pluginClass).kotlin.cast()
+                        }
+                    }
+
+                scan.getSubclasses(PluginSupport::class.java)
+                    .filter { it.isFinal }
+                    .mapNotNull { info ->
+                        externSupports.find { it.elementFile == info.classpathElementFile }?.let { wrappable ->
+                            val obj = info.loadClass().kotlin.objectInstance as? PluginSupport ?: return@mapNotNull null
+                            WrappedExternalSupport(wrappable.pluginId, obj)
+                        }
+                    }
+            }
 
         fun addPluginSupport(target: Any) {
             val name = when (target) {
@@ -94,15 +116,17 @@ public open class PluginSupport(
 
             supportedPlugins.forEach { support ->
                 if (support.canConfigure(project)) {
-                    logger.info("Configuring immediate `${support::class.simpleName}` for `$name`.")
+                    logger.info("Configuring immediate `${support.name}` for `$name`.")
                     warnForMissingUsedPlugin(support.id) { func(support, target.cast()) }
                     return@forEach
                 }
 
-                logger.info("Adding possible `${support::class.simpleName}` for `$name`.")
-                project.plugins.withId(support.id) {
-                    logger.info("Configuring late `${support::class.simpleName}` for `$name`.")
-                    warnForMissingUsedPlugin(support.id) { func(support, target.cast()) }
+                logger.info("Adding possible `${support.name}` for `$name`.")
+                project.plugins.withId(support.pluginId) {
+                    project.plugins.withId(support.id) {
+                        logger.info("Configuring late `${support.name}` for `$name`.")
+                        warnForMissingUsedPlugin(support.id) { func(support, target.cast()) }
+                    }
                 }
             }
         }
