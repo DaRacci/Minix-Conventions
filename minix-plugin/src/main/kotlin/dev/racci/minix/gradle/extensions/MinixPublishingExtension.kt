@@ -1,6 +1,7 @@
 package dev.racci.minix.gradle.extensions
 
 import dev.racci.minix.gradle.ex.recursiveSubprojects
+import dev.racci.minix.gradle.ex.whenEvaluated
 import org.gradle.api.GradleException
 import org.gradle.api.Named
 import org.gradle.api.NamedDomainObjectContainer
@@ -28,7 +29,7 @@ import org.slf4j.Logger
 public class MinixPublishingExtension(override val rootProject: Project) :
     ExtensionBase(),
     NamedDomainObjectContainer<MinixPublishingExtension.PublicationSpec> by rootProject.container({
-        PublicationSpec(rootProject, it)
+        PublicationSpec(rootProject, it).also { spec -> spec.relatedProject.apply<MavenPublishPlugin>() }
     }) {
 
     @get:Input
@@ -40,9 +41,9 @@ public class MinixPublishingExtension(override val rootProject: Project) :
 
     override fun configure(project: Project) = forEach { spec ->
         project.logger.prInfo("Configuring publication for `${spec.name}`.")
-        val specProject = spec.relatedProject.get()
+        val specProject = spec.relatedProject
 
-        specProject.afterEvaluate {
+        specProject.whenEvaluated {
             logger.prInfo("Configuring publication after evaluation for `$name`.")
 
             if (spec.appendRunNumberOrSnapshot) {
@@ -64,12 +65,10 @@ public class MinixPublishingExtension(override val rootProject: Project) :
             }
 
             if (!configureMavenPublish) {
-                return@afterEvaluate logger.prInfo("Skipping maven publish for $name.")
+                return@whenEvaluated logger.prInfo("Skipping maven publish for $name.")
             } else {
                 logger.prInfo("Configuring maven publish for $name.")
             }
-
-            apply<MavenPublishPlugin>()
 
             extensions.configure<PublishingExtension> {
                 spec.repository(repositories)
@@ -131,12 +130,12 @@ public class MinixPublishingExtension(override val rootProject: Project) :
         @Optional
         public val extraConfigure: (MavenPublication) -> Unit = {}
 
-        internal val relatedProject: Provider<Project> = project.provider {
-            project.recursiveSubprojects(true).firstOrNull { it.name.equals(name, true) }
-                ?: throw GradleException(
-                    "Could not find subproject with name `$name` to configure publishing for."
-                )
-        }
+        internal val relatedProject: Project = project.recursiveSubprojects(true).firstOrNull {
+            it.name.equals(
+                name,
+                true
+            )
+        } ?: error("Unable to find project `$name`.")
 
         override fun getName(): String = name
 

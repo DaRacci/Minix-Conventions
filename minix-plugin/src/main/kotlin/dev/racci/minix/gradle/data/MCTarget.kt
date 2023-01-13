@@ -2,6 +2,7 @@ package dev.racci.minix.gradle.data
 
 import dev.racci.minix.gradle.Constants
 import dev.racci.minix.gradle.ex.project
+import dev.racci.minix.gradle.ex.whenEvaluated
 import dev.racci.minix.gradle.exceptions.MissingPluginException
 import io.papermc.paperweight.util.constants.DEV_BUNDLE_CONFIG
 import org.gradle.api.Project
@@ -27,8 +28,12 @@ public data class MCTarget @PublishedApi internal constructor(
         if (applyNMS && platform.supportsPaperweight) {
             logger.info("Configuring MCTarget $obj Paperweight for ${platform.name}")
             if (obj !is Project) throw UnsupportedOperationException("NMS is only supported for projects at this time.")
-            runCatching { (obj as Project).apply(plugin = "io.papermc.paperweight.userdev") } // Tries to apply the plugin if present in the classpath already.
-            if (!obj.plugins.hasPlugin("io.papermc.paperweight.userdev")) throw MissingPluginException("io.papermc.paperweight.userdev")
+
+            // Tries to apply the plugin if present in the classpath already.
+            runCatching { (obj as Project).apply(plugin = "io.papermc.paperweight.userdev") }
+            if (!obj.plugins.hasPlugin("io.papermc.paperweight.userdev")) {
+                throw MissingPluginException("io.papermc.paperweight.userdev")
+            }
 
             obj.repositories.maven(platform.paperweightRepository)
             obj.dependencies.add(
@@ -45,7 +50,7 @@ public data class MCTarget @PublishedApi internal constructor(
             when (obj) {
                 is Project -> {
                     obj.repositories.addDefaultRepo()
-                    obj.dependencies.add(COMPILE_ONLY, platform.dependencyString(version))
+                    obj.whenEvaluated { obj.dependencies.add(COMPILE_ONLY, platform.dependencyString(this@MCTarget.version)) }
                 }
 
                 is KotlinSourceSet -> {
@@ -63,7 +68,7 @@ public data class MCTarget @PublishedApi internal constructor(
         when (obj) {
             is Project -> {
                 obj.repositories.minixRepo()
-                obj.dependencies.add(COMPILE_ONLY, platform.minixDependency!!)
+                obj.whenEvaluated { obj.dependencies.add(COMPILE_ONLY, platform.minixDependency!!) }
             }
 
             is KotlinSourceSet -> {
