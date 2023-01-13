@@ -81,8 +81,8 @@ public fun KotlinSourceSet.withMCTarget(
     )
 }
 
-@PublishedApi
-internal fun KotlinSourceSet.project(): Project = DefaultKotlinSourceSet::class.java.getDeclaredField("project").let { field ->
-    field.isAccessible = true
-    field.get(this) as Project
-}
+public fun KotlinSourceSet.project(): Project = DefaultKotlinSourceSet::class.java
+    .getDeclaredField("project").let { field ->
+        field.isAccessible = true
+        field.get(this) as Project
+    }

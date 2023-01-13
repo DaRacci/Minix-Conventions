@@ -95,10 +95,11 @@ public open class PluginSupport(
                     }
             }
 
-        fun addPluginSupport(target: Any) {
-            val name = when (target) {
-                is Named -> target.name
+        internal fun addPluginSupport(target: Any) {
+            val targetName = when (target) {
                 is Project -> target.name
+                is KotlinTarget -> "[kotlinTarget:${target.name}] of ${target.project.name}"
+                is KotlinSourceSet -> "[sourceSet:${target.name}] of ${target.project().name}"
                 else -> error("Unknown type: $target")
             }
 
@@ -114,17 +115,22 @@ public open class PluginSupport(
                 else -> throw IllegalArgumentException("Unsupported target type: ${target::class}")
             }
 
+            logger.info("Using name `$targetName`, with project `${project.name}`, and func `$func`")
+
             supportedPlugins.forEach { support ->
                 if (support.canConfigure(project)) {
-                    logger.info("Configuring immediate `${support.name}` for `$name`.")
+                    logger.info("Configuring immediate `${support.name}` for `$targetName`.")
                     warnForMissingUsedPlugin(support.id) { func(support, target.cast()) }
                     return@forEach
                 }
 
-                logger.info("Adding possible `${support.name}` for `$name`.")
-                project.plugins.withId(support.pluginId) {
-                    project.plugins.withId(support.id) {
-                        logger.info("Configuring late `${support.name}` for `$name`.")
+                logger.info("Adding possible `${support.name}` for `$targetName`.")
+                project.plugins.withId(support.id) {
+                    logger.info(
+                        "The owning plugin for `${support.name}` was found, checking if the plugin can be configured."
+                    )
+                    project.plugins.withId(support.pluginId) {
+                        logger.info("Configuring late `${support.name}` for `$targetName`.")
                         warnForMissingUsedPlugin(support.id) { func(support, target.cast()) }
                     }
                 }

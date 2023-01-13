@@ -18,6 +18,9 @@ public object KotlinJvmPluginSupport : KotlinPluginSupport<KotlinJvmProjectExten
             }
         }
 
-        addExtraSupport(project.kotlin)
+        kotlin {
+            addPluginSupport(target)
+            sourceSets.all(::addPluginSupport)
+        }
     }
 }

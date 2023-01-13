@@ -8,8 +8,12 @@ public object KotlinMultiplatformPluginSupport : KotlinPluginSupport<KotlinMulti
     "org.jetbrains.kotlin.multiplatform",
     { KotlinMultiplatformPluginWrapper::class }
 ) {
-    override fun configureRoot(project: Project): Unit = with(project) {
+    override fun configureSub(project: Project) {
         configureBaseExtension(project.kotlin)
-        addExtraSupport(project.kotlin)
+
+        project.kotlin {
+            targets.all(::configureTarget)
+            sourceSets.all(::addPluginSupport)
+        }
     }
 }
