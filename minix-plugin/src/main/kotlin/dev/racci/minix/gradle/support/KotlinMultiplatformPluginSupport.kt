@@ -12,7 +12,7 @@ public object KotlinMultiplatformPluginSupport : KotlinPluginSupport<KotlinMulti
         configureBaseExtension(project.kotlin)
 
         project.kotlin {
-            targets.all(::configureTarget)
+            targets.all(::addPluginSupport)
             sourceSets.all(::addPluginSupport)
         }
     }
