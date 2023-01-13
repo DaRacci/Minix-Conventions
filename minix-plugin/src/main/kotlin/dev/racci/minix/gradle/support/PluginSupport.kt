@@ -104,7 +104,7 @@ public open class PluginSupport(
                 ) { return@forEach }
 
                 if (support.canConfigureNow(project)) {
-                    logger.info("Configuring immediate `${support.name}` for `$targetName`.")
+                    logger.info("Configuring immediate `${support.name}` for `$targetName` with `${func.name}`.")
                     warnForMissingUsedPlugin(support.id) { func(support.actualSupport, target) }
                     return@forEach
                 }
@@ -115,7 +115,7 @@ public open class PluginSupport(
                         "The owning plugin for `${support.name}` was found, checking if the plugin can be configured."
                     )
                     project.plugins.withId(support.pluginId) {
-                        logger.info("Configuring late `${support.name}` for `$targetName`.")
+                        logger.info("Configuring late `${support.name}` for `$targetName` with `${func.name}`.")
                         warnForMissingUsedPlugin(support.id) { func(support.actualSupport, target) }
                     }
                 }

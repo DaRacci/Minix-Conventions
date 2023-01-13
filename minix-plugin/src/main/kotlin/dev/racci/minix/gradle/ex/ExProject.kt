@@ -9,9 +9,8 @@ public fun Project.recursiveSubprojects(
     includeRoot: Boolean = false,
     depth: Int = 0
 ): Sequence<Project> = sequence {
-    if (!includeRoot && depth != 0) yield(this@recursiveSubprojects)
+    if (includeRoot || depth != 0) yield(this@recursiveSubprojects)
     subprojects.forEach { innerSub ->
-        yield(innerSub)
         yieldAll(innerSub.recursiveSubprojects(includeRoot, depth.inc()))
     }
 }

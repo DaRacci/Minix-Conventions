@@ -134,7 +134,7 @@ public class MinixPublishingExtension(override val rootProject: Project) :
         internal val relatedProject: Provider<Project> = project.provider {
             project.recursiveSubprojects(true).firstOrNull { it.name.equals(name, true) }
                 ?: throw GradleException(
-                    "Could not find subproject with name `$name` to configureTrueRoot publishing for."
+                    "Could not find subproject with name `$name` to configure publishing for."
                 )
         }
 
