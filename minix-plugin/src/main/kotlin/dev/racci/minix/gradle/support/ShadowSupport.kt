@@ -1,6 +1,5 @@
 package dev.racci.minix.gradle.support
 
-import com.github.jengelman.gradle.plugins.shadow.ShadowJavaPlugin
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import dev.racci.minix.gradle.ex.disambiguateName
 import dev.racci.minix.gradle.tasks.ShadowJarMPPTask
