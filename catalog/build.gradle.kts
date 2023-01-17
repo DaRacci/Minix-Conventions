@@ -8,6 +8,7 @@ import kotlin.reflect.full.declaredMemberProperties
 import kotlin.reflect.jvm.isAccessible
 
 plugins {
+    `java-base`
     `version-catalog`
 }
 
