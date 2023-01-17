@@ -110,11 +110,11 @@ public open class PluginSupport(
                 }
 
                 logger.info("Adding possible `${support.name}` for `$targetName`.")
-                project.plugins.withId(support.id) {
+                project.plugins.withId(support.pluginId) {
                     logger.info(
                         "The owning plugin for `${support.name}` was found, checking if the plugin can be configured."
                     )
-                    project.plugins.withId(support.pluginId) {
+                    project.plugins.withId(support.id) {
                         logger.info("Configuring late `${support.name}` for `$targetName` with `${func.name}`.")
                         warnForMissingUsedPlugin(support.id) { func(support.actualSupport, target) }
                     }
