@@ -147,7 +147,7 @@ caffeine = "com.github.ben-manes.caffeine:caffeine:3.1.2"
 reflections = "org.reflections:reflections:0.10.2"
 classgraph = "io.github.classgraph:classgraph:4.8.154"
 slimjar = { module = "dev.racci.slimjar:slimjar", version.ref = "slimjar" }
-mariadb = "org.mariadb.jdbc:mariadb-java-client:3.1.1"
+mariadb = "org.mariadb.jdbc:mariadb-java-client:3.1.2"
 toolfactory = "io.github.toolfactory:jvm-driver:9.4.2"
 apiguardian = "org.apiguardian:apiguardian-api:1.1.2"
 aedile = "com.sksamuel.aedile:aedile-core:1.2.0"
