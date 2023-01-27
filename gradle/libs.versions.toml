@@ -165,7 +165,7 @@ sentry-core = { module = "io.sentry:sentry", version.ref = "sentry" }
 sentry-kotlin = { module = "io.sentry:sentry-kotlin-extensions", version.ref = "sentry" }
 
 testing-junit5 = "org.junit.jupiter:junit-jupiter:5.9.2"
-testing-mockK = "io.mockk:mockk:1.13.3"
+testing-mockK = "io.mockk:mockk:1.13.4"
 
 testing-strikt = { module = "io.strikt:strikt-core", version.ref = "strikt" }
 testing-strikt-arrow = { module = "io.strikt:strikt-arrow", version.ref = "strikt" }
