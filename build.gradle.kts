@@ -15,10 +15,10 @@ allprojects {
 minix {
     publishing {
         runNumber = System.getenv("BUILD_NUMBER")
-        val nms by creating {
+        create("nms") {
             appendRunNumberOrSnapshot = true
         }
-        val catalog by creating {
+        create("catalog") {
             appendRunNumberOrSnapshot = true
             componentName = "versionCatalog"
         }
@@ -34,7 +34,7 @@ minix {
 }
 
 tasks {
-    val publish by registering {
+    register("publish") {
         group = "publishing"
         description = "Publishes all publications produced by this project."
 
@@ -45,7 +45,7 @@ tasks {
         )
     }
 
-    val publishToMavenLocal by registering {
+    register("publishToMavenLocal") {
         group = "publishing"
         description = "Publishes all publications produced by this project to the local Maven repository."
 

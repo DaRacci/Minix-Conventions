@@ -13,6 +13,7 @@ public object ShadowSupport : AbstractMultiplatformSupport(
     target = { ShadowPlugin::class }
 ) {
     override fun configureTargetFiltered(target: KotlinTarget): Unit = with(target) {
+        if (name.isEmpty()) return // This is the root target, we don't want to configure it.
         project.tasks.register<ShadowJarMPPTask>(
             disambiguateName("shadowJar"),
             target
