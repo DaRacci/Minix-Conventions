@@ -15,7 +15,7 @@ arrow = "1.1.5"
 arrow-analysis = "2.0.2"
 bstats = "3.0.0"
 ksp = "1.8.0-1.0.9"
-slimjar = "1.5.1"
+slimjar = "1.5.2"
 minotaur = "2.6.0"
 strikt = "0.34.1"
 
