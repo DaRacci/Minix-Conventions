@@ -9,7 +9,7 @@ plugins {
 }
 
 allprojects {
-    version = libs.versions.kotlin.asProvider().get()
+    version = rootProject.libs.versions.kotlin.asProvider().get()
 }
 
 minix {
