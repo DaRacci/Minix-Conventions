@@ -9,10 +9,6 @@ on:
     branches: [ main ]
     paths: [ "./**.gradle.kts", "gradle/**", "catalog/**", ".github/workflows/catalog.yml", "gradle.properties" ]
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
 jobs:
   validate:
     uses: ./.github/workflows/wrapper-validation.yml
