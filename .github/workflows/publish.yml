@@ -2,7 +2,10 @@ name: Publish to Repository
 
 on: [ workflow_call, workflow_dispatch ]
 
-# TODO: Find out how to verify if last push was same commit as current due to muliple workflows being able to call after a commit.
+concurrency:
+  group: ${{ github.sha }}
+  cancel-in-progress: true
+
 jobs:
   publish:
     runs-on: ubuntu-latest
