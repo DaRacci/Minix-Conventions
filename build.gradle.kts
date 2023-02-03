@@ -7,9 +7,9 @@ plugins {
     alias(libs.plugins.kotlin.plugin.dokka)
     alias(libs.plugins.minecraft.paperweight) apply false
 }
-val kotlinVersion: String by properties
+
 allprojects {
-    version = kotlinVersion
+    version = libs.versions.kotlin.asProvider().get()
 }
 
 minix {
