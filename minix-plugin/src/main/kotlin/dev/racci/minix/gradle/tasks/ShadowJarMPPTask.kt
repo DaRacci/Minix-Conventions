@@ -6,8 +6,8 @@ import org.gradle.kotlin.dsl.get
 import org.jetbrains.kotlin.gradle.targets.jvm.KotlinJvmTarget
 import javax.inject.Inject
 
-// TODO: Support non JVM targets
 @CacheableTask
+@Suppress("UnnecessaryAbstractClass")
 public abstract class ShadowJarMPPTask @Inject constructor(
     target: KotlinJvmTarget
 ) : ShadowJar() {

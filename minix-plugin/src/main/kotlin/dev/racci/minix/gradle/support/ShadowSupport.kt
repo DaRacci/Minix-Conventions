@@ -1,7 +1,7 @@
 package dev.racci.minix.gradle.support
 
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
-import dev.racci.minix.gradle.ex.disambiguateName
+import dev.racci.minix.gradle.data.disambiguate
 import dev.racci.minix.gradle.tasks.ShadowJarMPPTask
 import org.gradle.kotlin.dsl.register
 import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformType
@@ -15,7 +15,7 @@ public object ShadowSupport : AbstractMultiplatformSupport(
     override fun configureTargetFiltered(target: KotlinTarget): Unit = with(target) {
         if (name.isEmpty()) return // This is the root target, we don't want to configure it.
         project.tasks.register<ShadowJarMPPTask>(
-            disambiguateName("shadowJar"),
+            disambiguate("shadowJar"),
             target
         )
     }
