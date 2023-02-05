@@ -13,6 +13,11 @@ public abstract class AbstractMultiplatformSupport protected constructor(
     private vararg val supports: KotlinPlatformType,
     override val pluginId: String,
 ) : MultiplatformSupport {
+
+    override fun getName(): String {
+        return "MultiplatformSupport:[$pluginId]"
+    }
+
     final override fun canConfigureNow(project: Project): Boolean {
         return project.plugins.hasPlugin(MultiplatformSupport.MULTIPLATFORM_ID) && super.canConfigureNow(project)
     }
