@@ -1,6 +1,7 @@
 package dev.racci.minix.gradle.data
 
 import org.gradle.api.Named
+import org.gradle.api.tasks.SourceSet
 import org.gradle.configurationcache.extensions.capitalized
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
@@ -16,7 +17,7 @@ public fun KotlinSourceSet.disambiguate(name: Named): String = Disambiguatable.d
 public interface Disambiguatable : Named {
     private val defaultName: String?
         get() = when (this) {
-            is KotlinSourceSet -> "main"
+            is KotlinSourceSet -> SourceSet.MAIN_SOURCE_SET_NAME
             is KotlinTarget -> ""
             else -> null
         }
@@ -44,8 +45,8 @@ public interface Disambiguatable : Named {
             named: String,
             mainName: String?,
             simpleName: String
-        ): String = when (named) {
-            mainName -> simpleName
+        ): String = when {
+            named == mainName || named.isEmpty() -> simpleName
             else -> disambiguate(named, simpleName)
         }
     }
