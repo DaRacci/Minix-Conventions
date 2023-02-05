@@ -1,9 +1,16 @@
 package dev.racci.minix.gradle.ex
 
+import TargetTask
+import TargetTaskContainerScope
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import dev.racci.minix.gradle.data.MCTarget
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.plugin.sources.DefaultKotlinSourceSet
+import org.jetbrains.kotlin.gradle.utils.named
+
+public val TargetTaskContainerScope.shadowJar: TargetTask<ShadowJar>
+    get() = named<ShadowJar>("shadowJar")
 
 public fun KotlinSourceSet.withMCTarget(
     platform: MCTarget.Platform,
