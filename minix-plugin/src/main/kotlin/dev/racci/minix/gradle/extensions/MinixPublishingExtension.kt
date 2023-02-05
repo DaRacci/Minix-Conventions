@@ -128,7 +128,7 @@ public class MinixPublishingExtension(override val rootProject: Project) :
 
         @Input
         @Optional
-        public val extraConfigure: (MavenPublication) -> Unit = {}
+        public var extraConfigure: (MavenPublication) -> Unit = {}
 
         internal val relatedProject: Project = project.recursiveSubprojects(true).firstOrNull {
             it.name.equals(
@@ -136,6 +136,14 @@ public class MinixPublishingExtension(override val rootProject: Project) :
                 true
             )
         } ?: error("Unable to find project `$name`.")
+
+        public fun repository(handler: RepositoryHandler.() -> Unit) {
+            repository = handler
+        }
+
+        public fun configure(handler: MavenPublication.() -> Unit) {
+            extraConfigure = handler
+        }
 
         override fun getName(): String = name
 
