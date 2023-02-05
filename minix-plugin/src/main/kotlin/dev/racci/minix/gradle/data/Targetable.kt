@@ -13,6 +13,18 @@ public value class Targetable(private val mainString: String) : Disambiguatable 
         return mainString
     }
 
+    public fun disambiguateNullable(named: Named?): String = Disambiguatable.maybeDisambiguate(
+        named?.name.orEmpty(),
+        null,
+        mainString
+    )
+
+    public fun disambiguateNullable(simpleName: String?): String = Disambiguatable.maybeDisambiguate(
+        simpleName.orEmpty(),
+        null,
+        mainString
+    )
+
     override fun disambiguate(named: Named): String {
         return disambiguate(named.name)
     }
