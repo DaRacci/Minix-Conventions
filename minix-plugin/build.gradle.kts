@@ -60,6 +60,10 @@ tasks {
         useJUnitPlatform()
     }
 
+    compileKotlin {
+        kotlinOptions.freeCompilerArgs = listOf("-opt-in=kotlin.RequiresOptIn")
+    }
+
     processResources {
         filesMatching("minix.properties") {
             expand(

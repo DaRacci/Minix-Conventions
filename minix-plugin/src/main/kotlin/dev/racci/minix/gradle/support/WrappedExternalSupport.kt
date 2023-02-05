@@ -72,6 +72,5 @@ internal class WrappedExternalSupport(
     data class WrappablePlugin(
         val elementFile: File,
         val pluginId: String,
-        val classTarget: () -> KClass<out Plugin<out PluginAware>>
     )
 }
