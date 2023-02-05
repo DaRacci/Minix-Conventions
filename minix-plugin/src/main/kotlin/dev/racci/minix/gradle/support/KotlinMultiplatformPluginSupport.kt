@@ -9,7 +9,7 @@ public object KotlinMultiplatformPluginSupport : KotlinPluginSupport<KotlinMulti
     override fun configureRoot(project: Project): Unit = configureSub(project)
 
     override fun configureSub(project: Project) {
-        configureBaseExtension(project.kotlin)
+        configureBase(project.kotlin)
 
         project.kotlin {
             targets.all(::addPluginSupport)

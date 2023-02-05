@@ -10,7 +10,7 @@ public object KotlinJvmPluginSupport : KotlinPluginSupport<KotlinJvmProjectExten
     override fun configureRoot(project: Project): Unit = configureSub(project)
 
     override fun configureSub(project: Project): Unit = with(project) {
-        configureBaseExtension(project.kotlin)
+        configureBase(project.kotlin)
 
         dependencies.constraints {
             enforcedPlatform(dependencies.kotlin("bom", KotlinVersion.CURRENT.toString())) {
