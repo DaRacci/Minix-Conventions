@@ -3,12 +3,12 @@ package dev.racci.minix.gradle.support
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.kotlin
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
-import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 
 public object KotlinJvmPluginSupport : KotlinPluginSupport<KotlinJvmProjectExtension>(
-    "org.jetbrains.kotlin.jvm",
-    { KotlinPluginWrapper::class }
+    "org.jetbrains.kotlin.jvm"
 ) {
+    override fun configureRoot(project: Project): Unit = configureSub(project)
+
     override fun configureSub(project: Project): Unit = with(project) {
         configureBaseExtension(project.kotlin)
 

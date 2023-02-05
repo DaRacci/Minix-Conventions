@@ -15,9 +15,11 @@ public class MinixGradlePlugin : Plugin<Project> {
         )
     }
 
-    public lateinit var project: Project
+    /** The project that had this instance of the plugin applied to it. */
+    public lateinit var virtualRoot: Project
         private set
 
+    /** The baseExtension instance. */
     public lateinit var baseExtension: MinixBaseExtension
         private set
 
@@ -36,8 +38,8 @@ public class MinixGradlePlugin : Plugin<Project> {
             )
         }
 
-        this@MinixGradlePlugin.project = this
-        this@MinixGradlePlugin.baseExtension = project.extensions.create<MinixBaseExtension>(
+        virtualRoot = this
+        baseExtension = project.extensions.create<MinixBaseExtension>(
             "minix",
             this@MinixGradlePlugin
         ).also(MinixBaseExtension::configure)

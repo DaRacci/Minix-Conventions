@@ -4,13 +4,10 @@ import dev.racci.minix.gradle.Constants
 import org.gradle.api.Project
 import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
-import org.jetbrains.kotlin.gradle.plugin.DefaultKotlinBasePlugin
-import kotlin.reflect.KClass
 
 public sealed class KotlinPluginSupport<T : KotlinProjectExtension>(
-    id: String,
-    target: () -> KClass<out DefaultKotlinBasePlugin>
-) : PluginSupport(id, target) {
+    pluginId: String,
+) : PluginSupport(pluginId) {
 
     protected val Project.kotlin: T
         get() = kotlinExtension as T

@@ -3,13 +3,13 @@ package dev.racci.minix.gradle.support
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
-import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 public object KtlintPluginSupport : PluginSupport(
-    id = "org.jlleitschuh.gradle.ktlint",
-    target = { KtlintPlugin::class }
+    "org.jlleitschuh.gradle.ktlint"
 ) {
+    override fun configureRoot(project: Project): Unit = configureSub(project)
+
     override fun configureSub(project: Project): Unit = project.extensions.configure<KtlintExtension> {
         project.rootProject.layout.projectDirectory
             .dir("config/ktlint")

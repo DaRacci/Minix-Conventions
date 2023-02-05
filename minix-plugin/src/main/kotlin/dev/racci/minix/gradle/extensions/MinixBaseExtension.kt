@@ -22,10 +22,10 @@ public abstract class MinixBaseExtension(private val plugin: MinixGradlePlugin) 
     public val ignoredTargets: MutableList<String> = mutableListOf("metadata")
 
     @get:Input
-    public val minecraft: MinixMinecraftExtension by lazy { MinixMinecraftExtension(plugin.project) }
+    public val minecraft: MinixMinecraftExtension by lazy { MinixMinecraftExtension(plugin.virtualRoot) }
 
     @get:Input
-    public val publishing: MinixPublishingExtension by lazy { MinixPublishingExtension(plugin.project) }
+    public val publishing: MinixPublishingExtension by lazy { MinixPublishingExtension(plugin.virtualRoot) }
 
     @TopLevelDSLMarker
     public inline fun minecraft(block: MinixMinecraftExtension.() -> Unit) {
@@ -37,7 +37,7 @@ public abstract class MinixBaseExtension(private val plugin: MinixGradlePlugin) 
         block(publishing)
     }
 
-    internal fun configure(): Unit = with(plugin.project) {
+    internal fun configure(): Unit = with(plugin.virtualRoot) {
         if (rootProject != this) {
             buildDir = rootProject.buildDir.resolve(project.name.lowercase())
         }
