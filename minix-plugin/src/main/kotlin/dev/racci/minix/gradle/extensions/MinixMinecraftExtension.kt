@@ -7,7 +7,10 @@ import org.gradle.api.tasks.Input
 
 // TODO: Use NameDomainObjectContainer like publishing extension
 public class MinixMinecraftExtension(override val rootProject: Project) : ExtensionBase() {
-    @[Input PublishedApi]
+    @[
+        Input
+        PublishedApi
+    ]
     internal val mcTargets: MutableSet<MCTarget> = mutableSetOf()
 
     @JvmName("withMCTargetReceiver")

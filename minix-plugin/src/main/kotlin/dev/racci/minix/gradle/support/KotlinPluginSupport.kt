@@ -10,7 +10,7 @@ import org.jetbrains.kotlin.gradle.kpm.external.project
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 public sealed class KotlinPluginSupport<T : KotlinProjectExtension>(
-    pluginId: String,
+    pluginId: String
 ) : PluginSupport(pluginId) {
 
     protected val Project.kotlin: T

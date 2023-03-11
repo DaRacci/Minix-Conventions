@@ -18,7 +18,7 @@ public sealed interface SupportBase : Named {
     public fun <T : Any> registerLazySupport(
         project: Project,
         target: T,
-        func: KFunction2<SupportBase, T, Unit>,
+        func: KFunction2<SupportBase, T, Unit>
     ): Unit = project.plugins.withId(pluginId) { func(this@SupportBase, target) }
 
     public operator fun <T : Any> invoke(

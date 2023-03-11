@@ -2,7 +2,7 @@ package dev.racci.minix.gradle.exceptions
 
 public class PluginSupportException private constructor(
     pluginId: String,
-    err: Throwable? = null,
+    err: Throwable? = null
 ) : MinixGradleException("Failed to configure plugin: $pluginId", err) {
 
     internal companion object {

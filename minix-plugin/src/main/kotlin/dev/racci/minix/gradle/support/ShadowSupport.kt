@@ -8,7 +8,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
 
 public object ShadowSupport : AbstractMultiplatformSupport(
     KotlinPlatformType.jvm,
-    pluginId = "com.github.johnrengelman.shadow",
+    pluginId = "com.github.johnrengelman.shadow"
 ) {
     override fun configureTargetFiltered(target: KotlinTarget): Unit = with(target) {
         if (name.isEmpty()) return // This is the root target, we don't want to configure it.

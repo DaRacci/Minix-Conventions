@@ -11,7 +11,7 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinTarget
  */
 public abstract class AbstractMultiplatformSupport protected constructor(
     private vararg val supports: KotlinPlatformType,
-    override val pluginId: String,
+    override val pluginId: String
 ) : MultiplatformSupport {
 
     override fun getName(): String {

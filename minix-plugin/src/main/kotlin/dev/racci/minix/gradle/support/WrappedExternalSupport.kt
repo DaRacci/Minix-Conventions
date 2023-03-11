@@ -1,10 +1,7 @@
 package dev.racci.minix.gradle.support
 
-import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.plugins.PluginAware
 import java.io.File
-import kotlin.reflect.KClass
 import kotlin.reflect.KFunction2
 
 internal sealed interface WrappedSupport : SupportBase {
@@ -33,7 +30,7 @@ internal sealed interface WrappedSupport : SupportBase {
     override fun <T : Any> registerLazySupport(
         project: Project,
         target: T,
-        func: KFunction2<SupportBase, T, Unit>,
+        func: KFunction2<SupportBase, T, Unit>
     ) = project.plugins.withId(delegate.pluginId) { invoke(target, func) }
 
     override fun <T : Any> invoke(
@@ -64,13 +61,13 @@ internal class WrappedExternalSupport(
     override fun <T : Any> registerLazySupport(
         project: Project,
         target: T,
-        func: KFunction2<SupportBase, T, Unit>,
+        func: KFunction2<SupportBase, T, Unit>
     ) = project.plugins.withId(pluginId) {
         super.registerLazySupport(project, target, func)
     }
 
     data class WrappablePlugin(
         val elementFile: File,
-        val pluginId: String,
+        val pluginId: String
     )
 }
