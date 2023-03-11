@@ -143,7 +143,7 @@ h2 = "com.h2database:h2:2.1.214"
 kotlin-statistics = "org.nield:kotlin-statistics:1.2.1"
 valiktor = "org.valiktor:valiktor-core:0.12.0"
 mordant = "com.github.ajalt.mordant:mordant-jvm:2.0.0-beta11.72-SNAPSHOT"
-caffeine = "com.github.ben-manes.caffeine:caffeine:3.1.4"
+caffeine = "com.github.ben-manes.caffeine:caffeine:3.1.5"
 reflections = "org.reflections:reflections:0.10.2"
 classgraph = "io.github.classgraph:classgraph:4.8.154"
 slimjar = { module = "dev.racci.slimjar:slimjar", version.ref = "slimjar" }
