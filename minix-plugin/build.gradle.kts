@@ -81,7 +81,7 @@ tasks {
 
         listOf(
             "io.github.classgraph",
-            "nonapi.io.github.classgraph",
+            "nonapi.io.github.classgraph"
         ).map { it to it.split('.').last() }.forEach { (original, last) ->
             relocate(original, "dev.racci.classgraph.libs.$last")
         }
