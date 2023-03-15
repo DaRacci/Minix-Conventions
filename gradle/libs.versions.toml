@@ -16,7 +16,7 @@ arrow-analysis = "2.0.2"
 bstats = "3.0.1"
 ksp = "1.8.10-1.0.9"
 slimjar = "1.5.4"
-minotaur = "2.7.4"
+minotaur = "2.7.5"
 strikt = "0.34.1"
 
 eco = "6.48.2"
