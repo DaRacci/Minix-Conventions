@@ -105,6 +105,7 @@ publishing.repositories.maven("https://repo.racci.dev/") {
     credentials(PasswordCredentials::class)
 }
 
+@Suppress("UnstableApiUsage")
 gradlePlugin {
     plugins {
         create("minix-gradle") {
@@ -112,13 +113,9 @@ gradlePlugin {
             displayName = "Minix-Gradle"
             description = "Kotlin and Minecraft conventions and helper."
             implementationClass = "dev.racci.minix.gradle.MinixGradlePlugin"
+            tags.addAll("setup", "helper", "conventions")
+            website.set("https://github.com/DaRacci/Minix-Conventions")
+            vcsUrl.set(website.get())
         }
     }
-}
-
-pluginBundle {
-    website = "https://github.com/DaRacci/Minix-Conventions"
-    vcsUrl = "https://github.com/DaRacci/Minix-Conventions"
-    tags = listOf("setup", "helper", "conventions")
-    description = "Kotlin and Minecraft conventions and helper."
 }
