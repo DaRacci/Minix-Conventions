@@ -82,18 +82,17 @@ tasks.create("validate-dependencies") {
             forVerify("https://repo.extendedclip.com/content/repositories/placeholderapi/") {
                 mavenContent { includeGroup("me.clip") }
             }
-            forVerify("https://repo.dmulloy2.net/repository/public/") {
-                mavenContent { includeGroup("com.comphenix.protocol") }
-            }
             forVerify("https://repo.fvdh.dev/releases") {
                 mavenContent { includeGroup("net.frankheijden.serverutils") }
             }
             forVerify("https://jitpack.io") {
                 mavenContent {
                     includeGroup("com.willfp")
+                    includeGroup("com.comphenix.protocol")
                     includeGroup("com.github.BeYkeRYkt.LightAPI")
                     includeModule("com.github.angeschossen", "LandsAPI")
                     includeModule("com.github.LoneDev6", "api-itemsadder")
+
                 }
             }
         }
