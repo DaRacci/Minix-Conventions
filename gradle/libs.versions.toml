@@ -25,7 +25,7 @@ eco-enchants = "9.15.0"
 eco-libreforge = "3.127.0"
 
 adventure = "4.13.0"
-adventure-platform = "4.2.0"
+adventure-platform = "4.3.0"
 
 koin = "3.3.3"
 koin-ktor = "3.3.1"
