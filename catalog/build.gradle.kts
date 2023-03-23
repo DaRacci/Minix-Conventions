@@ -88,7 +88,7 @@ tasks.create("validate-dependencies") {
             forVerify("https://jitpack.io") {
                 mavenContent {
                     includeGroup("com.willfp")
-                    includeGroup("com.comphenix.protocol")
+                    includeGroup("com.github.dmulloy2")
                     includeGroup("com.github.BeYkeRYkt.LightAPI")
                     includeModule("com.github.angeschossen", "LandsAPI")
                     includeModule("com.github.LoneDev6", "api-itemsadder")
