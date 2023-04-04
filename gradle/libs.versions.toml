@@ -29,7 +29,7 @@ adventure-platform = "4.3.0"
 
 koin = "3.3.3"
 koin-ktor = "3.4.0"
-koin-annotations = "1.1.1"
+koin-annotations = "1.2.0"
 
 kotlin = "1.8.10"
 kotlin-dsl = "3.2.6"
