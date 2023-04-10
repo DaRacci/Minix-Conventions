@@ -24,7 +24,7 @@ eco-bosses = "8.113.0"
 eco-enchants = "9.15.0"
 eco-libreforge = "3.127.0"
 
-adventure = "4.13.0"
+adventure = "4.13.1"
 adventure-platform = "4.3.0"
 
 koin = "3.4.0"
