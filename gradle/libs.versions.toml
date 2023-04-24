@@ -242,7 +242,7 @@ kotlin-plugin-atomicfu = { id = "org.jetbrains.kotlin.plugin.atomicfu", version.
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-plugin-binaryValidator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlin-plugin-binaryValidator" }
 
-minecraft-runPaper = "xyz.jpenilla.run-paper:2.0.1"
+minecraft-runPaper = "xyz.jpenilla.run-paper:2.1.0"
 minecraft-pluginYML = { id = "net.minecrell.plugin-yml.bukkit", version.ref = "pluginYML" }
 minecraft-paperweight = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight" }
 minecraft-minotaur = { id = "com.modrinth.minotaur", version.ref = "minotaur" }
