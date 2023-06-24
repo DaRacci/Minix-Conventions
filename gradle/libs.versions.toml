@@ -91,7 +91,7 @@ minecraft-minix = { module = "dev.racci:Minix", version.ref = "minix" }
 minecraft-minix-core = { module = "dev.racci:Minix-Core", version.ref = "minix" }
 minecraft-authLib = "com.mojang:authlib:2.3.31"
 minecraft-commandAPI = "dev.jorel:commandapi-shade:8.8.0"
-minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.9"
+minecraft-inventoryFramework = "com.github.stefvanschie.inventoryframework:IF:0.10.11"
 minecraft-particles = "xyz.xenondevs:particle:1.8.4"
 minecraft-bstats-base = { module = "org.bstats:bstats-base", version.ref = "bstats" }
 minecraft-bstats-bukkit = { module = "org.bstats:bstats-bukkit", version.ref = "bstats" }
