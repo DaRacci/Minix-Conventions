@@ -34,7 +34,7 @@ koin-annotations = "1.2.2"
 kotlin = "1.8.21"
 kotlin-dsl = "4.0.16"
 kotlin-plugin-dokka = "1.8.10"
-kotlin-plugin-ktlint = "11.3.2"
+kotlin-plugin-ktlint = "11.5.0"
 kotlin-plugin-binaryValidator = "0.13.1"
 
 kotest = "5.6.1"
