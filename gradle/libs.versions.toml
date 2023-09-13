@@ -27,7 +27,7 @@ eco-libreforge = "3.127.0"
 adventure = "4.14.0"
 adventure-platform = "4.3.0"
 
-koin = "3.4.3"
+koin = "3.5.0"
 koin-ktor = "3.4.3"
 koin-annotations = "1.2.2"
 
