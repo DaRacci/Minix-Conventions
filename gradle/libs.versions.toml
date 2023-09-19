@@ -42,7 +42,7 @@ kotest-ktor = "2.0.0"
 kotest-koin = "1.1.0"
 kotest-arrow = "1.3.3"
 
-gradle-publish = "1.2.0"
+gradle-publish = "1.2.1"
 gradle-license = "0.16.1"
 
 [libraries]
