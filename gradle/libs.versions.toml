@@ -1,6 +1,6 @@
 [versions]
 minecraft = "1.19.4-R0.1-SNAPSHOT"
-serialization = "1.5.1"
+serialization = "1.6.0"
 exposed = "0.42.0"
 ktor = "2.3.4"
 cloud = "1.8.4"
