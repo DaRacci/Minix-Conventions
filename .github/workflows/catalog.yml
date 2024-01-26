@@ -25,7 +25,7 @@ jobs:
           java-version: 17
 
       - name: Run validate-dependencies task
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: clean :catalog:validate-dependencies
 
