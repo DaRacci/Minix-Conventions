@@ -1,22 +1,22 @@
 [versions]
 minecraft = "1.19.4-R0.1-SNAPSHOT"
-serialization = "1.5.1"
-exposed = "0.42.0"
-ktor = "2.3.3"
-cloud = "1.8.3"
-sentry = "6.28.0"
+serialization = "1.6.0"
+exposed = "0.43.0"
+ktor = "2.3.4"
+cloud = "1.8.4"
+sentry = "6.29.0"
 minix = "4.3.14"
 configurate = "4.1.2"
 pluginYML = "0.6.0"
 shadow = "8.1.1"
-paperweight = "1.5.5"
+paperweight = "1.5.6"
 interfaces = "1.0.0-SNAPSHOT"
-arrow = "1.2.0"
+arrow = "1.2.1"
 arrow-analysis = "2.0.2"
 bstats = "3.0.2"
-ksp = "1.9.0-1.0.13"
-slimjar = "1.5.4"
-minotaur = "2.8.3"
+ksp = "1.9.10-1.0.13"
+slimjar = "1.6.1"
+minotaur = "2.8.4"
 strikt = "0.34.1"
 
 eco = "6.48.2"
@@ -27,22 +27,22 @@ eco-libreforge = "3.127.0"
 adventure = "4.14.0"
 adventure-platform = "4.3.0"
 
-koin = "3.4.3"
-koin-ktor = "3.4.3"
-koin-annotations = "1.2.2"
+koin = "3.5.0"
+koin-ktor = "3.5.1"
+koin-annotations = "1.3.0"
 
-kotlin = "1.9.0"
-kotlin-dsl = "4.1.0"
-kotlin-plugin-dokka = "1.8.20"
-kotlin-plugin-ktlint = "11.5.0"
+kotlin = "1.9.10"
+kotlin-dsl = "4.1.2"
+kotlin-plugin-dokka = "1.9.0"
+kotlin-plugin-ktlint = "11.6.0"
 kotlin-plugin-binaryValidator = "0.13.2"
 
-kotest = "5.6.2"
+kotest = "5.7.2"
 kotest-ktor = "2.0.0"
-kotest-koin = "1.1.0"
+kotest-koin = "1.2.0"
 kotest-arrow = "1.3.3"
 
-gradle-publish = "1.2.0"
+gradle-publish = "1.2.1"
 gradle-license = "0.16.1"
 
 [libraries]
@@ -120,9 +120,9 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
 kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.7.3"
-kotlinx-dateTime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.4.0"
+kotlinx-dateTime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.4.1"
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.5"
-kotlinx-atomicfu = "org.jetbrains.kotlinx:atomicfu-jvm:0.21.0"
+kotlinx-atomicfu = "org.jetbrains.kotlinx:atomicfu-jvm:0.22.0"
 
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm", version.ref = "serialization" }
@@ -139,15 +139,15 @@ exposed-dateTime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", v
 
 # TODO: Sort these
 hikariCP = "com.zaxxer:HikariCP:5.0.1"
-h2 = "com.h2database:h2:2.2.220"
+h2 = "com.h2database:h2:2.2.224"
 kotlin-statistics = "org.nield:kotlin-statistics:1.2.1"
 valiktor = "org.valiktor:valiktor-core:0.12.0"
 mordant = "com.github.ajalt.mordant:mordant-jvm:2.1.0"
-caffeine = "com.github.ben-manes.caffeine:caffeine:3.1.7"
+caffeine = "com.github.ben-manes.caffeine:caffeine:3.1.8"
 reflections = "org.reflections:reflections:0.10.2"
-classgraph = "io.github.classgraph:classgraph:4.8.161"
+classgraph = "io.github.classgraph:classgraph:4.8.162"
 slimjar = { module = "dev.racci.slimjar:slimjar", version.ref = "slimjar" }
-mariadb = "org.mariadb.jdbc:mariadb-java-client:3.1.4"
+mariadb = "org.mariadb.jdbc:mariadb-java-client:3.2.0"
 toolfactory = "io.github.toolfactory:jvm-driver:9.4.3"
 apiguardian = "org.apiguardian:apiguardian-api:1.1.2"
 aedile = "com.sksamuel.aedile:aedile-core:1.2.4"
@@ -159,13 +159,13 @@ koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin-ktor" }
 koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotations" }
 koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotations" }
 
-logging-slf4JAPI = "org.slf4j:slf4j-api:2.0.7"
+logging-slf4JAPI = "org.slf4j:slf4j-api:2.0.9"
 
 sentry-core = { module = "io.sentry:sentry", version.ref = "sentry" }
 sentry-kotlin = { module = "io.sentry:sentry-kotlin-extensions", version.ref = "sentry" }
 
 testing-junit5 = "org.junit.jupiter:junit-jupiter:5.10.0"
-testing-mockK = "io.mockk:mockk:1.13.5"
+testing-mockK = "io.mockk:mockk:1.13.7"
 
 testing-strikt = { module = "io.strikt:strikt-core", version.ref = "strikt" }
 testing-strikt-arrow = { module = "io.strikt:strikt-arrow", version.ref = "strikt" }
