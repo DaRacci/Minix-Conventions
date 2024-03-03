@@ -22,7 +22,7 @@
     {
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell {
-          packages = with pkgs; [ kotlin gradle gcc ncurses patchelf zlib ];
+          packages = with pkgs; [ kotlin gradle gcc ncurses patchelf zlib cog ];
         };
       });
     };
