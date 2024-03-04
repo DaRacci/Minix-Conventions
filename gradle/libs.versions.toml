@@ -2,7 +2,7 @@
 minecraft = "1.19.4-R0.1-SNAPSHOT"
 serialization = "1.6.0"
 exposed = "0.43.0"
-ktor = "2.3.4"
+ktor = "2.3.9"
 cloud = "1.8.4"
 sentry = "6.29.0"
 minix = "4.3.14"
