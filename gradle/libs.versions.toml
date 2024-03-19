@@ -121,7 +121,7 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 
 kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.7.3"
 kotlinx-dateTime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.5.0"
-kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.5"
+kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.7"
 kotlinx-atomicfu = "org.jetbrains.kotlinx:atomicfu-jvm:0.22.0"
 
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm", version.ref = "serialization" }
