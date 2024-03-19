@@ -30,7 +30,7 @@ jobs:
           arguments: clean :catalog:validate-dependencies
 
       - name: Upload final catalog
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: catalog.toml
           path: build/catalog/version-catalog/libs.versions.toml
