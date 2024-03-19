@@ -138,7 +138,7 @@ exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "e
 exposed-dateTime = { module = "org.jetbrains.exposed:exposed-kotlin-datetime", version.ref = "exposed" }
 
 # TODO: Sort these
-hikariCP = "com.zaxxer:HikariCP:5.0.1"
+hikariCP = "com.zaxxer:HikariCP:5.1.0"
 h2 = "com.h2database:h2:2.2.224"
 kotlin-statistics = "org.nield:kotlin-statistics:1.2.1"
 valiktor = "org.valiktor:valiktor-core:0.12.0"
