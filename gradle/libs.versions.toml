@@ -1,7 +1,7 @@
 [versions]
 minecraft = "1.19.4-R0.1-SNAPSHOT"
 serialization = "1.6.3"
-exposed = "0.43.0"
+exposed = "0.48.0"
 ktor = "2.3.9"
 cloud = "1.8.4"
 sentry = "6.34.0"
