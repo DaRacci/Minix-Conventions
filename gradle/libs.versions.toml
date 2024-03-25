@@ -1,7 +1,7 @@
 [versions]
 minecraft = "1.19.4-R0.1-SNAPSHOT"
 serialization = "1.6.3"
-exposed = "0.43.0"
+exposed = "0.48.0"
 ktor = "2.3.9"
 cloud = "1.8.4"
 sentry = "6.34.0"
@@ -31,9 +31,9 @@ koin = "3.5.3"
 koin-ktor = "3.5.3"
 koin-annotations = "1.3.1"
 
-kotlin = "1.9.10"
+kotlin = "1.9.23"
 kotlin-dsl = "4.1.2"
-kotlin-plugin-dokka = "1.9.0"
+kotlin-plugin-dokka = "1.9.20"
 kotlin-plugin-ktlint = "12.1.0"
 kotlin-plugin-binaryValidator = "0.14.0"
 
@@ -119,10 +119,10 @@ kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.re
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 
-kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.7.3"
+kotlinx-coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.8.0"
 kotlinx-dateTime = "org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.5.0"
 kotlinx-immutableCollections = "org.jetbrains.kotlinx:kotlinx-collections-immutable-jvm:0.3.7"
-kotlinx-atomicfu = "org.jetbrains.kotlinx:atomicfu-jvm:0.22.0"
+kotlinx-atomicfu = "org.jetbrains.kotlinx:atomicfu-jvm:0.23.2"
 
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core-jvm", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json-jvm", version.ref = "serialization" }
@@ -130,7 +130,7 @@ kotlinx-serialization-cbor = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-hocon = { module = "org.jetbrains.kotlinx:kotlinx-serialization-hocon", version.ref = "serialization" }
 kotlinx-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf-jvm", version.ref = "serialization" }
 kotlinx-serialization-properties = { module = "org.jetbrains.kotlinx:kotlinx-serialization-properties-jvm", version.ref = "serialization" }
-kotlinx-serialization-kaml = "com.charleskorn.kaml:kaml-jvm:0.57.0"
+kotlinx-serialization-kaml = "com.charleskorn.kaml:kaml-jvm:0.58.0"
 
 exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
 exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
