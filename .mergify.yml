@@ -1,0 +1,20 @@
+queue_rules:
+  - name: default
+    merge_conditions:
+      - "#commits-behind==0"
+      - "#check-failure==0"
+
+defaults:
+  actions:
+    queue:
+      merge_method:  rebase
+      update_method: rebase
+
+pull_request_rules:
+  - name: merge automated dependencies
+    conditions:
+      - base=main
+      - label~=merge-queue|dependencies
+    actions:
+        queue:
+      
