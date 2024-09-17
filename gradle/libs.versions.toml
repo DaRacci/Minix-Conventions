@@ -35,7 +35,7 @@ kotlin = "2.0.20"
 kotlin-dsl = "5.1.1"
 kotlin-plugin-dokka = "1.9.20"
 kotlin-plugin-ktlint = "12.1.1"
-kotlin-plugin-binaryValidator = "0.14.0"
+kotlin-plugin-binaryValidator = "0.16.3"
 
 kotest = "5.8.1"
 kotest-ktor = "2.0.0"
